@@ -1,10 +1,13 @@
 package UQAC.Mobile.SAMM;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,6 +42,11 @@ public class RefuelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_refuel);
 
         setTitle("Refuel");
+
+        // calling the action bar
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         litterPrice = findViewById(R.id.litterPriceText);
         totalCost = findViewById(R.id.totalCostText);
@@ -116,6 +124,16 @@ public class RefuelActivity extends AppCompatActivity {
         String myFormat="MM/dd/yy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
         dateText.setText(dateFormat.format(myCalendar.getTime()));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
