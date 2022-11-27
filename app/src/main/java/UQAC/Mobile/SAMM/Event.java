@@ -4,6 +4,6 @@ import java.util.Date;
 
 public class Event {
     private User creator;
-    private Date date;
-    private int mileage;
+    Date date;
+    int mileage;
 }
