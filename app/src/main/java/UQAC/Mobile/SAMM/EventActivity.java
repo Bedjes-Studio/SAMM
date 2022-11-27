@@ -43,8 +43,15 @@ public class EventActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        // recup list d'event ???
-        List<EventItemClass>
+        // recup list d'event (history)???
+        //List<Event> event= fct recup history
+
+        //EventAdapterClass eventAdapterClass = new EventAdapterClass(event)
+        //EventAdapterClass eventAdapter = new EventAdapterClass(event)
+        //set the adapter
+        //recyclerView.setAdapter(adapter);
+
+
 
         addEventButton = findViewById(R.id.button_add_event);
         addRefuelButton = findViewById(R.id.button_add_refuel);

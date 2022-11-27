@@ -26,6 +26,8 @@ public class EventAdapterClass extends RecyclerView.Adapter {
     public EventAdapterClass(List<EventItemClass> eventItemClassList){
         this.eventItemClassList = eventItemClassList;
     }
+
+
     // Override the getItemViewType method.
     // This method uses a switch statement
     // to assign the layout to each item
