@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         TextView password = findViewById(R.id.loginPassword);
 
         Button loginButton = findViewById(R.id.loginButton);
-        eventButton = findViewById(R.id.buttonEvent);
+        /*eventButton = findViewById(R.id.buttonEvent);
 
         eventButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent eventActivityIntent = new Intent(MainActivity.this, EventActivity.class);
                 startActivity(eventActivityIntent);
             }
-        });
+        });*/
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
