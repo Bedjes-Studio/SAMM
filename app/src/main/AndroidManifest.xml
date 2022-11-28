@@ -18,9 +18,23 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".SignIn"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SIGNIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".listVehicules"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".addVehicule"
+            android:exported="true">
         </activity>
     </application>
 

@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">SAMM</string>
+    <string name="signIn"><u>Crées en un</u></string>
+    <string name="forgotPassword"><u>Forgot Password ?</u></string>
+
+    <string-array name="type_vehicule">
+        <item>Voiture</item>
+        <item>Moto</item>
+        <item>Camion</item>
+        <item>Bus</item>
+    </string-array>
 </resources>
+
