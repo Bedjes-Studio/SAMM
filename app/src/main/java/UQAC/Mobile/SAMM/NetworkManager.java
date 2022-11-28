@@ -18,16 +18,28 @@ public class NetworkManager {
 
         History history = new History();
 
-        Car car = new Car(history,
+        Car car1 = new Car(history,
                 null,
-                1000,
+                180000,
                 "Essence",
                 23,
                 "voiture",
                 "Chrysler",
                 "300c",
                 "Mon char");
-        cars.add(car);
+
+        Car car2 = new Car(history,
+                null,
+                150000,
+                "Essence",
+                23,
+                "voiture",
+                "Pontiac",
+                "G6",
+                "Auto de ma blonde");
+
+        cars.add(car1);
+        cars.add(car2);
         return cars;
     }
 }
