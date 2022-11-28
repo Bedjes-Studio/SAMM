@@ -33,6 +33,8 @@ public class addVehicule extends AppCompatActivity implements AdapterView.OnItem
         EditText kilometrage = findViewById(R.id.text_view_mileage);
         Button creation = findViewById(R.id.buttonCreate);
 
+        NetworkManager networkManager = new NetworkManager();
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_vehicule, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -53,6 +55,7 @@ public class addVehicule extends AppCompatActivity implements AdapterView.OnItem
                 if(!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
                     //Creer nouveau véhicule ici pour la bdd
                     Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
+                    networkManager.cars.add(vehicule);
                     Intent returnMenuIntent = new Intent(addVehicule.this, listVehicules.class);
                     //addNoteIntent.putExtra("title", "Titre de la note");
                     startActivity(returnMenuIntent);

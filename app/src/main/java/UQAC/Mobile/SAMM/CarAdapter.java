@@ -17,7 +17,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
     Context context;
     List<Car> carArrayList;
 
-    public CarAdapter(Context context, ArrayList<Car> carArrayList){
+    public CarAdapter(Context context, List<Car> carArrayList){
         this.context = context;
         this.carArrayList = carArrayList;
     }
