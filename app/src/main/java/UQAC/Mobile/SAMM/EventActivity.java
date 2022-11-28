@@ -51,8 +51,6 @@ public class EventActivity extends AppCompatActivity {
         //set the adapter
         //recyclerView.setAdapter(adapter);
 
-
-
         addEventButton = findViewById(R.id.button_add_event);
         addRefuelButton = findViewById(R.id.button_add_refuel);
         addRepairButton = findViewById(R.id.button_add_repair);
