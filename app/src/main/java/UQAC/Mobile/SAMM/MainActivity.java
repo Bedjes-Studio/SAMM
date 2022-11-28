@@ -12,6 +12,8 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     //TextView signIn = findViewById(R.id.signIn);
 
+    Button eventButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +23,15 @@ public class MainActivity extends AppCompatActivity {
         TextView password = findViewById(R.id.loginPassword);
 
         Button loginButton = findViewById(R.id.loginButton);
+        eventButton = findViewById(R.id.buttonEvent);
 
+        eventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent eventActivityIntent = new Intent(MainActivity.this, EventActivity.class);
+                startActivity(eventActivityIntent);
+            }
+        });
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -42,5 +52,6 @@ public class MainActivity extends AppCompatActivity {
         Intent signInIntent = new Intent(MainActivity.this, SignIn.class);
         //addNoteIntent.putExtra("title", "Titre de la note");
         startActivity(signInIntent);
+        
     }
 }
