@@ -14,7 +14,7 @@ public class NetworkManager {
     static public List<Event> events = new ArrayList<Event>();
     static public List<Car> cars = new ArrayList<Car>();
 
-    public NetworkManager() {
+    public void createContent() {
 
         // create events
         Refuel refuel1 = new Refuel("Essence", 1.6f, 86.64f, 54.15f, Calendar.getInstance().getTime(), 180000);
@@ -51,6 +51,9 @@ public class NetworkManager {
 
         cars.add(car1);
         cars.add(car2);
+    }
+    public NetworkManager() {
+
     }
 
     static public List<Event> getEvents() {
