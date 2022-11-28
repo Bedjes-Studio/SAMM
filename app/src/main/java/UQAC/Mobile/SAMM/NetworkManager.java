@@ -11,14 +11,12 @@ public class NetworkManager {
     // ajout voiture
     // ajout refuel
     // get events
-
+    static public List<Event> events = new ArrayList<Event>();
+    static public List<Car> cars = new ArrayList<Car>();
 
     public NetworkManager() {
-    }
 
-    static public List<Event> getEvents() {
-        List<Event> events = new ArrayList<Event>();
-
+        // create events
         Refuel refuel1 = new Refuel("Essence", 1.6f, 86.64f, 54.15f, Calendar.getInstance().getTime(), 180000);
         Earning earning = new Earning(70, "Covoiturage", Calendar.getInstance().getTime(), 180000);
         Refuel refuel2 = new Refuel("Essence", 1.5f, 75f, 50f, Calendar.getInstance().getTime(), 175000);
@@ -26,11 +24,8 @@ public class NetworkManager {
         events.add(refuel1);
         events.add(earning);
         events.add(refuel2);
-        return events;
-    }
 
-    static public List<Car> getCars() {
-        List<Car> cars = new ArrayList<Car>();
+        // create cars
 
         History history = new History();
 
@@ -56,6 +51,15 @@ public class NetworkManager {
 
         cars.add(car1);
         cars.add(car2);
+    }
+
+    static public List<Event> getEvents() {
+
+        return events;
+    }
+
+    static public List<Car> getCars() {
+
         return cars;
     }
 }
