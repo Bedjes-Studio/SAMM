@@ -21,11 +21,16 @@ import static UQAC.Mobile.SAMM.EventItemClass.LayoutRepair;
 public class EventAdapterClass extends RecyclerView.Adapter {
 
     private List<EventItemClass> eventItemClassList;
+//    private List<Event> eventlist;
 
     //constructor
     public EventAdapterClass(List<EventItemClass> eventItemClassList){
         this.eventItemClassList = eventItemClassList;
     }
+
+//    public EventAdapterClass(List<Event> eventList){
+//        this.eventlist = eventList;
+//    }
 
 
     // Override the getItemViewType method.
@@ -36,6 +41,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position){
         switch (eventItemClassList.get(position).getViewType()) {
+        //switch (eventlist.get(position).getClass().getSimpleName()) {
             case 0:
                 return LayoutRefuel;
             case 1:
@@ -164,6 +170,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
             int position)
     {
         switch (eventItemClassList.get(position).getViewType()){
+        //switch (eventlist.get(position).getClass().getSimpleName()) {
             case LayoutRefuel:
                 String litter = eventItemClassList.get(position).getLitter();
                 String litterPrice = eventItemClassList.get(position).getLitterPrice();
