@@ -50,6 +50,8 @@ public class EarningActivity extends AppCompatActivity {
         reason = findViewById(R.id.reasonText);
         mileage = findViewById(R.id.mileageText);
 
+        NetworkManager networkManager = new NetworkManager();
+
 
         //-- Date Picker
         dateText = (EditText) findViewById(R.id.dateText);
@@ -69,7 +71,10 @@ public class EarningActivity extends AppCompatActivity {
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(EarningActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(EarningActivity.this,date,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -87,10 +92,19 @@ public class EarningActivity extends AppCompatActivity {
 
                 earning.save(earning);
 
-                Toast.makeText(getApplicationContext(),earning.getDate().toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
+                if(true){//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
+                    //Creer nouveau véhicule ici pour la bdd
+                    //Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
+                    networkManager.events.add(earning);
+                    Intent returnMenuIntent = new Intent(EarningActivity.this, EventActivity.class);
+                    startActivity(returnMenuIntent);
+                }else{
+                    Toast.makeText(EarningActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
+                }
 
-                Intent eventActivityIntent = new Intent(EarningActivity.this, EventActivity.class);
-                startActivity(eventActivityIntent);
+//                Intent eventActivityIntent = new Intent(EarningActivity.this, EventActivity.class);
+//                startActivity(eventActivityIntent);
             }
         });
     }

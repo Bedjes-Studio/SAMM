@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,6 +20,14 @@ public class addVehicule extends AppCompatActivity implements AdapterView.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_vehicule);
+
+//        setTitle("Add vehicle");
+//
+//        // calling the action bar
+//        ActionBar actionBar = getSupportActionBar();
+//        // showing the back button in action bar
+//        assert actionBar != null;
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton backButton = findViewById(R.id.backButtonCreationV);
 

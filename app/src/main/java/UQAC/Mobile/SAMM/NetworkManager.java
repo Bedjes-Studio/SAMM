@@ -27,7 +27,9 @@ public class NetworkManager {
 
         // create cars
 
-        History history = new History();
+
+        History history = new History(events);
+        History history1 = new History();
 
         Car car1 = new Car(history,
                 null,
@@ -39,7 +41,7 @@ public class NetworkManager {
                 "300c",
                 "Mon char");
 
-        Car car2 = new Car(history,
+        Car car2 = new Car(history1,
                 null,
                 150000,
                 "Essence",

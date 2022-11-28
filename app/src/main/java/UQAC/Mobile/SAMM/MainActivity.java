@@ -25,15 +25,15 @@ public class MainActivity extends AppCompatActivity {
 
         Button loginButton = findViewById(R.id.loginButton);
 
-        eventButton = findViewById(R.id.buttonEvent);
-
-        eventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                Intent eventActivityIntent = new Intent(MainActivity.this, EventActivity.class);
-                startActivity(eventActivityIntent);
-            }
-        });
+//        eventButton = findViewById(R.id.buttonEvent);
+//
+//        eventButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view){
+//                Intent eventActivityIntent = new Intent(MainActivity.this, EventActivity.class);
+//                startActivity(eventActivityIntent);
+//            }
+//        });
 
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override

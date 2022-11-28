@@ -24,6 +24,7 @@ public class Car {
         this.model = model;
         this.name = name;
     }
+    public Car(){}
 
     //Getters
     public History getHistory() { return history; }

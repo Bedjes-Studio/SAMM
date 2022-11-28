@@ -25,6 +25,8 @@ public class listVehicules extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
 
+        setTitle("Vehicles");
+
         FloatingActionButton button_add_car = findViewById(R.id.button_add_car);
         RecyclerView recyclerView = findViewById(R.id.recycler_view_car);
 
@@ -40,5 +42,14 @@ public class listVehicules extends AppCompatActivity{
                 startActivity(addVehiculeIntent);
             }
         });
+
+        adapter.setOnItemClickListener(new CarAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+                Intent eventActivityIntent = new Intent(listVehicules.this, EventActivity.class);
+                startActivity(eventActivityIntent);
+            }
+        });
     }
+
 }

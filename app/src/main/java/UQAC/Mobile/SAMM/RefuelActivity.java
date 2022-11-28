@@ -28,6 +28,8 @@ public class RefuelActivity extends AppCompatActivity {
     final Calendar myCalendar = Calendar.getInstance();
     String myFuelType;
 
+    NetworkManager networkManager = new NetworkManager();
+
     FloatingActionButton save;
 
     EditText litterPrice;
@@ -46,6 +48,7 @@ public class RefuelActivity extends AppCompatActivity {
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
         // showing the back button in action bar
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         litterPrice = findViewById(R.id.litterPriceText);
@@ -66,10 +69,11 @@ public class RefuelActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 myFuelType = String.valueOf(spinnerFuelType.getSelectedItem());
-                Toast.makeText(RefuelActivity.this,
-                        "OnClickListener : " +
-                                "\nSpinner 1 : " + myFuelType,
-                        Toast.LENGTH_SHORT).show(); }
+//                Toast.makeText(RefuelActivity.this,
+//                        "OnClickListener : " +
+//                                "\nSpinner 1 : " + myFuelType,
+//                        Toast.LENGTH_SHORT).show();
+                       }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
@@ -114,10 +118,16 @@ public class RefuelActivity extends AppCompatActivity {
 
                 refuel.save(refuel);
 
-                Toast.makeText(getApplicationContext(),refuel.getDate().toString(), Toast.LENGTH_SHORT).show();
-
-                Intent eventActivityIntent = new Intent(RefuelActivity.this, EventActivity.class);
-                startActivity(eventActivityIntent);
+                //Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
+                if(true){//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
+                    //Creer nouveau véhicule ici pour la bdd
+                    //Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
+                    networkManager.events.add(refuel);
+                    Intent returnMenuIntent = new Intent(RefuelActivity.this, EventActivity.class);
+                    startActivity(returnMenuIntent);
+                }else{
+                    Toast.makeText(RefuelActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -12,4 +12,12 @@ public class History {
     public History(){
         this.history = null;
     }
+
+    public List<Event> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<Event> history) {
+        this.history = history;
+    }
 }
