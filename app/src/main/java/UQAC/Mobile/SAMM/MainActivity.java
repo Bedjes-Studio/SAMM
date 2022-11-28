@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     //TextView signIn = findViewById(R.id.signIn);
+    NetworkManager networkManager = new NetworkManager();
 
     Button eventButton;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
                     Toast.makeText(MainActivity.this, "Connection reussie", Toast.LENGTH_SHORT).show();
+                    networkManager.createContent();
                     Intent loginIntent = new Intent(MainActivity.this, listVehicules.class);
                     //addNoteIntent.putExtra("title", "Titre de la note");
                     startActivity(loginIntent);
