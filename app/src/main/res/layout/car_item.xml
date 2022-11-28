@@ -9,30 +9,32 @@
     app:cardCornerRadius="20dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp"
-        android:layout_marginStart="10dp">
-
-        <TextView
-            android:id="@+id/text_view_brand"
-            android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:cardCornerRadius="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Brand"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        <TextView
-            android:id="@+id/text_view_model"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Model"/>
-
-        <TextView
-            android:id="@+id/text_view_mileage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mileage"/>
+            android:layout_marginStart="10dp"
+            android:orientation="vertical"
+            android:padding="8dp">
+            <TextView
+                android:id="@+id/text_view_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Brand"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <TextView
+                android:id="@+id/text_view_model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Model" />
+            <TextView
+                android:id="@+id/text_view_mileage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mileage" />
+        </LinearLayout>
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>
