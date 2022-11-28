@@ -11,7 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static UQAC.Mobile.SAMM.EventItemClass.LayoutEarning;
 import static UQAC.Mobile.SAMM.EventItemClass.LayoutRefuel;
@@ -20,17 +23,17 @@ import static UQAC.Mobile.SAMM.EventItemClass.LayoutRepair;
 
 public class EventAdapterClass extends RecyclerView.Adapter {
 
-    private List<EventItemClass> eventItemClassList;
-//    private List<Event> eventlist;
+    //private List<EventItemClass> eventItemClassList;
+    private List<Event> eventlist;
 
     //constructor
-    public EventAdapterClass(List<EventItemClass> eventItemClassList){
-        this.eventItemClassList = eventItemClassList;
-    }
-
-//    public EventAdapterClass(List<Event> eventList){
-//        this.eventlist = eventList;
+//    public EventAdapterClass(List<EventItemClass> eventItemClassList){
+//        this.eventItemClassList = eventItemClassList;
 //    }
+
+    public EventAdapterClass(List<Event> eventList){
+        this.eventlist = eventList;
+    }
 
 
     // Override the getItemViewType method.
@@ -40,13 +43,14 @@ public class EventAdapterClass extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position){
-        switch (eventItemClassList.get(position).getViewType()) {
-        //switch (eventlist.get(position).getClass().getSimpleName()) {
-            case 0:
+        //switch (eventItemClassList.get(position).getViewType()) {
+        switch (eventlist.get(position).getClass().getSimpleName()) {
+            //case 0:
+            case "Refuel":
                 return LayoutRefuel;
-            case 1:
-                return LayoutRepair;
-            case 2:
+//            case 1:
+//                return LayoutRepair;
+            case "Earning":
                 return LayoutEarning;
             default:
                 return -1;
@@ -74,12 +78,17 @@ public class EventAdapterClass extends RecyclerView.Adapter {
 
         //method to set the views that will
         // be used further in onBindViewHolder method.
-        private void setView(String litterValue, String litterPriceValue, String totalCostValue, String dateValue, String mileageValue){
+        private void setView(String litterValue, String litterPriceValue, String totalCostValue, Date dateValue, String mileageValue){
             litter.setText(litterValue);
             litterPrice.setText(litterPriceValue);
             totalCost.setText(totalCostValue);
             mileage.setText(mileageValue);
-            date.setText(dateValue);
+
+            String myFormat="MM/dd/yy";
+            SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+            //dateText.setText(dateFormat.format(myCalendar.getTime()));
+
+            date.setText(dateFormat.format(dateValue));
         }
     }
 
@@ -108,7 +117,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
     }
 
     class LayoutEarningViewHolder extends RecyclerView.ViewHolder{
-        private TextView value, date, mileage;
+        private TextView value, reason, date, mileage;
         private LinearLayout linearLayout;
 
         public LayoutEarningViewHolder(@NonNull View eventItemView){
@@ -116,6 +125,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
 
             // find the view
             value = eventItemView.findViewById(R.id.text_view_value);
+            reason = eventItemView.findViewById(R.id.text_view_reason);
             date = eventItemView.findViewById(R.id.text_view_date);
             mileage = eventItemView.findViewById(R.id.text_view_mileage);
 
@@ -124,10 +134,17 @@ public class EventAdapterClass extends RecyclerView.Adapter {
 
         //method to set the views that will
         // be used further in onBindViewHolder method.
-        private void setView(String valueValue, String dateValue, String mileageValue){
+        private void setView(String valueValue, String reasonValue, Date dateValue, String mileageValue){
             value.setText(valueValue);
+            reason.setText(reasonValue);
             mileage.setText(mileageValue);
-            date.setText(dateValue);
+
+
+            String myFormat="MM/dd/yy";
+            SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+            //dateText.setText(dateFormat.format(myCalendar.getTime()));
+
+            date.setText(dateFormat.format(dateValue));
         }
     }
 
@@ -169,14 +186,15 @@ public class EventAdapterClass extends RecyclerView.Adapter {
             @NonNull RecyclerView.ViewHolder holder,
             int position)
     {
-        switch (eventItemClassList.get(position).getViewType()){
-        //switch (eventlist.get(position).getClass().getSimpleName()) {
-            case LayoutRefuel:
-                String litter = eventItemClassList.get(position).getLitter();
-                String litterPrice = eventItemClassList.get(position).getLitterPrice();
-                String totalCost = eventItemClassList.get(position).getTotalCost();
-                String date = eventItemClassList.get(position).getDate();
-                String mileage = eventItemClassList.get(position).getMileage();
+//        switch (eventItemClassList.get(position).getViewType()){
+        switch (eventlist.get(position).getClass().getSimpleName()) {
+            case "Refuel":
+                Refuel refuel = (Refuel) eventlist.get(position);
+                String litter = String.valueOf(refuel.getLitter()) + " L";
+                String litterPrice = String.valueOf(refuel.getLitterPrice()) + " L/$";
+                String totalCost = String.valueOf(refuel.getTotalCost()) + " $";
+                Date date = refuel.getDate();
+                String mileage = String.valueOf(refuel.getMileage()) + " km";
                 ((LayoutRefuelViewHolder)holder).setView(litter, litterPrice, totalCost, date, mileage);
 
                 // The following code pops a toast message
@@ -197,35 +215,37 @@ public class EventAdapterClass extends RecyclerView.Adapter {
                                 });
                 break;
 
-            case LayoutRepair:
-                String value = eventItemClassList.get(position).getValue();
-                date = eventItemClassList.get(position).getDate();
-                mileage = eventItemClassList.get(position).getMileage();
-                ((LayoutRepairViewHolder)holder).setView(value, date, mileage);
-
-                // The following code pops a toast message
-                // when the item layout is clicked.
-                // This message indicates the corresponding layout.
-                ((LayoutRepairViewHolder)holder)
-                        .linearLayout.setOnClickListener(
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view)
-                                    {
-                                        Toast.makeText(
-                                                        view.getContext(),
-                                                        "Repair",
-                                                        Toast.LENGTH_SHORT)
-                                                .show();
-                                    }
-                                });
-                break;
-
-            case LayoutEarning:
-                value = eventItemClassList.get(position).getValue();
-                date = eventItemClassList.get(position).getDate();
-                mileage = eventItemClassList.get(position).getMileage();
-                ((LayoutEarningViewHolder)holder).setView(value, date, mileage);
+//            case LayoutRepair:
+//                String value = eventItemClassList.get(position).getValue();
+//                date = eventItemClassList.get(position).getDate();
+//                mileage = eventItemClassList.get(position).getMileage();
+//                ((LayoutRepairViewHolder)holder).setView(value, date, mileage);
+//
+//                // The following code pops a toast message
+//                // when the item layout is clicked.
+//                // This message indicates the corresponding layout.
+//                ((LayoutRepairViewHolder)holder)
+//                        .linearLayout.setOnClickListener(
+//                                new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View view)
+//                                    {
+//                                        Toast.makeText(
+//                                                        view.getContext(),
+//                                                        "Repair",
+//                                                        Toast.LENGTH_SHORT)
+//                                                .show();
+//                                    }
+//                                });
+//                break;
+//
+            case "Earning":
+                Earning earning = (Earning) eventlist.get(position);
+                String value = String.valueOf(earning.getValue()) + " $";
+                String reason = earning.getReason();
+                date = earning.getDate();
+                mileage = String.valueOf(earning.getMileage()) + " km";
+                ((LayoutEarningViewHolder)holder).setView(value, reason, date, mileage);
 
                 // The following code pops a toast message
                 // when the item layout is clicked.
@@ -249,7 +269,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount(){
-        return eventItemClassList.size();
+        return eventlist.size();
     }
 
 }

@@ -17,26 +17,31 @@
         android:padding="8dp"
         android:layout_marginStart="10dp">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_refuel"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:padding="8dp"
             android:layout_marginStart="10dp">
 
-            <TextView
-                android:id="@+id/text_view_reason"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Refuel"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+<!--            <TextView-->
+<!--                android:id="@+id/text_view_reason"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Refuel"-->
+<!--                android:textAppearance="@style/TextAppearance.AppCompat.Large" />-->
 
             <TextView
-                android:id="@+id/text_view_litter"
+                android:id="@+id/text_view_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Litter"/>
+                android:text="Date"/>
 
             <TextView
                 android:id="@+id/text_view_mileage"
@@ -47,17 +52,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/text_view_date"
+                android:id="@+id/text_view_litter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date"/>
+                android:text="Litter"/>
 
             <TextView
                 android:id="@+id/text_view_litter_price"
@@ -70,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total cost" />
+
         </LinearLayout>
     </LinearLayout>
 

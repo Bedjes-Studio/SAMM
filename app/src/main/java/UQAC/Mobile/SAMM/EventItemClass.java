@@ -2,6 +2,8 @@ package UQAC.Mobile.SAMM;
 
 public class EventItemClass {
 
+    // --Ce sera inutile à supprimer quand les events seront ok
+
     // Integers assigned to each layout
     // these are declared static so that they can
     // be accessed from the class name itself

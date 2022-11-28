@@ -6,10 +6,32 @@ public class Earning extends Event {
     private float value;
     private String reason;
 
-    public Earning(float value, String reason, Date date, int mileage) {
+    public Earning(String reason, float value, Date date, int mileage) {
+
         this.value = value;
         this.reason = reason;
         this.date = date;
         this.mileage = mileage;
     }
+
+    public boolean save(Earning earning){
+        return true;
+    }
+
+    public float getValue() {
+        return value;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
 }

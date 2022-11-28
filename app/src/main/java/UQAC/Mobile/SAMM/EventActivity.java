@@ -1,5 +1,7 @@
 package UQAC.Mobile.SAMM;
 
+import static UQAC.Mobile.SAMM.NetworkManager.getEvents;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,8 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class EventActivity extends AppCompatActivity {
@@ -51,6 +55,18 @@ public class EventActivity extends AppCompatActivity {
         //set the adapter
         //recyclerView.setAdapter(adapter);
 
+        // --Test en dur--
+//        List<Event> eventList = new ArrayList<>();
+
+//        eventList.add(new Refuel("gasoline",70,10,5,new Date(), 15555));
+//        eventList.add(new Earning("lift",70,new Date(), 15555));
+
+        List<Event> eventList = getEvents();
+        EventAdapterClass eventAdapterClass = new EventAdapterClass(eventList);
+        EventAdapterClass eventAdapter = new EventAdapterClass(eventList);
+        recyclerView.setAdapter(eventAdapter);
+
+
         addEventButton = findViewById(R.id.button_add_event);
         addRefuelButton = findViewById(R.id.button_add_refuel);
         addRepairButton = findViewById(R.id.button_add_repair);
@@ -69,6 +85,14 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent eventActivityIntent = new Intent(EventActivity.this, RefuelActivity.class);
+                startActivity(eventActivityIntent);
+            }
+        });
+
+        addEarningButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent eventActivityIntent = new Intent(EventActivity.this, EarningActivity.class);
                 startActivity(eventActivityIntent);
             }
         });

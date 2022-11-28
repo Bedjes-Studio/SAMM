@@ -23,59 +23,33 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class RefuelActivity extends AppCompatActivity {
+public class EarningActivity extends AppCompatActivity {
 
     final Calendar myCalendar = Calendar.getInstance();
-    String myFuelType;
 
     FloatingActionButton save;
 
-    EditText litterPrice;
-    EditText totalCost;
-    EditText litter;
+    EditText value;
+    EditText reason;
     EditText mileage;
     EditText dateText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_refuel);
+        setContentView(R.layout.activity_earning);
 
-        setTitle("Refuel");
+        setTitle("Earning");
 
         // calling the action bar
         ActionBar actionBar = getSupportActionBar();
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        litterPrice = findViewById(R.id.litterPriceText);
-        totalCost = findViewById(R.id.totalCostText);
-        litter = findViewById(R.id.litterText);
+        value = findViewById(R.id.valueText);
+        reason = findViewById(R.id.reasonText);
         mileage = findViewById(R.id.mileageText);
 
-        //https://andrologiciels.wordpress.com/astuces-android/divers-2/quitter-une-application/liste-deroulante-spinner/
-        //-- Drop Down Fuel Type
-        final Spinner spinnerFuelType = (Spinner) findViewById(R.id.spinnerFuelType);
-        String[] lFuelType = {"Gasoline","Diesel Fuel", "Bio-diesel", "Ethanol"};
-        ArrayAdapter<String> dataAdapterF = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lFuelType);
-        dataAdapterF.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerFuelType.setAdapter(dataAdapterF);
-
-        //-- Gestion du Click sur la liste Fuel type
-        spinnerFuelType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                myFuelType = String.valueOf(spinnerFuelType.getSelectedItem());
-                Toast.makeText(RefuelActivity.this,
-                        "OnClickListener : " +
-                                "\nSpinner 1 : " + myFuelType,
-                        Toast.LENGTH_SHORT).show(); }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
-            }
-
-        });
 
         //-- Date Picker
         dateText = (EditText) findViewById(R.id.dateText);
@@ -95,7 +69,7 @@ public class RefuelActivity extends AppCompatActivity {
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(RefuelActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(EarningActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -105,18 +79,17 @@ public class RefuelActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Float litterPriceValue = Float.valueOf(litterPrice.getText().toString());
-                Float totalCostValue = Float.valueOf(totalCost.getText().toString());
-                Float litterValue = Float.valueOf(litter.getText().toString());
+                Float valueValue = Float.valueOf(value.getText().toString());
+                String reasonValue = reason.getText().toString();
                 Integer mileageValue = Integer.valueOf(mileage.getText().toString());
 
-                Refuel refuel = new Refuel(myFuelType, litterPriceValue, totalCostValue, litterValue, myCalendar.getTime(),  mileageValue);
+                Earning earning = new Earning( reasonValue, valueValue, myCalendar.getTime(),  mileageValue);
 
-                refuel.save(refuel);
+                earning.save(earning);
 
-                Toast.makeText(getApplicationContext(),refuel.getDate().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),earning.getDate().toString(), Toast.LENGTH_SHORT).show();
 
-                Intent eventActivityIntent = new Intent(RefuelActivity.this, EventActivity.class);
+                Intent eventActivityIntent = new Intent(EarningActivity.this, EventActivity.class);
                 startActivity(eventActivityIntent);
             }
         });
@@ -137,6 +110,4 @@ public class RefuelActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

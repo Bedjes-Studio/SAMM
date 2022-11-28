@@ -20,7 +20,7 @@ public class NetworkManager {
         List<Event> events = new ArrayList<Event>();
 
         Refuel refuel1 = new Refuel("Essence", 1.6f, 86.64f, 54.15f, Calendar.getInstance().getTime(), 180000);
-        Earning earning = new Earning(70, "Covoiturage", Calendar.getInstance().getTime(), 180000);
+        Earning earning = new Earning( "Covoiturage", 70, Calendar.getInstance().getTime(), 180000);
         Refuel refuel2 = new Refuel("Essence", 1.5f, 75f, 50f, Calendar.getInstance().getTime(), 175000);
 
         events.add(refuel1);
