@@ -38,6 +38,26 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
+//                NetworkManager.login(username.getText().toString(), password.getText().toString(), getApplicationContext());
+                NetworkManager.login2(username.getText().toString(), password.getText().toString(), new NetworkCallback() {
+                    @Override
+                    public void onActionSuccess(){
+                        Toast.makeText(MainActivity.this, "Connection reussie", Toast.LENGTH_SHORT).show();
+                        networkManager.createContent();
+                        Intent loginIntent = new Intent(MainActivity.this, listVehicules.class);
+                        startActivity(loginIntent);
+                    };
+
+                    @Override
+                    public void onActionFailure(){
+                        Toast.makeText(MainActivity.this, "Connection ratee", Toast.LENGTH_SHORT).show();
+                    };
+                } );
+
+
+
+/*
                 if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
                     Toast.makeText(MainActivity.this, "Connection reussie", Toast.LENGTH_SHORT).show();
                     networkManager.createContent();
@@ -47,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(MainActivity.this, "Connection ratee", Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
     }
