@@ -17,6 +17,7 @@ import java.util.List;
 import UQAC.Mobile.SAMM.APIPojo.CarCreate;
 import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Login;
+import UQAC.Mobile.SAMM.APIPojo.RefuelCreate;
 import UQAC.Mobile.SAMM.APIPojo.Signup;
 import UQAC.Mobile.SAMM.APIPojo.Test;
 import okhttp3.OkHttpClient;
@@ -131,7 +132,7 @@ public class NetworkManager {
             @Override
             public void onResponse(Call<CarCreate> call, Response<CarCreate> response) {
                 Log.d("API", token);
-                if (response.code() == 200) {
+                if (response.code() == 201) {
                     CarCreate data = response.body();
                 }
             }
@@ -162,6 +163,23 @@ public class NetworkManager {
 
             @Override
             public void onFailure(Call<List<CarGetAll.Response>> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+    public static void createRefuel(Refuel refuel, String carId) {
+        Log.d("API", "create refuel");
+        Call<RefuelCreate> call = apiInterface.refuelCreate(token, new RefuelCreate.Request(refuel, carId));
+        call.enqueue(new Callback<RefuelCreate>() {
+            @Override
+            public void onResponse(Call<RefuelCreate> call, Response<RefuelCreate> response) {
+                if (response.code() == 201) {
+                    RefuelCreate data = response.body();
+                }
+            }
+            @Override
+            public void onFailure(Call<RefuelCreate> call, Throwable t) {
                 call.cancel();
             }
         });
