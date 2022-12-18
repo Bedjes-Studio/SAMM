@@ -38,12 +38,12 @@ public class listVehicules extends AppCompatActivity{
         button_add_car.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-//                Intent addVehiculeIntent = new Intent(listVehicules.this, addVehicule.class);
-//                //addNoteIntent.putExtra("title", "Titre de la note");
-//                startActivity(addVehiculeIntent);
-                Refuel refuel = new Refuel("Essence", 1.6f, 86.64f, 54.15f, Calendar.getInstance().getTime(), 180000);
-
-                NetworkManager.createRefuel(refuel, "639e9cbcee49d69a8c280e88");
+                Intent addVehiculeIntent = new Intent(listVehicules.this, addVehicule.class);
+                //addNoteIntent.putExtra("title", "Titre de la note");
+                startActivity(addVehiculeIntent);
+//                Refuel refuel = new Refuel("Essence", 1.6f, 86.64f, 54.15f, Calendar.getInstance().getTime(), 180000);
+//
+//                NetworkManager.createRefuel(refuel, "639e9cbcee49d69a8c280e88");
             }
         });
 
