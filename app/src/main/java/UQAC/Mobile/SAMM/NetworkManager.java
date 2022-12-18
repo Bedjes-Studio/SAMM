@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import UQAC.Mobile.SAMM.APIPojo.CarCreate;
+import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Login;
 import UQAC.Mobile.SAMM.APIPojo.Test;
 import okhttp3.OkHttpClient;
@@ -101,23 +104,42 @@ public class NetworkManager {
 
     public static void createCar(Car car) {
         Log.d("API", "create car");
-        int a = 1;
-        int b = 1;
         Call<CarCreate> call = apiInterface.carCreate(token, new CarCreate.Request(car.getMileage(), car.getYear()));
         call.enqueue(new Callback<CarCreate>() {
             @Override
             public void onResponse(Call<CarCreate> call, Response<CarCreate> response) {
                 Log.d("API", token);
                 if (response.code() == 200) {
-                    CarCreate resource = response.body();
-//                    callback.onActionSuccess();
-                } else {
-//                    callback.onActionFailure();
+                    CarCreate data = response.body();
                 }
             }
 
             @Override
             public void onFailure(Call<CarCreate> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+    public static void getAllCar(NetworkCallback callback) {
+        Log.d("API", "get all cars");
+        Call<List<CarGetAll.Response>> call = apiInterface.carGetAll(token);
+        call.enqueue(new Callback<List<CarGetAll.Response>>() {
+            @Override
+            public void onResponse(Call<List<CarGetAll.Response>> call, Response<List<CarGetAll.Response>> response) {
+                if (response.code() == 200) {
+                    List<CarGetAll.Response> data = response.body();
+                    List<Car> cars = new ArrayList<Car>();
+                    for (CarGetAll.Response d : data) {
+                        Car car = new Car(d);
+                        cars.add(car);
+                    }
+                    callback.onActionSuccess(cars);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CarGetAll.Response>> call, Throwable t) {
                 call.cancel();
             }
         });

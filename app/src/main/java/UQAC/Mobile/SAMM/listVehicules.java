@@ -40,6 +40,7 @@ public class listVehicules extends AppCompatActivity{
                 Intent addVehiculeIntent = new Intent(listVehicules.this, addVehicule.class);
                 //addNoteIntent.putExtra("title", "Titre de la note");
                 startActivity(addVehiculeIntent);
+//                NetworkManager.getAllCar(new NetworkCallback());
             }
         });
 

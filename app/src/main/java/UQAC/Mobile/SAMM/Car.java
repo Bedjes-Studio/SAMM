@@ -2,7 +2,10 @@ package UQAC.Mobile.SAMM;
 
 import java.util.List;
 
+import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
+
 public class Car {
+    private String id;
     private History history;
     private List<User> owners;
     private int mileage;
@@ -26,16 +29,51 @@ public class Car {
         this.model = model;
         this.name = name;
     }
-    public Car(){}
+
+    public Car(CarGetAll.Response response) {
+        this.id = response.id;
+        this.mileage = response.mileage;
+        this.year = response.year;
+        // this.owner = get owners from id ?
+        // this.guests = get guests from id ?
+        // this.specs = not used anymore
+    }
+
+    public Car() {
+    }
 
     //Getters
-    public History getHistory() { return history; }
-    public List<User> getOwners() { return owners; }
-    public int getMileage() { return mileage; }
-    public int getYear() { return year; }
-    public String getType() { return type; }
-    public String getBrand() { return brand; }
-    public String getModel() { return model; }
+    public String getId() {
+        return id;
+    }
+
+    public History getHistory() {
+        return history;
+    }
+
+    public List<User> getOwners() {
+        return owners;
+    }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
 
     //
 }
