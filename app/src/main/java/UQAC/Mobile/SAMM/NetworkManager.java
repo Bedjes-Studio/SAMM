@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.sql.Ref;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,6 +19,7 @@ import UQAC.Mobile.SAMM.APIPojo.CarCreate;
 import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Login;
 import UQAC.Mobile.SAMM.APIPojo.RefuelCreate;
+import UQAC.Mobile.SAMM.APIPojo.RefuelGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Signup;
 import UQAC.Mobile.SAMM.APIPojo.Test;
 import okhttp3.OkHttpClient;
@@ -152,10 +154,9 @@ public class NetworkManager {
             public void onResponse(Call<List<CarGetAll.Response>> call, Response<List<CarGetAll.Response>> response) {
                 if (response.code() == 200) {
                     List<CarGetAll.Response> data = response.body();
-                    List<Car> cars = new ArrayList<Car>();
-                    for (CarGetAll.Response d : data) {
-                        Car car = new Car(d);
-                        cars.add(car);
+                    Car[] cars = new Car[data.size()];
+                    for (int i = 0; i < data.size(); ++i) {
+                        cars[i] = new Car(data.get(i));
                     }
                     callback.onActionSuccess(cars);
                 }
@@ -180,6 +181,29 @@ public class NetworkManager {
             }
             @Override
             public void onFailure(Call<RefuelCreate> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+    public static void getAllRefuel(NetworkCallback callback) {
+        Log.d("API", "get all refuel");
+        Call<List<RefuelGetAll.Response>> call = apiInterface.refuelGetAll(token);
+        call.enqueue(new Callback<List<RefuelGetAll.Response>>() {
+            @Override
+            public void onResponse(Call<List<RefuelGetAll.Response>> call, Response<List<RefuelGetAll.Response>> response) {
+                if (response.code() == 200) {
+                    List<RefuelGetAll.Response> data = response.body();
+                    Refuel[] refuels = new Refuel[data.size()];
+                    for (int i =0; i < data.size(); ++i) {
+                        refuels[i] = new Refuel(data.get(i));
+                    }
+                    callback.onActionSuccess(refuels);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RefuelGetAll.Response>> call, Throwable t) {
                 call.cancel();
             }
         });

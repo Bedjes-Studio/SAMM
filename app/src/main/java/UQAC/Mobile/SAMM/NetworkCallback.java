@@ -4,7 +4,8 @@ import java.util.List;
 
 public class NetworkCallback {
     public void onActionSuccess(){};
-    public void onActionSuccess(List<Car> cars){};
+    public void onActionSuccess(Car[] cars){};
+    public void onActionSuccess(Refuel[] refuels){};
 
 
     public void onActionFailure(){};

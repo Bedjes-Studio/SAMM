@@ -5,6 +5,8 @@ import android.widget.Toast;
 
 import java.util.Date;
 
+import UQAC.Mobile.SAMM.APIPojo.RefuelGetAll;
+
 public class Refuel extends Event {
 
     private String fuelType;
@@ -19,6 +21,15 @@ public class Refuel extends Event {
         this.litter = litter;
         this.date = date;
         this.mileage = mileage;
+    }
+
+    public Refuel(RefuelGetAll.Response response){
+        this.fuelType = response.fuelType;
+        this.litterPrice = response.litterPrice;
+        this.totalCost = response.totalCost;
+        this.litter = response.litter;
+//        this.date = response.date;
+        this.mileage = response.mileage;
     }
 
     public boolean save(Refuel refuel){

@@ -42,8 +42,7 @@ public class listVehicules extends AppCompatActivity{
                 //addNoteIntent.putExtra("title", "Titre de la note");
                 startActivity(addVehiculeIntent);
 //                Refuel refuel = new Refuel("Essence", 1.6f, 86.64f, 54.15f, Calendar.getInstance().getTime(), 180000);
-//
-//                NetworkManager.createRefuel(refuel, "639e9cbcee49d69a8c280e88");
+//                NetworkManager.getAllRefuel(new NetworkCallback());
             }
         });
 

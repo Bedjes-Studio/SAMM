@@ -6,6 +6,7 @@ import UQAC.Mobile.SAMM.APIPojo.CarCreate;
 import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Login;
 import UQAC.Mobile.SAMM.APIPojo.RefuelCreate;
+import UQAC.Mobile.SAMM.APIPojo.RefuelGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Signup;
 import UQAC.Mobile.SAMM.APIPojo.Test;
 import retrofit2.Call;
@@ -35,6 +36,9 @@ interface APIInterface {
 
         @POST("/api/event/refuel/create")
         Call<RefuelCreate> refuelCreate(@Header("Authorization") String token, @Body RefuelCreate.Request request);
+
+        @GET("/api/event/refuel/getAll")
+        Call<List<RefuelGetAll.Response>> refuelGetAll(@Header("Authorization") String token);
 
 //        @POST("/api/users?")
 //        Call<UserList> doCreateUserWithField(@Field("name") String name, @Field("job") String job);
