@@ -76,41 +76,16 @@ public class NetworkManager {
         });
     }
 
-    public static void login(String email, String password, Context context) {
+    public static void login(String email, String password, NetworkCallback callback) {
         Log.d("API", "login");
-        Call<Login.Response> call = apiInterface.login(new Login.Request(email,password));
+        Call<Login.Response> call = apiInterface.login(new Login.Request(email, password));
 
         call.enqueue(new Callback<Login.Response>() {
             @Override
             public void onResponse(Call<Login.Response> call, Response<Login.Response> response) {
-                Log.d("API", response.code() + "");
                 if (response.code() == 200) {
-                    Toast.makeText(context, "Connection reussie", Toast.LENGTH_SHORT).show();
-                    //createContent();
-                    Intent loginIntent = new Intent(context, listVehicules.class);
-                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(loginIntent);
-                } else {
-                    Toast.makeText(context, "Connection refusée", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Login.Response> call, Throwable t) {
-                call.cancel();
-            }
-        });
-    }
-
-    public static void login2(String email, String password, NetworkCallback callback) {
-        Log.d("API", "login");
-        Call<Login.Response> call = apiInterface.login(new Login.Request(email,password));
-
-        call.enqueue(new Callback<Login.Response>() {
-            @Override
-            public void onResponse(Call<Login.Response> call, Response<Login.Response> response) {
-                Log.d("API", response.code() + "");
-                if (response.code() == 200) {
+                    Login.Response data = response.body();
+                    token = "Bearer " + data.token;
                     callback.onActionSuccess();
                 } else {
                     callback.onActionFailure();
@@ -124,16 +99,21 @@ public class NetworkManager {
         });
     }
 
-    public static void createCar() {
+    public static void createCar(Car car) {
         Log.d("API", "create car");
-        Call<CarCreate> call = apiInterface.carCreate(1000, 0);
+        int a = 1;
+        int b = 1;
+        Call<CarCreate> call = apiInterface.carCreate(token, new CarCreate.Request(car.getMileage(), car.getYear()));
         call.enqueue(new Callback<CarCreate>() {
             @Override
             public void onResponse(Call<CarCreate> call, Response<CarCreate> response) {
-
-                Log.d("API", response.code() + "");
-                CarCreate resource = response.body();
-                String text = resource.message;
+                Log.d("API", token);
+                if (response.code() == 200) {
+                    CarCreate resource = response.body();
+//                    callback.onActionSuccess();
+                } else {
+//                    callback.onActionFailure();
+                }
             }
 
             @Override
@@ -164,6 +144,7 @@ public class NetworkManager {
         Car car1 = new Car(history,
                 null,
                 180000,
+                2000,
                 "Essence",
                 23,
                 "voiture",
@@ -174,6 +155,7 @@ public class NetworkManager {
         Car car2 = new Car(history1,
                 null,
                 150000,
+                2000,
                 "Essence",
                 23,
                 "voiture",

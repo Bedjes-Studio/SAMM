@@ -3,8 +3,6 @@ package UQAC.Mobile.SAMM.APIPojo;
 import com.google.gson.annotations.SerializedName;
 
 public class CarCreate {
-    @SerializedName("message")
-    public String message;
 
     public static class Request {
         @SerializedName("mileage")

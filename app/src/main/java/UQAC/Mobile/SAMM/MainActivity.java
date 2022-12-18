@@ -35,47 +35,36 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        loginButton.setOnClickListener(new View.OnClickListener(){
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
 
-//                NetworkManager.login(username.getText().toString(), password.getText().toString(), getApplicationContext());
-                NetworkManager.login2(username.getText().toString(), password.getText().toString(), new NetworkCallback() {
+                // création de la callback
+                NetworkCallback callback = new NetworkCallback() {
                     @Override
-                    public void onActionSuccess(){
+                    public void onActionSuccess() {
                         Toast.makeText(MainActivity.this, "Connection reussie", Toast.LENGTH_SHORT).show();
                         networkManager.createContent();
                         Intent loginIntent = new Intent(MainActivity.this, listVehicules.class);
                         startActivity(loginIntent);
-                    };
+                    }
 
                     @Override
-                    public void onActionFailure(){
+                    public void onActionFailure() {
                         Toast.makeText(MainActivity.this, "Connection ratee", Toast.LENGTH_SHORT).show();
-                    };
-                } );
+                    }
+                };
 
-
-
-/*
-                if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
-                    Toast.makeText(MainActivity.this, "Connection reussie", Toast.LENGTH_SHORT).show();
-                    networkManager.createContent();
-                    Intent loginIntent = new Intent(MainActivity.this, listVehicules.class);
-                    //addNoteIntent.putExtra("title", "Titre de la note");
-                    startActivity(loginIntent);
-                }
-                else{
-                    Toast.makeText(MainActivity.this, "Connection ratee", Toast.LENGTH_SHORT).show();
-                }*/
+                // appel networkmanager avec callback
+                NetworkManager.login(username.getText().toString(), password.getText().toString(), callback);
             }
         });
     }
 
-    public void setSignIn(View v){
+    public void setSignIn(View v) {
         Intent signInIntent = new Intent(MainActivity.this, SignIn.class);
         //addNoteIntent.putExtra("title", "Titre de la note");
         startActivity(signInIntent);
-        
+
     }
 }

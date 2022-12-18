@@ -8,6 +8,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 interface APIInterface {
@@ -18,9 +19,9 @@ interface APIInterface {
         @POST("/api/user/login")
         Call<Login.Response> login(@Body Login.Request request);
 
-        @FormUrlEncoded
         @POST("/api/car/create")
-        Call<CarCreate> carCreate(@Field("mileage") int mileage, @Field("year") int year);
+        Call<CarCreate> carCreate(@Header("Authorization") String token, @Body CarCreate.Request request);
+
 
 //        @POST("/api/users?")
 //        Call<UserList> doCreateUserWithField(@Field("name") String name, @Field("job") String job);
