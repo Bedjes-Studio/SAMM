@@ -17,6 +17,7 @@ import java.util.List;
 import UQAC.Mobile.SAMM.APIPojo.CarCreate;
 import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Login;
+import UQAC.Mobile.SAMM.APIPojo.Signup;
 import UQAC.Mobile.SAMM.APIPojo.Test;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -74,6 +75,27 @@ public class NetworkManager {
 
             @Override
             public void onFailure(Call<Test.Test2> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+    public static void signup(String name, String email, String password, NetworkCallback callback) {
+        Log.d("API", "signup");
+        Call<Signup.Response> call = apiInterface.signup(new Signup.Request(name, email, password));
+
+        call.enqueue(new Callback<Signup.Response>() {
+            @Override
+            public void onResponse(Call<Signup.Response> call, Response<Signup.Response> response) {
+                if (response.code() == 201) {
+                    callback.onActionSuccess();
+                } else {
+                    callback.onActionFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Signup.Response> call, Throwable t) {
                 call.cancel();
             }
         });

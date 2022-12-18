@@ -5,6 +5,7 @@ import java.util.List;
 import UQAC.Mobile.SAMM.APIPojo.CarCreate;
 import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Login;
+import UQAC.Mobile.SAMM.APIPojo.Signup;
 import UQAC.Mobile.SAMM.APIPojo.Test;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,6 +22,9 @@ interface APIInterface {
 
         @POST("/api/user/login")
         Call<Login.Response> login(@Body Login.Request request);
+
+        @POST("/api/user/signup")
+        Call<Signup.Response> signup(@Body Signup.Request request);
 
         @POST("/api/car/create")
         Call<CarCreate> carCreate(@Header("Authorization") String token, @Body CarCreate.Request request);
