@@ -18,6 +18,7 @@ public class Cost extends Event {
     }
 
     public Cost(CostGetAll.Response response) {
+        this.id = response.id;
         this.value = response.value;
         this.reason = response.reason;
         this.paymentMethod = response.paymentMethod;

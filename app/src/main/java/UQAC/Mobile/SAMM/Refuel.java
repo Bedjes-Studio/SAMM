@@ -24,6 +24,7 @@ public class Refuel extends Event {
     }
 
     public Refuel(RefuelGetAll.Response response){
+        this.id = response.id;
         this.fuelType = response.fuelType;
         this.litterPrice = response.litterPrice;
         this.totalCost = response.totalCost;

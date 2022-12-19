@@ -18,6 +18,7 @@ public class Earning extends Event {
     }
 
     public Earning(EarningGetAll.Response response) {
+        this.id = response.id;
         this.value = response.value;
         this.reason = response.reason;
 //        this.date = response.date;

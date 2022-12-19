@@ -6,6 +6,7 @@ public class Event {
     private User creator;
     Date date;
     int mileage;
+    String id;
 
     public User getCreator() {
         return creator;
@@ -21,6 +22,10 @@ public class Event {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getMileage() {

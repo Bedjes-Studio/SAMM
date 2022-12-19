@@ -132,7 +132,7 @@ public class EventActivity extends AppCompatActivity {
 //        Earning earning = new Earning("Covoiturage", 70, Calendar.getInstance().getTime(), 180000);
 //        Cost cost = new Cost(70, "Covoiturage", "CB", Calendar.getInstance().getTime(), 180000);
 //
-        //        NetworkManager.getAllEarning( "aaa", new NetworkCallback());
+              NetworkManager.deleteCar( "639fd9508f3d7679bf4f9396", new NetworkCallback());
     }
 
     @Override
