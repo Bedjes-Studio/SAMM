@@ -32,6 +32,7 @@ public class EventActivity extends AppCompatActivity {
     FloatingActionButton addEarningButton;
     FloatingActionButton addCostButton;
     FloatingActionButton backButton;
+    FloatingActionButton statButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class EventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event);
 
         backButton = findViewById(R.id.backButtonCreationV);
+        statButton = findViewById(R.id.buttonStats);
 
         Intent intent = getIntent();
         String id = intent.getExtras().getString("id");
@@ -121,6 +123,14 @@ public class EventActivity extends AppCompatActivity {
                         Intent returnMenuIntent = new Intent(EventActivity.this, listVehicules.class);
                         returnMenuIntent.putExtra("id", id);
                         startActivity(returnMenuIntent);
+                    }
+                });
+
+                statButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent statsIntent = new Intent(EventActivity.this, Statistiques.class);
+                        startActivity(statsIntent);
                     }
                 });
 

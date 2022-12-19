@@ -30,6 +30,7 @@
             app:srcCompat="?attr/actionModeCloseDrawable" />
 
         <TextView
+            android:id="@+id/textView7"
             android:layout_width="189dp"
             android:layout_height="34dp"
             android:text="Evénements"
@@ -40,6 +41,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonStats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/purple"
+            android:clickable="true"
+            android:src="@android:drawable/ic_dialog_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <!--        <ImageButton-->
 <!--            android:id="@+id/imageButton"-->
