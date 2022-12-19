@@ -12,9 +12,6 @@
         android:layout_height="75dp"
         android:background="@color/purple"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -56,10 +53,11 @@
         android:layout_width="409dp"
         android:layout_height="match_parent"
         android:layout_marginTop="75dp"
-        android:orientation="vertical"
         android:background="@color/white"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.0">
@@ -69,9 +67,9 @@
             android:id="@+id/spinner"
             android:layout_width="130dp"
             android:layout_height="40dp"
-            android:layout_marginStart="56dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageCar"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -81,8 +79,8 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Nom"
-            android:textColor="@color/dark_blue"
             android:inputType="textPersonName"
+            android:textColor="@color/dark_blue"
             app:layout_constraintStart_toStartOf="@+id/spinner"
             app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
@@ -93,8 +91,8 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Marque"
-            android:textColor="@color/dark_blue"
             android:inputType="textPersonName"
+            android:textColor="@color/dark_blue"
             app:layout_constraintStart_toStartOf="@+id/nameV"
             app:layout_constraintTop_toBottomOf="@+id/nameV" />
 
@@ -105,8 +103,8 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Model"
-            android:textColor="@color/dark_blue"
             android:inputType="textPersonName"
+            android:textColor="@color/dark_blue"
             app:layout_constraintStart_toStartOf="@+id/brandV"
             app:layout_constraintTop_toBottomOf="@+id/brandV" />
 
@@ -117,8 +115,8 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="N° d'immatriculation"
-            android:textColor="@color/dark_blue"
             android:inputType="text"
+            android:textColor="@color/dark_blue"
             app:layout_constraintStart_toStartOf="@+id/modelV"
             app:layout_constraintTop_toBottomOf="@+id/modelV" />
 
@@ -141,8 +139,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Type de carburant"
-            android:textColor="@color/dark_blue"
             android:inputType="text"
+            android:textColor="@color/dark_blue"
             app:layout_constraintStart_toStartOf="@+id/immatriculation"
             app:layout_constraintTop_toBottomOf="@+id/immatriculation" />
 
@@ -151,8 +149,8 @@
             android:layout_width="219dp"
             android:layout_height="50dp"
             android:layout_marginBottom="28dp"
-            android:text="Créer"
             android:backgroundTint="@color/purple"
+            android:text="Créer"
             android:textColor="@color/dark_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -176,8 +174,8 @@
             android:id="@+id/imageCar"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="12dp"
-            app:layout_constraintEnd_toStartOf="@+id/spinner"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/spinner"
             app:srcCompat="@drawable/vehicule" />
 
@@ -185,16 +183,14 @@
             android:id="@+id/imageView3"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:layout_constraintEnd_toEndOf="@+id/imageCar"
-            app:layout_constraintStart_toStartOf="@+id/imageCar"
-            app:layout_constraintTop_toTopOf="@+id/capacityV"
-            app:srcCompat="@drawable/fuel" />
+            app:layout_constraintStart_toStartOf="@+id/fuel_type"
+            app:srcCompat="@drawable/fuel"
+            tools:layout_editor_absoluteY="332dp" />
 
         <ImageView
             android:id="@+id/fuel_type"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:layout_constraintEnd_toEndOf="@+id/imageCar"
             app:layout_constraintStart_toStartOf="@+id/imageCar"
             app:layout_constraintTop_toTopOf="@+id/carburant"
             app:srcCompat="@drawable/type_fuel" />
@@ -203,56 +199,55 @@
             android:id="@+id/image_mileage"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView3"
             app:layout_constraintStart_toStartOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="@+id/text_view_mileage"
             app:srcCompat="@drawable/mileage" />
 
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:id="@+id/linearLayout"-->
-<!--            android:layout_width="170dp"-->
-<!--            android:layout_height="75dp"-->
-<!--            android:background="@color/dark_blue"-->
-<!--            android:orientation="horizontal"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.0"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent">-->
+        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--            android:id="@+id/linearLayout"-->
+        <!--            android:layout_width="170dp"-->
+        <!--            android:layout_height="75dp"-->
+        <!--            android:background="@color/dark_blue"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.0"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent">-->
 
-<!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/backButtonCreationV"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="10dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:backgroundTint="@color/yellow"-->
-<!--                android:clickable="true"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:srcCompat="?attr/actionModeCloseDrawable" />-->
+        <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--                android:id="@+id/backButtonCreationV"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="10dp"-->
+        <!--                android:layout_marginTop="10dp"-->
+        <!--                android:backgroundTint="@color/yellow"-->
+        <!--                android:clickable="true"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                app:srcCompat="?attr/actionModeCloseDrawable" />-->
 
-<!--            <TextView-->
-<!--                android:layout_width="189dp"-->
-<!--                android:layout_height="34dp"-->
-<!--                android:text="Nouveau véhicule"-->
-<!--                android:textColor="@color/yellow"-->
-<!--                android:textSize="24dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/imageButton"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+        <!--            <TextView-->
+        <!--                android:layout_width="189dp"-->
+        <!--                android:layout_height="34dp"-->
+        <!--                android:text="Nouveau véhicule"-->
+        <!--                android:textColor="@color/yellow"-->
+        <!--                android:textSize="24dp"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintEnd_toEndOf="@+id/imageButton"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/imageButton"-->
-<!--                android:layout_width="68dp"-->
-<!--                android:layout_height="56dp"-->
-<!--                android:backgroundTint="@color/dark_blue"-->
-<!--                android:src="@drawable/gear_option"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+        <!--            <ImageButton-->
+        <!--                android:id="@+id/imageButton"-->
+        <!--                android:layout_width="68dp"-->
+        <!--                android:layout_height="56dp"-->
+        <!--                android:backgroundTint="@color/dark_blue"-->
+        <!--                android:src="@drawable/gear_option"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
