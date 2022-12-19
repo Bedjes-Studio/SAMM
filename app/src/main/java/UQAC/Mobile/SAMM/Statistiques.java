@@ -35,7 +35,6 @@ public class Statistiques extends AppCompatActivity {
 
         TextView totalFuelValue = findViewById(R.id.totalFuelValue);
         TextView totalFuelDayValue = findViewById(R.id.totalFuelDayValue);
-        TextView totalConsoValue = findViewById(R.id.totalConsoValue);
 
         TextView totalMaintValue = findViewById(R.id.totalMaintValue);
         TextView totalMaintDayValue = findViewById(R.id.totalMaintDayValue);
@@ -48,6 +47,7 @@ public class Statistiques extends AppCompatActivity {
             @Override
             public void onActionSuccess(Refuel[] refuels) {
                 totalFuelValue.setText(String.valueOf(totalCostRefuel(refuels)));
+                totalFuelDayValue.setText(String.valueOf(totalKmRefuel(refuels, Float.valueOf(totalFuelValue.getText().toString()))));
             }
         };
         NetworkManager.getAllRefuel(id, callbackFuel);
@@ -65,7 +65,7 @@ public class Statistiques extends AppCompatActivity {
         NetworkCallback callbackCost = new NetworkCallback() {
             @Override
             public void onActionSuccess(Cost[] costs) {
-                totalEarnValue.setText(String.valueOf(totalCostCosts(costs)));
+                totalMaintValue.setText(String.valueOf(totalCostCosts(costs)));
             }
         };
         NetworkManager.getAllCost(id, callbackCost);
@@ -90,12 +90,26 @@ public class Statistiques extends AppCompatActivity {
         return total;
     }
 
-    public float totalKmRefuel(Refuel[] refuels) {
+    public float totalKmRefuel(Refuel[] refuels, float cost) {
         // get mini kilom
         // get max kilom
+        float min = refuels[0].getMileage();
+        float max = refuels[0].getMileage();
+        for (Refuel refuel : refuels) {
+            if(refuel.getMileage() < min){
+                min = refuel.getMileage();
+            }
+            if(refuel.getMileage() > max){
+                max = refuel.getMileage();
+            }
+        }
         // diff max -min
         // total cost / diff
-        return 0;
+        if(max == min){
+            return cost;
+        }else{
+            return cost/(max-min);
+        }
     }
 
     public float totalCostCosts(Cost[] costs) {
@@ -105,6 +119,23 @@ public class Statistiques extends AppCompatActivity {
         }
         return total;
     }
+    public float totalKmCosts(Cost[] costs, float cost) {
+        // get mini kilom
+        float min = costs[0].getMileage();
+        float max = costs[0].getMileage();
+        for (Cost costV : costs) {
+            if(costV.getMileage() < min){
+                min = costV.getMileage();
+            }
+            if(costV.getMileage() > max){
+                max = costV.getMileage();
+            }
+        }
+        // get max kilom
+        // diff max -min
+        // total cost / diff
+        return cost/(max-min);
+    }
 
 
     public float totalCostEarning(Earning[] earns) {
@@ -113,5 +144,22 @@ public class Statistiques extends AppCompatActivity {
             total += earn.getValue();
         }
         return total;
+    }
+    public float totalKmEarning(Earning[] earns, float cost) {
+        // get mini kilom
+        float min = earns[0].getMileage();
+        float max = earns[0].getMileage();
+        for (Earning earn : earns) {
+            if(earn.getMileage() < min){
+                min = earn.getMileage();
+            }
+            if(earn.getMileage() > max){
+                max = earn.getMileage();
+            }
+        }
+        // get max kilom
+        // diff max -min
+        // total cost / diff
+        return cost/(max-min);
     }
 }

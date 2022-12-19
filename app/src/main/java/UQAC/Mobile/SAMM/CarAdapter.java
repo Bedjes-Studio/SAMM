@@ -2,8 +2,6 @@ package UQAC.Mobile.SAMM;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +11,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
     Context context;
     Car[] carArrayList;
 
     public static OnItemClickListener listener;
+    public static OnItemLongClickListener listenerLong;
 
     public CarAdapter(Context context, Car[] carArrayList){
         this.context = context;
@@ -60,6 +54,24 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
                                 listener.onItemClick(carArrayList[position].getId());
                             }
                         });
+
+        (holder).linearLayout.setOnLongClickListener(
+                new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view)
+                    {
+                        Toast.makeText(
+                                        view.getContext(),
+                                        carArrayList[position].getId(),
+                                        Toast.LENGTH_SHORT)
+                                .show();
+                        //faudra voir pour passer en parametre la voiture sur laquelle on click pour avoir
+                        // son historique pour l'instant c'est du bullshit
+                        // j'ai fais des tests avec putExtra ce sera surement l'id de la voiture qu'on passera
+                        listenerLong.onItemLongClick(carArrayList[position].getId());
+                        return false;
+                    }
+                });
     }
 
     @Override
@@ -70,9 +82,15 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.listener = onItemClickListener;
     }
-
     public interface OnItemClickListener {
         void onItemClick(String id);
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener){
+        this.listenerLong = onItemLongClickListener;
+    }
+    public interface OnItemLongClickListener {
+        void onItemLongClick(String id);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder    {
