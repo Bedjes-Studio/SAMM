@@ -21,11 +21,11 @@ import java.util.List;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
     Context context;
-    List<Car> carArrayList;
+    Car[] carArrayList;
 
     public static OnItemClickListener listener;
 
-    public CarAdapter(Context context, List<Car> carArrayList){
+    public CarAdapter(Context context, Car[] carArrayList){
         this.context = context;
         this.carArrayList = carArrayList;
     }
@@ -40,9 +40,9 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull CarAdapter.MyViewHolder holder, int position) {
-        holder.brand.setText(carArrayList.get(position).getBrand());
-        holder.model.setText(carArrayList.get(position).getModel());
-        holder.mileage.setText(String.valueOf(carArrayList.get(position).getMileage()));
+        //holder.brand.setText(carArrayList[position].getBrand());
+        //holder.model.setText(carArrayList[position].getModel());
+        holder.mileage.setText(String.valueOf(carArrayList[position].getMileage()));
 
         (holder).linearLayout.setOnClickListener(
                         new View.OnClickListener() {
@@ -64,7 +64,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
 
     @Override
     public int getItemCount() {
-        return carArrayList.size();
+        return carArrayList.length;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
