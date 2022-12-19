@@ -19,6 +19,7 @@ import UQAC.Mobile.SAMM.APIPojo.CarCreate;
 import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.CostCreate;
 import UQAC.Mobile.SAMM.APIPojo.CostGetAll;
+import UQAC.Mobile.SAMM.APIPojo.DeleteSelector;
 import UQAC.Mobile.SAMM.APIPojo.EarningCreate;
 import UQAC.Mobile.SAMM.APIPojo.EarningGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Login;
@@ -173,6 +174,26 @@ public class NetworkManager {
         });
     }
 
+    public static void deleteCar(String carId, NetworkCallback callback) {
+        Log.d("API", "create car");
+        Call<DeleteSelector> call = apiInterface.carDelete(token, new DeleteSelector.Request(carId));
+        call.enqueue(new Callback<DeleteSelector>() {
+            @Override
+            public void onResponse(Call<DeleteSelector> call, Response<DeleteSelector> response) {
+                Log.d("API", token);
+                if (response.code() == 201) {
+                    DeleteSelector data = response.body();
+                    callback.onActionSuccess();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeleteSelector> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
     public static void createRefuel(Refuel refuel, String carId) {
         Log.d("API", "create refuel");
         Call<RefuelCreate> call = apiInterface.refuelCreate(token, new RefuelCreate.Request(refuel, carId));
@@ -208,6 +229,26 @@ public class NetworkManager {
 
             @Override
             public void onFailure(Call<List<RefuelGetAll.Response>> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+    public static void deleteFuel(String carId, NetworkCallback callback) {
+        Log.d("API", "delete fuel");
+        Call<DeleteSelector> call = apiInterface.refuelDelete(token, new DeleteSelector.Request(carId));
+        call.enqueue(new Callback<DeleteSelector>() {
+            @Override
+            public void onResponse(Call<DeleteSelector> call, Response<DeleteSelector> response) {
+                Log.d("API", token);
+                if (response.code() == 201) {
+                    DeleteSelector data = response.body();
+                    callback.onActionSuccess();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeleteSelector> call, Throwable t) {
                 call.cancel();
             }
         });
@@ -254,6 +295,26 @@ public class NetworkManager {
         });
     }
 
+    public static void deleteCost(String carId, NetworkCallback callback) {
+        Log.d("API", "delete cost");
+        Call<DeleteSelector> call = apiInterface.costDelete(token, new DeleteSelector.Request(carId));
+        call.enqueue(new Callback<DeleteSelector>() {
+            @Override
+            public void onResponse(Call<DeleteSelector> call, Response<DeleteSelector> response) {
+                Log.d("API", token);
+                if (response.code() == 201) {
+                    DeleteSelector data = response.body();
+                    callback.onActionSuccess();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeleteSelector> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
 
     public static void createEearning(Earning earning, String carId) {
         Log.d("API", "create earning");
@@ -294,6 +355,27 @@ public class NetworkManager {
             }
         });
     }
+
+    public static void deleteEarning(String carId, NetworkCallback callback) {
+        Log.d("API", "delete earning");
+        Call<DeleteSelector> call = apiInterface.earningDelete(token, new DeleteSelector.Request(carId));
+        call.enqueue(new Callback<DeleteSelector>() {
+            @Override
+            public void onResponse(Call<DeleteSelector> call, Response<DeleteSelector> response) {
+                Log.d("API", token);
+                if (response.code() == 201) {
+                    DeleteSelector data = response.body();
+                    callback.onActionSuccess();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeleteSelector> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
 
     // TODO : remove faussaires
     public void createContent() {

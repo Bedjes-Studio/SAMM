@@ -6,6 +6,7 @@ import UQAC.Mobile.SAMM.APIPojo.CarCreate;
 import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.CostCreate;
 import UQAC.Mobile.SAMM.APIPojo.CostGetAll;
+import UQAC.Mobile.SAMM.APIPojo.DeleteSelector;
 import UQAC.Mobile.SAMM.APIPojo.EarningCreate;
 import UQAC.Mobile.SAMM.APIPojo.EarningGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Login;
@@ -38,11 +39,17 @@ interface APIInterface {
         @GET("/api/car/getAll")
         Call<List<CarGetAll.Response>> carGetAll(@Header("Authorization") String token);
 
+        @POST("/api/car/delete")
+        Call<DeleteSelector> carDelete(@Header("Authorization") String token, @Body DeleteSelector.Request request);
+
         @POST("/api/event/refuel/create")
         Call<RefuelCreate> refuelCreate(@Header("Authorization") String token, @Body RefuelCreate.Request request);
 
         @POST("/api/event/refuel/getAll")
         Call<List<RefuelGetAll.Response>> refuelGetAll(@Header("Authorization") String token, @Body RefuelGetAll.Request request);
+
+        @POST("/api/refuel/delete")
+        Call<DeleteSelector> refuelDelete(@Header("Authorization") String token, @Body DeleteSelector.Request request);
 
         @POST("/api/event/cost/create")
         Call<CostCreate> costCreate(@Header("Authorization") String token, @Body CostCreate.Request request);
@@ -50,11 +57,18 @@ interface APIInterface {
         @POST("/api/event/cost/getAll")
         Call<List<CostGetAll.Response>> costGetAll(@Header("Authorization") String token, @Body CostGetAll.Request request);
 
+        @POST("/api/cost/delete")
+        Call<DeleteSelector> costDelete(@Header("Authorization") String token, @Body DeleteSelector.Request request);
+
         @POST("/api/event/earning/create")
         Call<EarningCreate> earningCreate(@Header("Authorization") String token, @Body EarningCreate.Request request);
 
         @POST("/api/event/earning/getAll")
         Call<List<EarningGetAll.Response>> earningGetAll(@Header("Authorization") String token, @Body EarningGetAll.Request request);
+
+        @POST("/api/earning/delete")
+        Call<DeleteSelector> earningDelete(@Header("Authorization") String token, @Body DeleteSelector.Request request);
+
 
 //        @POST("/api/users?")
 //        Call<UserList> doCreateUserWithField(@Field("name") String name, @Field("job") String job);
