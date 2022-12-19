@@ -1,21 +1,17 @@
 package UQAC.Mobile.SAMM;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,11 +20,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class EarningActivity extends AppCompatActivity {
+public class CostActivity extends AppCompatActivity {
 
     final Calendar myCalendar = Calendar.getInstance();
 
-    FloatingActionButton back;
     FloatingActionButton save;
 
     EditText value;
@@ -39,15 +34,11 @@ public class EarningActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_earning);
+        setContentView(R.layout.activity_cost);
 
         value = findViewById(R.id.valueText);
         reason = findViewById(R.id.reasonText);
         mileage = findViewById(R.id.mileageText);
-
-        Intent intent = getIntent();
-        String id = intent.getExtras().getString("id");
-        Log.d("ALEXIA", id);
 
         NetworkManager networkManager = new NetworkManager();
 
@@ -70,7 +61,7 @@ public class EarningActivity extends AppCompatActivity {
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(EarningActivity.this,date,
+                new DatePickerDialog(CostActivity.this,date,
                         myCalendar.get(Calendar.YEAR),
                         myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -79,8 +70,6 @@ public class EarningActivity extends AppCompatActivity {
 
         // --Save
         save = findViewById(R.id.button_save_event);
-
-        back = findViewById(R.id.backButtonCreationV);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,23 +87,14 @@ public class EarningActivity extends AppCompatActivity {
                     //Creer nouveau véhicule ici pour la bdd
                     //Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
                     networkManager.events.add(earning);
-                    Intent returnMenuIntent = new Intent(EarningActivity.this, EventActivity.class);
+                    Intent returnMenuIntent = new Intent(CostActivity.this, EventActivity.class);
                     startActivity(returnMenuIntent);
                 }else{
-                    Toast.makeText(EarningActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CostActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
                 }
 
 //                Intent eventActivityIntent = new Intent(EarningActivity.this, EventActivity.class);
 //                startActivity(eventActivityIntent);
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent returnMenuIntent = new Intent(EarningActivity.this, EventActivity.class);
-                returnMenuIntent.putExtra("id", id);
-                startActivity(returnMenuIntent);
             }
         });
     }

@@ -1,9 +1,5 @@
 package UQAC.Mobile.SAMM;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +8,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,33 +24,60 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class EarningActivity extends AppCompatActivity {
+public class RepairActivity extends AppCompatActivity {
 
     final Calendar myCalendar = Calendar.getInstance();
+    String myFuelType;
+
+    NetworkManager networkManager = new NetworkManager();
 
     FloatingActionButton back;
-    FloatingActionButton save;
+    Button save;
 
-    EditText value;
-    EditText reason;
+    EditText litterPrice;
+    EditText totalCost;
+    EditText litter;
     EditText mileage;
     EditText dateText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_earning);
+        setContentView(R.layout.activity_repair);
 
-        value = findViewById(R.id.valueText);
-        reason = findViewById(R.id.reasonText);
+        litterPrice = findViewById(R.id.litterPriceText);
+        totalCost = findViewById(R.id.totalCostText);
+        litter = findViewById(R.id.litterText);
         mileage = findViewById(R.id.mileageText);
 
         Intent intent = getIntent();
         String id = intent.getExtras().getString("id");
         Log.d("ALEXIA", id);
 
-        NetworkManager networkManager = new NetworkManager();
+        //https://andrologiciels.wordpress.com/astuces-android/divers-2/quitter-une-application/liste-deroulante-spinner/
+        //-- Drop Down Fuel Type
+        final Spinner spinnerFuelType = (Spinner) findViewById(R.id.spinnerFuelType);
+        String[] lFuelType = {"Gasoline","Diesel Fuel", "Bio-diesel", "Ethanol"};
+        ArrayAdapter<String> dataAdapterF = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lFuelType);
+        dataAdapterF.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFuelType.setAdapter(dataAdapterF);
 
+        //-- Gestion du Click sur la liste Fuel type
+        spinnerFuelType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                myFuelType = String.valueOf(spinnerFuelType.getSelectedItem());
+//                Toast.makeText(RefuelActivity.this,
+//                        "OnClickListener : " +
+//                                "\nSpinner 1 : " + myFuelType,
+//                        Toast.LENGTH_SHORT).show();
+                       }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+
+        });
 
         //-- Date Picker
         dateText = (EditText) findViewById(R.id.dateText);
@@ -70,10 +97,7 @@ public class EarningActivity extends AppCompatActivity {
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(EarningActivity.this,date,
-                        myCalendar.get(Calendar.YEAR),
-                        myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(RepairActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -85,34 +109,32 @@ public class EarningActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Float valueValue = Float.valueOf(value.getText().toString());
-                String reasonValue = reason.getText().toString();
-                Integer mileageValue = Integer.valueOf(mileage.getText().toString());
 
-                Earning earning = new Earning( reasonValue, valueValue, myCalendar.getTime(),  mileageValue);
+                //Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
+                if( !litterPrice.getText().toString().isEmpty() && !totalCost.getText().toString().isEmpty() && !litter.getText().toString().isEmpty() && !mileage.getText().toString().isEmpty()){
+                    Float litterPriceValue = Float.valueOf(litterPrice.getText().toString());
+                    Float totalCostValue = Float.valueOf(totalCost.getText().toString());
+                    Float litterValue = Float.valueOf(litter.getText().toString());
+                    Integer mileageValue = Integer.valueOf(mileage.getText().toString());
 
-                earning.save(earning);
+                    Refuel refuel = new Refuel(myFuelType, litterPriceValue, totalCostValue, litterValue, myCalendar.getTime(),  mileageValue);
 
-//                Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
-                if(true){//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
                     //Creer nouveau véhicule ici pour la bdd
                     //Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
-                    networkManager.events.add(earning);
-                    Intent returnMenuIntent = new Intent(EarningActivity.this, EventActivity.class);
+                    networkManager.createRefuel(refuel, id);
+                    Intent returnMenuIntent = new Intent(RepairActivity.this, EventActivity.class);
+                    returnMenuIntent.putExtra("id", id);
                     startActivity(returnMenuIntent);
                 }else{
-                    Toast.makeText(EarningActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RepairActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
                 }
-
-//                Intent eventActivityIntent = new Intent(EarningActivity.this, EventActivity.class);
-//                startActivity(eventActivityIntent);
             }
         });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent returnMenuIntent = new Intent(EarningActivity.this, EventActivity.class);
+                Intent returnMenuIntent = new Intent(RepairActivity.this, EventActivity.class);
                 returnMenuIntent.putExtra("id", id);
                 startActivity(returnMenuIntent);
             }
@@ -134,4 +156,6 @@ public class EarningActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
