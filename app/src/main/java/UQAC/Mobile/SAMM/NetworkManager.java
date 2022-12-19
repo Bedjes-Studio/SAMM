@@ -186,27 +186,27 @@ public class NetworkManager {
         });
     }
 
-    public static void getAllRefuel(String id, NetworkCallback callback) {
+    public static void getAllRefuel(String carId, NetworkCallback callback) {
         Log.d("API", "get all refuel");
-//        Call<List<RefuelGetAll.Response>> call = apiInterface.refuelGetAll(token, new RefuelGetAll.Request(car));
-//        call.enqueue(new Callback<List<RefuelGetAll.Response>>() {
-//            @Override
-//            public void onResponse(Call<List<RefuelGetAll.Response>> call, Response<List<RefuelGetAll.Response>> response) {
-//                if (response.code() == 200) {
-//                    List<RefuelGetAll.Response> data = response.body();
-//                    Refuel[] refuels = new Refuel[data.size()];
-//                    for (int i =0; i < data.size(); ++i) {
-//                        refuels[i] = new Refuel(data.get(i));
-//                    }
-//                    callback.onActionSuccess(refuels);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<RefuelGetAll.Response>> call, Throwable t) {
-//                call.cancel();
-//            }
-//        });
+        Call<List<RefuelGetAll.Response>> call = apiInterface.refuelGetAll(token, new RefuelGetAll.Request(carId));
+        call.enqueue(new Callback<List<RefuelGetAll.Response>>() {
+            @Override
+            public void onResponse(Call<List<RefuelGetAll.Response>> call, Response<List<RefuelGetAll.Response>> response) {
+                if (response.code() == 200) {
+                    List<RefuelGetAll.Response> data = response.body();
+                    Refuel[] refuels = new Refuel[data.size()];
+                    for (int i =0; i < data.size(); ++i) {
+                        refuels[i] = new Refuel(data.get(i));
+                    }
+                    callback.onActionSuccess(refuels);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RefuelGetAll.Response>> call, Throwable t) {
+                call.cancel();
+            }
+        });
     }
 
     // TODO : remove faussaires

@@ -43,8 +43,8 @@ public class RefuelGetAll {
         @SerializedName("carId")
         public String carId;
 
-        public Request(Car car) {
-            this.carId = car.getId();
+        public Request(String id) {
+            this.carId = id;
         }
     }
 }
