@@ -74,7 +74,9 @@ public class EventActivity extends AppCompatActivity {
                 addRefuelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Log.d("ALEXIA", "Want to add refuel");
                         Intent eventActivityIntent = new Intent(EventActivity.this, RefuelActivity.class);
+                        eventActivityIntent.putExtra("id", id);
                         startActivity(eventActivityIntent);
                     }
                 });

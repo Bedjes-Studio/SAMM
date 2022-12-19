@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,18 +44,14 @@ public class RefuelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refuel);
 
-        setTitle("Refuel");
-
-        // calling the action bar
-        ActionBar actionBar = getSupportActionBar();
-        // showing the back button in action bar
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
         litterPrice = findViewById(R.id.litterPriceText);
         totalCost = findViewById(R.id.totalCostText);
         litter = findViewById(R.id.litterText);
         mileage = findViewById(R.id.mileageText);
+
+        Intent intent = getIntent();
+        String id = intent.getExtras().getString("id");
+        Log.d("ALEXIA", id);
 
         //https://andrologiciels.wordpress.com/astuces-android/divers-2/quitter-une-application/liste-deroulante-spinner/
         //-- Drop Down Fuel Type
@@ -109,21 +106,22 @@ public class RefuelActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Float litterPriceValue = Float.valueOf(litterPrice.getText().toString());
-                Float totalCostValue = Float.valueOf(totalCost.getText().toString());
-                Float litterValue = Float.valueOf(litter.getText().toString());
-                Integer mileageValue = Integer.valueOf(mileage.getText().toString());
-
-                Refuel refuel = new Refuel(myFuelType, litterPriceValue, totalCostValue, litterValue, myCalendar.getTime(),  mileageValue);
-
-                refuel.save(refuel);
 
                 //Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
-                if(true){//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
+                if( !litterPrice.getText().toString().isEmpty() && !totalCost.getText().toString().isEmpty() && !litter.getText().toString().isEmpty() && !mileage.getText().toString().isEmpty()){
+                    Float litterPriceValue = Float.valueOf(litterPrice.getText().toString());
+                    Float totalCostValue = Float.valueOf(totalCost.getText().toString());
+                    Float litterValue = Float.valueOf(litter.getText().toString());
+                    Integer mileageValue = Integer.valueOf(mileage.getText().toString());
+
+                    Refuel refuel = new Refuel(myFuelType, litterPriceValue, totalCostValue, litterValue, myCalendar.getTime(),  mileageValue);
+//
+
                     //Creer nouveau véhicule ici pour la bdd
                     //Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
-                    networkManager.events.add(refuel);
+                    networkManager.createRefuel(refuel, id);
                     Intent returnMenuIntent = new Intent(RefuelActivity.this, EventActivity.class);
+                    returnMenuIntent.putExtra("id", id);
                     startActivity(returnMenuIntent);
                 }else{
                     Toast.makeText(RefuelActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
