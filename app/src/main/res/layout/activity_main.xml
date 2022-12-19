@@ -45,7 +45,7 @@
         android:layout_marginTop="60dp"
         android:background="@drawable/rounded_corner_rect"
         android:ems="10"
-        android:hint="Nom d'utilisateur"
+        android:hint="Adresse mail"
         android:inputType="textPersonName"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
