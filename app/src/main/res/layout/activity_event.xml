@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_width="485dp"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@color/purple"
         android:orientation="horizontal"
@@ -32,23 +32,24 @@
         <TextView
             android:layout_width="189dp"
             android:layout_height="34dp"
-            android:text="Event"
+            android:text="Evénements"
+            android:textAlignment="center"
             android:textColor="@color/dark_blue"
             android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="68dp"
-            android:layout_height="56dp"
-            android:backgroundTint="@color/purple"
-            android:src="@drawable/gear_option"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/imageButton"-->
+<!--            android:layout_width="68dp"-->
+<!--            android:layout_height="56dp"-->
+<!--            android:backgroundTint="@color/purple"-->
+<!--            android:src="@drawable/gear_option"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
