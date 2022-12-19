@@ -36,6 +36,7 @@ public class listVehicules extends AppCompatActivity {
 
                 CarAdapter adapter = new CarAdapter(listVehicules.this, cars);
 
+
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(listVehicules.this));
 
@@ -61,6 +62,25 @@ public class listVehicules extends AppCompatActivity {
                         Intent eventActivityIntent = new Intent(listVehicules.this, EventActivity.class);
                         eventActivityIntent.putExtra("id", id);
                         startActivity(eventActivityIntent);
+                    }
+
+                });
+
+                adapter.setOnItemLongClickListener(new CarAdapter.OnItemLongClickListener() {
+                    @Override
+                    public void onItemLongClick(String id) {
+                        Toast.makeText(listVehicules.this, "LongCLick", Toast.LENGTH_SHORT).show();
+                        NetworkCallback callback1 = new NetworkCallback() {
+
+                            @Override
+                            public void onActionSuccess() {
+                                Intent eventActivityIntent = new Intent(listVehicules.this, listVehicules.class);
+                                eventActivityIntent.putExtra("id", id);
+                                startActivity(eventActivityIntent);
+                            }
+                        };
+
+                        NetworkManager.deleteCar(id, callback1);
                     }
                 });
             }
