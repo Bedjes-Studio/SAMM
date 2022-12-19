@@ -30,12 +30,15 @@ public class EventActivity extends AppCompatActivity {
     FloatingActionButton addRefuelButton;
     FloatingActionButton addRepairButton;
     FloatingActionButton addEarningButton;
+    FloatingActionButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+
+        backButton = findViewById(R.id.backButtonCreationV);
 
         Intent intent = getIntent();
         String id = intent.getExtras().getString("id");
@@ -89,10 +92,18 @@ public class EventActivity extends AppCompatActivity {
                         startActivity(eventActivityIntent);
                     }
                 });
+
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent returnMenuIntent = new Intent(EventActivity.this, listVehicules.class);
+                        returnMenuIntent.putExtra("id", id);
+                        startActivity(returnMenuIntent);
+                    }
+                });
             }
 
         };
-        // TODO : find clicked car and pass it to the networkmanager
 //        Car car = new Car("aaa");
         // appel networkmanager avec callback
 //        Earning earning = new Earning("Covoiturage", 70, Calendar.getInstance().getTime(), 180000);
@@ -100,45 +111,6 @@ public class EventActivity extends AppCompatActivity {
 //
 //        NetworkManager.createCost(cost, "aaa");
 
-//        //create and set the layout manager for the RecyclerView
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        recyclerView.setLayoutManager(layoutManager);
-//
-//        List<Event> eventList = getEvents();
-//        EventAdapterClass eventAdapterClass = new EventAdapterClass(eventList);
-//        EventAdapterClass eventAdapter = new EventAdapterClass(eventList);
-//        recyclerView.setAdapter(eventAdapter);
-//
-//
-//        addEventButton = findViewById(R.id.button_add_event);
-//        addRefuelButton = findViewById(R.id.button_add_refuel);
-//        addRepairButton = findViewById(R.id.button_add_repair);
-//        addEarningButton = findViewById(R.id.button_add_earning);
-//
-//        addEventButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view){
-//                addRefuelButton.setVisibility(View.VISIBLE);
-//                addRepairButton.setVisibility(View.VISIBLE);
-//                addEarningButton.setVisibility(View.VISIBLE);
-//            }
-//        });
-//
-//        addRefuelButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent eventActivityIntent = new Intent(EventActivity.this, RefuelActivity.class);
-//                startActivity(eventActivityIntent);
-//            }
-//        });
-//
-//        addEarningButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent eventActivityIntent = new Intent(EventActivity.this, EarningActivity.class);
-//                startActivity(eventActivityIntent);
-//            }
-//        });
     }
 
     @Override
