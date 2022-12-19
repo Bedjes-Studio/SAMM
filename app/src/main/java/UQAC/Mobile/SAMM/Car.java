@@ -30,6 +30,10 @@ public class Car {
         this.name = name;
     }
 
+    public Car(String id) {
+        this.id = id;
+    }
+
     public Car(CarGetAll.Response response) {
         this.id = response.id;
         this.mileage = response.mileage;

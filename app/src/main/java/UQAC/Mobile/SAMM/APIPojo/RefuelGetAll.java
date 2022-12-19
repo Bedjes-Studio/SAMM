@@ -2,6 +2,8 @@ package UQAC.Mobile.SAMM.APIPojo;
 
 import com.google.gson.annotations.SerializedName;
 
+import UQAC.Mobile.SAMM.Car;
+
 public class RefuelGetAll {
     public static class Response {
 
@@ -34,5 +36,15 @@ public class RefuelGetAll {
 
         @SerializedName("__v")
         public String version;
+    }
+
+    public static class Request {
+
+        @SerializedName("carId")
+        public String carId;
+
+        public Request(Car car) {
+            this.carId = car.getId();
+        }
     }
 }

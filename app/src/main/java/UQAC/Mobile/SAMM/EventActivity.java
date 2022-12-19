@@ -84,9 +84,10 @@ public class EventActivity extends AppCompatActivity {
             }
 
         };
-
+        // TODO : find clicked car and pass it to the networkmanager
+        Car car = new Car("aaa");
         // appel networkmanager avec callback
-        NetworkManager.getAllRefuel(callback);
+        NetworkManager.getAllRefuel(car, callback);
 
 //        //create and set the layout manager for the RecyclerView
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(this);

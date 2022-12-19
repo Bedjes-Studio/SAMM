@@ -186,9 +186,9 @@ public class NetworkManager {
         });
     }
 
-    public static void getAllRefuel(NetworkCallback callback) {
+    public static void getAllRefuel(Car car, NetworkCallback callback) {
         Log.d("API", "get all refuel");
-        Call<List<RefuelGetAll.Response>> call = apiInterface.refuelGetAll(token);
+        Call<List<RefuelGetAll.Response>> call = apiInterface.refuelGetAll(token, new RefuelGetAll.Request(car));
         call.enqueue(new Callback<List<RefuelGetAll.Response>>() {
             @Override
             public void onResponse(Call<List<RefuelGetAll.Response>> call, Response<List<RefuelGetAll.Response>> response) {

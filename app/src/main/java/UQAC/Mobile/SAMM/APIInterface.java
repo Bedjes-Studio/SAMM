@@ -37,8 +37,8 @@ interface APIInterface {
         @POST("/api/event/refuel/create")
         Call<RefuelCreate> refuelCreate(@Header("Authorization") String token, @Body RefuelCreate.Request request);
 
-        @GET("/api/event/refuel/getAll")
-        Call<List<RefuelGetAll.Response>> refuelGetAll(@Header("Authorization") String token);
+        @POST("/api/event/refuel/getAll")
+        Call<List<RefuelGetAll.Response>> refuelGetAll(@Header("Authorization") String token, @Body RefuelGetAll.Request request);
 
 //        @POST("/api/users?")
 //        Call<UserList> doCreateUserWithField(@Field("name") String name, @Field("job") String job);

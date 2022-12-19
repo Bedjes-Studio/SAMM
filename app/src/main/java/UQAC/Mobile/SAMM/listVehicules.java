@@ -44,8 +44,14 @@ public class listVehicules extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent addVehiculeIntent = new Intent(listVehicules.this, addVehicule.class);
                         startActivity(addVehiculeIntent);
+
+                        // NETWORK MANAGER TESTS
+
 //                        Refuel refuel = new Refuel("Essence", 1.6f, 86.64f, 54.15f, Calendar.getInstance().getTime(), 180000);
 //                        NetworkManager.getAllRefuel(new NetworkCallback());
+//
+//                        Car car = new Car("aaa");
+//                        NetworkManager.getAllRefuel(car, new NetworkCallback());
                     }
                 });
 
