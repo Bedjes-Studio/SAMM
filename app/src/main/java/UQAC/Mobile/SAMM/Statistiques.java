@@ -43,21 +43,32 @@ public class Statistiques extends AppCompatActivity {
         TextView totalEarnValue = findViewById(R.id.totalEarnValue);
         TextView totalEarnDayValue = findViewById(R.id.totalEarnDayValue);
 
-        refuels = generateDataFuel();
-        //maintenances = generateDataMaint();
-        earns = generateDataEarn();
+        // fuel
+        NetworkCallback callbackFuel = new NetworkCallback() {
+            @Override
+            public void onActionSuccess(Refuel[] refuels) {
+                totalFuelValue.setText(String.valueOf(totalCostRefuel(refuels)));
+            }
+        };
+        NetworkManager.getAllRefuel(id, callbackFuel);
 
-        //total fuel
-        float totalrefuel = totalCostRefuel(refuels);
-        totalFuelValue.setText(String.valueOf(totalrefuel));
-/*
-        //total maintenance
-        float totalmaint = totalCostMaint(maintenances);
-        totalMaintValue.setText(String.valueOf(totalmaint));*/
+        // earnings
+        NetworkCallback callbackEarnings = new NetworkCallback() {
+            @Override
+            public void onActionSuccess(Earning[] earnings) {
+                totalEarnValue.setText(String.valueOf(totalCostEarning(earnings)));
+            }
+        };
+        NetworkManager.getAllEarning(id, callbackEarnings);
 
-        //total earn
-        float totalearn = totalEarn(earns);
-        totalEarnValue.setText(String.valueOf(totalearn));
+        // costs
+        NetworkCallback callbackCost = new NetworkCallback() {
+            @Override
+            public void onActionSuccess(Cost[] costs) {
+                totalEarnValue.setText(String.valueOf(totalCostCosts(costs)));
+            }
+        };
+        NetworkManager.getAllCost(id, callbackCost);
 
         backButtonStat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,49 +80,34 @@ public class Statistiques extends AppCompatActivity {
         });
     }
 
-    public List<Refuel> generateDataFuel() {
-        List<Refuel> refuels = new ArrayList<Refuel>();
-        Refuel refuel1 = new Refuel("Essence", 1.6f, 86.64f, 54.15f, Calendar.getInstance().getTime(), 180000);
-        Refuel refuel2 = new Refuel("Essence", 1.5f, 75f, 50f, Calendar.getInstance().getTime(), 175000);
 
-        refuels.add(refuel1);
-        refuels.add(refuel2);
-        return refuels;
-    }/*
-    public List<Maintenance> generateDataMaint() {
-        List<Maintenance> maintenances = new ArrayList<Maintenance>();
-        Maintenance maint1 = new Maintenance();
-        Maintenance maint2 = new Maintenance();
 
-        maintenances.add(maint1);
-        maintenances.add(maint2);
-        return maintenances;
-    }*/
-    public List<Earning> generateDataEarn() {
-        List<Earning> earnings = new ArrayList<Earning>();
-        Earning earn1 = new Earning("test1", 50, Calendar.getInstance().getTime(), 180000);
-        Earning earn2 = new Earning("test2", 42, Calendar.getInstance().getTime(), 175000);
-
-        earnings.add(earn1);
-        earnings.add(earn2);
-        return earnings;
-    }
-
-    public float totalCostRefuel(List<Refuel> refuels) {
+    public float totalCostRefuel(Refuel[] refuels) {
         float total =0;
         for (Refuel refuel : refuels) {
             total += refuel.getTotalCost();
         }
         return total;
-    }/*
-    public float totalCostMaint(List<Maintenance> maintenances) {
+    }
+
+    public float totalKmRefuel(Refuel[] refuels) {
+        // get mini kilom
+        // get max kilom
+        // diff max -min
+        // total cost / diff
+        return 0;
+    }
+
+    public float totalCostCosts(Cost[] costs) {
         float total =0;
-        for (Maintenance maintenance : maintenances) {
-            total += maintenance.get();
+        for (Cost cost : costs) {
+            total += cost.getValue();
         }
         return total;
-    }*/
-    public float totalEarn(List<Earning> earns) {
+    }
+
+
+    public float totalCostEarning(Earning[] earns) {
         float total =0;
         for (Earning earn : earns) {
             total += earn.getValue();
