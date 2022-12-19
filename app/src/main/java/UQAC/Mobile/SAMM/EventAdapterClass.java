@@ -24,14 +24,14 @@ import static UQAC.Mobile.SAMM.EventItemClass.LayoutRepair;
 public class EventAdapterClass extends RecyclerView.Adapter {
 
     //private List<EventItemClass> eventItemClassList;
-    private List<Event> eventlist;
+    private Event[] eventlist;
 
     //constructor
 //    public EventAdapterClass(List<EventItemClass> eventItemClassList){
 //        this.eventItemClassList = eventItemClassList;
 //    }
 
-    public EventAdapterClass(List<Event> eventList){
+    public EventAdapterClass(Event[] eventList){
         this.eventlist = eventList;
     }
 
@@ -44,7 +44,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position){
         //switch (eventItemClassList.get(position).getViewType()) {
-        switch (eventlist.get(position).getClass().getSimpleName()) {
+        switch (eventlist[position].getClass().getSimpleName()) {
             //case 0:
             case "Refuel":
                 return LayoutRefuel;
@@ -88,7 +88,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
             SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
             //dateText.setText(dateFormat.format(myCalendar.getTime()));
 
-            date.setText(dateFormat.format(dateValue));
+            //date.setText(dateFormat.format(dateValue));
         }
     }
 
@@ -101,7 +101,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
 
             // find the view
             value = eventItemView.findViewById(R.id.text_view_value);
-            date = eventItemView.findViewById(R.id.text_view_date);
+            //date = eventItemView.findViewById(R.id.text_view_date);
             mileage = eventItemView.findViewById(R.id.text_view_mileage);
 
             linearLayout = eventItemView.findViewById(R.id.linearLayout);
@@ -112,7 +112,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
         private void setView(String valueValue, String dateValue, String mileageValue){
             value.setText(valueValue);
             mileage.setText(mileageValue);
-            date.setText(dateValue);
+            //date.setText(dateValue);
         }
     }
 
@@ -126,7 +126,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
             // find the view
             value = eventItemView.findViewById(R.id.text_view_value);
             reason = eventItemView.findViewById(R.id.text_view_reason);
-            date = eventItemView.findViewById(R.id.text_view_date);
+            //date = eventItemView.findViewById(R.id.text_view_date);
             mileage = eventItemView.findViewById(R.id.text_view_mileage);
 
             linearLayout = eventItemView.findViewById(R.id.linearLayout);
@@ -144,7 +144,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
             SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
             //dateText.setText(dateFormat.format(myCalendar.getTime()));
 
-            date.setText(dateFormat.format(dateValue));
+            //date.setText(dateFormat.format(dateValue));
         }
     }
 
@@ -187,9 +187,9 @@ public class EventAdapterClass extends RecyclerView.Adapter {
             int position)
     {
 //        switch (eventItemClassList.get(position).getViewType()){
-        switch (eventlist.get(position).getClass().getSimpleName()) {
+        switch (eventlist[position].getClass().getSimpleName()) {
             case "Refuel":
-                Refuel refuel = (Refuel) eventlist.get(position);
+                Refuel refuel = (Refuel) eventlist[position];
                 String litter = String.valueOf(refuel.getLitter()) + " L";
                 String litterPrice = String.valueOf(refuel.getLitterPrice()) + " L/$";
                 String totalCost = String.valueOf(refuel.getTotalCost()) + " $";
@@ -240,7 +240,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
 //                break;
 //
             case "Earning":
-                Earning earning = (Earning) eventlist.get(position);
+                Earning earning = (Earning) eventlist[position];
                 String value = String.valueOf(earning.getValue()) + " $";
                 String reason = earning.getReason();
                 date = earning.getDate();
@@ -269,7 +269,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount(){
-        return eventlist.size();
+        return eventlist.length;
     }
 
 }

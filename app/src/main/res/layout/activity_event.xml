@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="189dp"
             android:layout_height="34dp"
-            android:text="Nouveau véhicule"
+            android:text="Event"
             android:textColor="@color/dark_blue"
             android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"

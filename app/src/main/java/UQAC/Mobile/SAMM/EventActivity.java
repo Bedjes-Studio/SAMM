@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -34,68 +35,98 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        this.setTitle("Event");
-
-        // calling the action bar
-        ActionBar actionBar = getSupportActionBar();
-        // showing the back button in action bar
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
         RecyclerView recyclerView = findViewById(R.id.recycler_view_event);
 
-        //create and set the layout manager for the RecyclerView
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        // création de la callback
+        NetworkCallback callback = new NetworkCallback() {
 
-        // recup list d'event (history)???
-        //List<Event> event= fct recup history
-
-        //EventAdapterClass eventAdapterClass = new EventAdapterClass(event)
-        //EventAdapterClass eventAdapter = new EventAdapterClass(event)
-        //set the adapter
-        //recyclerView.setAdapter(adapter);
-
-        // --Test en dur--
-//        List<Event> eventList = new ArrayList<>();
-
-//        eventList.add(new Refuel("gasoline",70,10,5,new Date(), 15555));
-//        eventList.add(new Earning("lift",70,new Date(), 15555));
-
-        List<Event> eventList = getEvents();
-        EventAdapterClass eventAdapterClass = new EventAdapterClass(eventList);
-        EventAdapterClass eventAdapter = new EventAdapterClass(eventList);
-        recyclerView.setAdapter(eventAdapter);
-
-
-        addEventButton = findViewById(R.id.button_add_event);
-        addRefuelButton = findViewById(R.id.button_add_refuel);
-        addRepairButton = findViewById(R.id.button_add_repair);
-        addEarningButton = findViewById(R.id.button_add_earning);
-
-        addEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                addRefuelButton.setVisibility(View.VISIBLE);
-                addRepairButton.setVisibility(View.VISIBLE);
-                addEarningButton.setVisibility(View.VISIBLE);
-            }
-        });
+            public void onActionSuccess(Refuel[] refuels) {
+                Toast.makeText(EventActivity.this, "Get refuel reussie", Toast.LENGTH_SHORT).show();
 
-        addRefuelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent eventActivityIntent = new Intent(EventActivity.this, RefuelActivity.class);
-                startActivity(eventActivityIntent);
-            }
-        });
+                //create and set the layout manager for the RecyclerView
+                LinearLayoutManager layoutManager = new LinearLayoutManager(EventActivity.this);
+                recyclerView.setLayoutManager(layoutManager);
 
-        addEarningButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent eventActivityIntent = new Intent(EventActivity.this, EarningActivity.class);
-                startActivity(eventActivityIntent);
+                EventAdapterClass eventAdapterClass = new EventAdapterClass(refuels);
+                EventAdapterClass eventAdapter = new EventAdapterClass(refuels);
+                recyclerView.setAdapter(eventAdapter);
+
+                addEventButton = findViewById(R.id.button_add_event);
+                addRefuelButton = findViewById(R.id.button_add_refuel);
+                addRepairButton = findViewById(R.id.button_add_repair);
+                addEarningButton = findViewById(R.id.button_add_earning);
+
+                addEventButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view){
+                        addRefuelButton.setVisibility(View.VISIBLE);
+                        addRepairButton.setVisibility(View.VISIBLE);
+                        addEarningButton.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                addRefuelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent eventActivityIntent = new Intent(EventActivity.this, RefuelActivity.class);
+                        startActivity(eventActivityIntent);
+                    }
+                });
+
+                addEarningButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent eventActivityIntent = new Intent(EventActivity.this, EarningActivity.class);
+                        startActivity(eventActivityIntent);
+                    }
+                });
             }
-        });
+
+        };
+
+        // appel networkmanager avec callback
+        NetworkManager.getAllRefuel(callback);
+
+//        //create and set the layout manager for the RecyclerView
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        recyclerView.setLayoutManager(layoutManager);
+//
+//        List<Event> eventList = getEvents();
+//        EventAdapterClass eventAdapterClass = new EventAdapterClass(eventList);
+//        EventAdapterClass eventAdapter = new EventAdapterClass(eventList);
+//        recyclerView.setAdapter(eventAdapter);
+//
+//
+//        addEventButton = findViewById(R.id.button_add_event);
+//        addRefuelButton = findViewById(R.id.button_add_refuel);
+//        addRepairButton = findViewById(R.id.button_add_repair);
+//        addEarningButton = findViewById(R.id.button_add_earning);
+//
+//        addEventButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view){
+//                addRefuelButton.setVisibility(View.VISIBLE);
+//                addRepairButton.setVisibility(View.VISIBLE);
+//                addEarningButton.setVisibility(View.VISIBLE);
+//            }
+//        });
+//
+//        addRefuelButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent eventActivityIntent = new Intent(EventActivity.this, RefuelActivity.class);
+//                startActivity(eventActivityIntent);
+//            }
+//        });
+//
+//        addEarningButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent eventActivityIntent = new Intent(EventActivity.this, EarningActivity.class);
+//                startActivity(eventActivityIntent);
+//            }
+//        });
     }
 
     @Override

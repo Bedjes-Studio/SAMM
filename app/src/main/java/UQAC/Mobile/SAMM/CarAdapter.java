@@ -40,8 +40,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull CarAdapter.MyViewHolder holder, int position) {
-        //holder.brand.setText(carArrayList[position].getBrand());
-        //holder.model.setText(carArrayList[position].getModel());
+        holder.brand.setText(carArrayList[position].getBrand());
+        holder.model.setText(carArrayList[position].getModel());
         holder.mileage.setText(String.valueOf(carArrayList[position].getMileage()));
 
         (holder).linearLayout.setOnClickListener(
