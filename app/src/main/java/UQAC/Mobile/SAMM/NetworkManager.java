@@ -20,6 +20,7 @@ import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.CostCreate;
 import UQAC.Mobile.SAMM.APIPojo.CostGetAll;
 import UQAC.Mobile.SAMM.APIPojo.EarningCreate;
+import UQAC.Mobile.SAMM.APIPojo.EarningGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Login;
 import UQAC.Mobile.SAMM.APIPojo.RefuelCreate;
 import UQAC.Mobile.SAMM.APIPojo.RefuelGetAll;
@@ -266,6 +267,29 @@ public class NetworkManager {
             }
             @Override
             public void onFailure(Call<EarningCreate> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+    public static void getAllEarning(String carId, NetworkCallback callback) {
+        Log.d("API", "get all costs");
+        Call<List<EarningGetAll.Response>> call = apiInterface.earningGetAll(token, new EarningGetAll.Request(carId));
+        call.enqueue(new Callback<List<EarningGetAll.Response>>() {
+            @Override
+            public void onResponse(Call<List<EarningGetAll.Response>> call, Response<List<EarningGetAll.Response>> response) {
+                if (response.code() == 200) {
+                    List<EarningGetAll.Response> data = response.body();
+                    Earning[] earnings = new Earning[data.size()];
+                    for (int i =0; i < data.size(); ++i) {
+                        earnings[i] = new Earning(data.get(i));
+                    }
+                    callback.onActionSuccess(earnings);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<EarningGetAll.Response>> call, Throwable t) {
                 call.cancel();
             }
         });

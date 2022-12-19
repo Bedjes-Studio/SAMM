@@ -3,8 +3,10 @@ package UQAC.Mobile.SAMM;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,7 +26,8 @@ public class CostActivity extends AppCompatActivity {
 
     final Calendar myCalendar = Calendar.getInstance();
 
-    FloatingActionButton save;
+    FloatingActionButton back;
+    Button save;
 
     EditText value;
     EditText reason;
@@ -40,8 +43,11 @@ public class CostActivity extends AppCompatActivity {
         reason = findViewById(R.id.reasonText);
         mileage = findViewById(R.id.mileageText);
 
-        NetworkManager networkManager = new NetworkManager();
+        Intent intent = getIntent();
+        String id = intent.getExtras().getString("id");
+        Log.d("ALEXIA", id);
 
+        NetworkManager networkManager = new NetworkManager();
 
         //-- Date Picker
         dateText = (EditText) findViewById(R.id.dateText);
@@ -71,6 +77,8 @@ public class CostActivity extends AppCompatActivity {
         // --Save
         save = findViewById(R.id.button_save_event);
 
+        back = findViewById(R.id.backButtonCreationV);
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +103,15 @@ public class CostActivity extends AppCompatActivity {
 
 //                Intent eventActivityIntent = new Intent(EarningActivity.this, EventActivity.class);
 //                startActivity(eventActivityIntent);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent returnMenuIntent = new Intent(CostActivity.this, EventActivity.class);
+                returnMenuIntent.putExtra("id", id);
+                startActivity(returnMenuIntent);
             }
         });
     }

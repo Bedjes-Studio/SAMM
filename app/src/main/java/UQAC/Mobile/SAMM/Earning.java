@@ -2,6 +2,9 @@ package UQAC.Mobile.SAMM;
 
 import java.util.Date;
 
+import UQAC.Mobile.SAMM.APIPojo.CostGetAll;
+import UQAC.Mobile.SAMM.APIPojo.EarningGetAll;
+
 public class Earning extends Event {
     private float value;
     private String reason;
@@ -13,6 +16,14 @@ public class Earning extends Event {
         this.date = date;
         this.mileage = mileage;
     }
+
+    public Earning(EarningGetAll.Response response) {
+        this.value = response.value;
+        this.reason = response.reason;
+//        this.date = response.date;
+        this.mileage = response.mileage;
+    }
+
 
     public boolean save(Earning earning){
         return true;
