@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -29,7 +30,7 @@ public class EarningActivity extends AppCompatActivity {
     final Calendar myCalendar = Calendar.getInstance();
 
     FloatingActionButton back;
-    FloatingActionButton save;
+    Button save;
 
     EditText value;
     EditText reason;
@@ -85,21 +86,22 @@ public class EarningActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Float valueValue = Float.valueOf(value.getText().toString());
-                String reasonValue = reason.getText().toString();
-                Integer mileageValue = Integer.valueOf(mileage.getText().toString());
-
-                Earning earning = new Earning( reasonValue, valueValue, myCalendar.getTime(),  mileageValue);
-
-                earning.save(earning);
-
 //                Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
-                if(true){//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
-                    //Creer nouveau véhicule ici pour la bdd
-                    //Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
+                if(!reason.getText().toString().isEmpty() && !value.getText().toString().isEmpty() && !mileage.getText().toString().isEmpty()){//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
+
+                    Float valueValue = Float.valueOf(value.getText().toString());
+                    String reasonValue = reason.getText().toString();
+                    Integer mileageValue = Integer.valueOf(mileage.getText().toString());
+
+                    Earning earning = new Earning( reasonValue, valueValue, myCalendar.getTime(),  mileageValue);
+
+                    earning.save(earning);
+
                     networkManager.events.add(earning);
                     Intent returnMenuIntent = new Intent(EarningActivity.this, EventActivity.class);
+                    returnMenuIntent.putExtra("id", id);
                     startActivity(returnMenuIntent);
+
                 }else{
                     Toast.makeText(EarningActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
                 }
