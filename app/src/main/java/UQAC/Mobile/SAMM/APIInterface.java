@@ -7,6 +7,7 @@ import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.CostCreate;
 import UQAC.Mobile.SAMM.APIPojo.CostGetAll;
 import UQAC.Mobile.SAMM.APIPojo.EarningCreate;
+import UQAC.Mobile.SAMM.APIPojo.EarningGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Login;
 import UQAC.Mobile.SAMM.APIPojo.RefuelCreate;
 import UQAC.Mobile.SAMM.APIPojo.RefuelGetAll;
@@ -51,6 +52,9 @@ interface APIInterface {
 
         @POST("/api/event/earning/create")
         Call<EarningCreate> earningCreate(@Header("Authorization") String token, @Body EarningCreate.Request request);
+
+        @POST("/api/event/earning/getAll")
+        Call<List<EarningGetAll.Response>> earningGetAll(@Header("Authorization") String token, @Body EarningGetAll.Request request);
 
 //        @POST("/api/users?")
 //        Call<UserList> doCreateUserWithField(@Field("name") String name, @Field("job") String job);
