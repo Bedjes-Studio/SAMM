@@ -130,6 +130,7 @@ public class EventActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent statsIntent = new Intent(EventActivity.this, Statistiques.class);
+                        statsIntent.putExtra("id", id);
                         startActivity(statsIntent);
                     }
                 });

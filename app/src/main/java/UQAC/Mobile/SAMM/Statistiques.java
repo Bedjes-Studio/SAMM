@@ -1,10 +1,15 @@
 package UQAC.Mobile.SAMM;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,11 +20,18 @@ public class Statistiques extends AppCompatActivity {
     List<Refuel> refuels = new ArrayList<Refuel>();
     //List<Maintenance> maintenances = new ArrayList<Maintenance>();
     List<Earning> earns = new ArrayList<Earning>();
+    FloatingActionButton backButtonStat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
+
+        Intent intent = getIntent();
+        String id = intent.getExtras().getString("id");
+        Log.d("ALEXIA", id);
+
+        backButtonStat = findViewById(R.id.backButtonStat);
 
         TextView totalFuelValue = findViewById(R.id.totalFuelValue);
         TextView totalFuelDayValue = findViewById(R.id.totalFuelDayValue);
@@ -46,6 +58,15 @@ public class Statistiques extends AppCompatActivity {
         //total earn
         float totalearn = totalEarn(earns);
         totalEarnValue.setText(String.valueOf(totalearn));
+
+        backButtonStat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent returnMenuIntent = new Intent(Statistiques.this, EventActivity.class);
+                returnMenuIntent.putExtra("id", id);
+                startActivity(returnMenuIntent);
+            }
+        });
     }
 
     public List<Refuel> generateDataFuel() {
