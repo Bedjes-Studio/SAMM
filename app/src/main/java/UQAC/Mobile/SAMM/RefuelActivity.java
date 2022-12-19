@@ -32,6 +32,7 @@ public class RefuelActivity extends AppCompatActivity {
 
     NetworkManager networkManager = new NetworkManager();
 
+    FloatingActionButton back;
     Button save;
 
     EditText litterPrice;
@@ -104,6 +105,8 @@ public class RefuelActivity extends AppCompatActivity {
         // --Save
         save = findViewById(R.id.button_save_event);
 
+        back = findViewById(R.id.backButtonCreationV);
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +129,15 @@ public class RefuelActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(RefuelActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent returnMenuIntent = new Intent(RefuelActivity.this, EventActivity.class);
+                returnMenuIntent.putExtra("id", id);
+                startActivity(returnMenuIntent);
             }
         });
     }
