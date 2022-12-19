@@ -25,6 +25,7 @@ public class listVehicules extends AppCompatActivity {
         setContentView(R.layout.activity_car);
 
         FloatingActionButton button_add_car = findViewById(R.id.button_add_car);
+        FloatingActionButton logout = findViewById(R.id.logout);
         RecyclerView recyclerView = findViewById(R.id.recycler_view_car);
 
         // création de la callback
@@ -56,6 +57,13 @@ public class listVehicules extends AppCompatActivity {
                     }
                 });
 
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(listVehicules.this, "Logout", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 adapter.setOnItemClickListener(new CarAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(String id) {
@@ -72,13 +80,9 @@ public class listVehicules extends AppCompatActivity {
 //                        Toast.makeText(listVehicules.this, "LongCLick", Toast.LENGTH_SHORT).show();
                         NetworkCallback callback1 = new NetworkCallback() {
 
-                            @Override
-                            public void onActionSuccess() {
-                                Intent eventActivityIntent = new Intent(listVehicules.this, listVehicules.class);
-                                eventActivityIntent.putExtra("id", id);
-                                startActivity(eventActivityIntent);
-                            }
                         };
+
+                        NetworkManager.deleteCar(id, callback1);
                     }
                 });
             }

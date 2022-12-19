@@ -69,7 +69,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
                         // son historique pour l'instant c'est du bullshit
                         // j'ai fais des tests avec putExtra ce sera surement l'id de la voiture qu'on passera
                         listenerLong.onItemLongClick(carArrayList[position].getId());
-                        return false;
+                        return true;
                     }
                 });
     }
