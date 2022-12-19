@@ -5,6 +5,7 @@ import java.util.List;
 import UQAC.Mobile.SAMM.APIPojo.CarCreate;
 import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.CostCreate;
+import UQAC.Mobile.SAMM.APIPojo.CostGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Login;
 import UQAC.Mobile.SAMM.APIPojo.RefuelCreate;
 import UQAC.Mobile.SAMM.APIPojo.RefuelGetAll;
@@ -43,6 +44,9 @@ interface APIInterface {
 
         @POST("/api/event/cost/create")
         Call<CostCreate> costCreate(@Header("Authorization") String token, @Body CostCreate.Request request);
+
+        @POST("/api/event/cost/getAll")
+        Call<List<CostGetAll.Response>> costGetAll(@Header("Authorization") String token, @Body CostGetAll.Request request);
 
 //        @POST("/api/users?")
 //        Call<UserList> doCreateUserWithField(@Field("name") String name, @Field("job") String job);

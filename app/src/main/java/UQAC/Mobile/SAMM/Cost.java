@@ -2,6 +2,8 @@ package UQAC.Mobile.SAMM;
 
 import java.util.Date;
 
+import UQAC.Mobile.SAMM.APIPojo.CostGetAll;
+
 public class Cost extends Event {
     private float value;
     private String reason;
@@ -13,6 +15,14 @@ public class Cost extends Event {
         this.paymentMethod = paymentMethod;
         this.date = date;
         this.mileage = mileage;
+    }
+
+    public Cost(CostGetAll.Response response) {
+        this.value = response.value;
+        this.reason = response.reason;
+        this.paymentMethod = response.paymentMethod;
+//        this.date = response.date;
+        this.mileage = response.mileage;
     }
 
     public float getValue() {

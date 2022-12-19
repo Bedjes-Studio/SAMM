@@ -6,6 +6,8 @@ public class NetworkCallback {
     public void onActionSuccess(){};
     public void onActionSuccess(Car[] cars){};
     public void onActionSuccess(Refuel[] refuels){};
+    public void onActionSuccess(Cost[] costs){};
+
 
 
     public void onActionFailure(){};
