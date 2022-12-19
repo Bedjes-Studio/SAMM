@@ -1,5 +1,7 @@
 package UQAC.Mobile.SAMM;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import UQAC.Mobile.SAMM.APIPojo.CostGetAll;
@@ -21,7 +23,14 @@ public class Earning extends Event {
         this.id = response.id;
         this.value = response.value;
         this.reason = response.reason;
-//        this.date = response.date;
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        try {
+            this.date = format.parse(response.date);
+            System.out.println(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         this.mileage = response.mileage;
     }
 

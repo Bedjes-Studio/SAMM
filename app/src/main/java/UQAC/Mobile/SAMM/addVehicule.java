@@ -35,8 +35,6 @@ public class addVehicule extends AppCompatActivity implements AdapterView.OnItem
         EditText kilometrage = findViewById(R.id.text_view_mileage);
         Button creation = findViewById(R.id.buttonCreate);
 
-        NetworkManager networkManager = new NetworkManager();
-
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_vehicule, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);

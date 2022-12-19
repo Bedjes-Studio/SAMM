@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -85,16 +86,16 @@ public class EventAdapterClass extends RecyclerView.Adapter {
             totalCost.setText(totalCostValue);
             mileage.setText(mileageValue);
 
-            String myFormat="MM/dd/yy";
-            SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-            //dateText.setText(dateFormat.format(myCalendar.getTime()));
-
-            //date.setText(dateFormat.format(dateValue));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date d = new Date();
+            String dateTime = dateFormat.format(d);
+            date.setText(dateTime);
+            System.out.println("Current Date Time : " + dateTime);
         }
     }
 
     class LayoutRepairViewHolder extends RecyclerView.ViewHolder{
-        private TextView value, date, mileage;
+        private TextView value, reason, date, mileage;
         private LinearLayout linearLayout;
 
         public LayoutRepairViewHolder(@NonNull View eventItemView){
@@ -102,7 +103,8 @@ public class EventAdapterClass extends RecyclerView.Adapter {
 
             // find the view
             value = eventItemView.findViewById(R.id.text_view_value);
-            //date = eventItemView.findViewById(R.id.text_view_date);
+            reason = eventItemView.findViewById(R.id.text_view_reason);
+            date = eventItemView.findViewById(R.id.text_view_date);
             mileage = eventItemView.findViewById(R.id.text_view_mileage);
 
             linearLayout = eventItemView.findViewById(R.id.linearLayout);
@@ -110,10 +112,16 @@ public class EventAdapterClass extends RecyclerView.Adapter {
 
         //method to set the views that will
         // be used further in onBindViewHolder method.
-        private void setView(String valueValue, String dateValue, String mileageValue){
+        private void setView(String valueValue, String reasonValue, Date dateValue, String mileageValue){
             value.setText(valueValue);
+            reason.setText(reasonValue);
             mileage.setText(mileageValue);
-            //date.setText(dateValue);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date d = new Date();
+            String dateTime = dateFormat.format(d);
+            date.setText(dateTime);
+            System.out.println("Current Date Time : " + dateTime);
         }
     }
 
@@ -127,7 +135,7 @@ public class EventAdapterClass extends RecyclerView.Adapter {
             // find the view
             value = eventItemView.findViewById(R.id.text_view_value);
             reason = eventItemView.findViewById(R.id.text_view_reason);
-            //date = eventItemView.findViewById(R.id.text_view_date);
+            date = eventItemView.findViewById(R.id.text_view_date);
             mileage = eventItemView.findViewById(R.id.text_view_mileage);
 
             linearLayout = eventItemView.findViewById(R.id.linearLayout);
@@ -139,10 +147,15 @@ public class EventAdapterClass extends RecyclerView.Adapter {
             value.setText(valueValue);
             reason.setText(reasonValue);
             mileage.setText(mileageValue);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date d = new Date();
+            String dateTime = dateFormat.format(d);
+            date.setText(dateTime);
+            System.out.println("Current Date Time : " + dateTime);
 
 
-            String myFormat="MM/dd/yy";
-            SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+//            String myFormat="MM/dd/yy";
+//            SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
             //dateText.setText(dateFormat.format(myCalendar.getTime()));
 
             //date.setText(dateFormat.format(dateValue));
@@ -218,7 +231,30 @@ public class EventAdapterClass extends RecyclerView.Adapter {
                                 });
                 break;
 
-//            case LayoutRepair:
+            case "Cost":
+                Cost cost = (Cost) eventlist[position];
+                String value = String.valueOf(cost.getValue()) + " $";
+                String reason = cost.getReason();
+                date = cost.getDate();
+                mileage = String.valueOf(cost.getMileage()) + " km";
+                ((LayoutRepairViewHolder)holder).setView(value, reason, date, mileage);
+
+                // The following code pops a toast message
+                // when the item layout is clicked.
+                // This message indicates the corresponding layout.
+                ((LayoutRepairViewHolder)holder)
+                        .linearLayout.setOnClickListener(
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view)
+                                    {
+//                                        Toast.makeText(
+//                                                        view.getContext(),
+//                                                        "Earning",
+//                                                        Toast.LENGTH_SHORT)
+//                                                .show();
+                                    }
+                                });
 //                String value = eventItemClassList.get(position).getValue();
 //                date = eventItemClassList.get(position).getDate();
 //                mileage = eventItemClassList.get(position).getMileage();
@@ -240,15 +276,15 @@ public class EventAdapterClass extends RecyclerView.Adapter {
 //                                                .show();
 //                                    }
 //                                });
-//                break;
-//
+                break;
+
             case "Earning":
                 Earning earning = (Earning) eventlist[position];
-                String value = String.valueOf(earning.getValue()) + " $";
-                String reason = earning.getReason();
+                String value2 = String.valueOf(earning.getValue()) + " $";
+                String reason2 = earning.getReason();
                 date = earning.getDate();
                 mileage = String.valueOf(earning.getMileage()) + " km";
-                ((LayoutEarningViewHolder)holder).setView(value, reason, date, mileage);
+                ((LayoutEarningViewHolder)holder).setView(value2, reason2, date, mileage);
 
                 // The following code pops a toast message
                 // when the item layout is clicked.

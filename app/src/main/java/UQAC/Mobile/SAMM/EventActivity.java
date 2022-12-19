@@ -58,7 +58,7 @@ public class EventActivity extends AppCompatActivity {
 //                Log.d("HUGO", "size: " + events.length);
 
 
-                Toast.makeText(EventActivity.this, "Get refuel reussie", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EventActivity.this, "Get refuel reussie", Toast.LENGTH_SHORT).show();
 
                 //create and set the layout manager for the RecyclerView
                 LinearLayoutManager layoutManager = new LinearLayoutManager(EventActivity.this);

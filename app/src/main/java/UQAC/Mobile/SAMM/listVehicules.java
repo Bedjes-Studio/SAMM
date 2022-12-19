@@ -32,7 +32,7 @@ public class listVehicules extends AppCompatActivity {
 
             @Override
             public void onActionSuccess(Car[] cars) {
-                Toast.makeText(listVehicules.this, "Get car reussie", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(listVehicules.this, "Get car reussie", Toast.LENGTH_SHORT).show();
 
                 CarAdapter adapter = new CarAdapter(listVehicules.this, cars);
 
@@ -69,7 +69,7 @@ public class listVehicules extends AppCompatActivity {
                 adapter.setOnItemLongClickListener(new CarAdapter.OnItemLongClickListener() {
                     @Override
                     public void onItemLongClick(String id) {
-                        Toast.makeText(listVehicules.this, "LongCLick", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(listVehicules.this, "LongCLick", Toast.LENGTH_SHORT).show();
                         NetworkCallback callback1 = new NetworkCallback() {
 
                             @Override
@@ -79,8 +79,6 @@ public class listVehicules extends AppCompatActivity {
                                 startActivity(eventActivityIntent);
                             }
                         };
-
-                        NetworkManager.deleteCar(id, callback1);
                     }
                 });
             }
