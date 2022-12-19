@@ -168,6 +168,15 @@ public class NetworkManager {
         });
     }
 
+    public static void disconnect(SharedPreferences sharedPref, NetworkCallback callback) {
+        Log.d("API", "disconnect");
+        token = null;
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("token");
+        editor.apply();
+        callback.onActionSuccess();
+    }
+
     public static void createCar(Car car) {
         Log.d("API", "create car");
         Call<CarCreate> call = apiInterface.carCreate(token, new CarCreate.Request(car));

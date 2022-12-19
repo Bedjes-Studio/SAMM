@@ -35,8 +35,12 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(eventActivityIntent);
 //            }
 //        });
-
-
+        boolean autologin = true;
+        Intent intent = getIntent();
+        if (intent.getExtras() != null) {
+            autologin = intent.getExtras().getBoolean("autologin", true);
+        }
+        if (autologin) {
         NetworkManager.tokenCheck(this.getSharedPreferences("Usertoken", Context.MODE_PRIVATE), new NetworkCallback() {
             @Override
             public void onActionSuccess() {
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             public void onActionFailure() {
                 Toast.makeText(MainActivity.this, "Connection automatique échouée", Toast.LENGTH_SHORT).show();
             }
-        });
+        });}
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

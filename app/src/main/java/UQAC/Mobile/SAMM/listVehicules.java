@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -61,6 +62,14 @@ public class listVehicules extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(listVehicules.this, "Logout", Toast.LENGTH_SHORT).show();
+                        NetworkManager.disconnect(listVehicules.this.getSharedPreferences("Usertoken", Context.MODE_PRIVATE), new NetworkCallback() {
+                            @Override
+                            public void onActionSuccess() {
+                                Intent mainActivityIntent = new Intent(listVehicules.this, MainActivity.class);
+                                mainActivityIntent.putExtra("autologin", false);
+                                startActivity(mainActivityIntent);
+                            }
+                        });
                     }
                 });
 

@@ -60,11 +60,11 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
                     @Override
                     public boolean onLongClick(View view)
                     {
-//                        Toast.makeText(
-//                                        view.getContext(),
-//                                        carArrayList[position].getId(),
-//                                        Toast.LENGTH_SHORT)
-//                                .show();
+                        Toast.makeText(
+                                        view.getContext(),
+                                        carArrayList[position].getId(),
+                                        Toast.LENGTH_SHORT)
+                                .show();
                         //faudra voir pour passer en parametre la voiture sur laquelle on click pour avoir
                         // son historique pour l'instant c'est du bullshit
                         // j'ai fais des tests avec putExtra ce sera surement l'id de la voiture qu'on passera
