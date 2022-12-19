@@ -21,13 +21,6 @@ public class addVehicule extends AppCompatActivity implements AdapterView.OnItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_vehicule);
 
-//        setTitle("Add vehicle");
-//
-//        // calling the action bar
-//        ActionBar actionBar = getSupportActionBar();
-//        // showing the back button in action bar
-//        assert actionBar != null;
-//        actionBar.setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton backButton = findViewById(R.id.backButtonCreationV);
 
@@ -53,7 +46,6 @@ public class addVehicule extends AppCompatActivity implements AdapterView.OnItem
             @Override
             public void onClick(View v){
                 Intent returnMenuIntent = new Intent(addVehicule.this, listVehicules.class);
-                //addNoteIntent.putExtra("title", "Titre de la note");
                 startActivity(returnMenuIntent);
             }
         });
@@ -64,9 +56,8 @@ public class addVehicule extends AppCompatActivity implements AdapterView.OnItem
                 if(!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
                     //Creer nouveau véhicule ici pour la bdd
                     Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), 2000, typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
-                    networkManager.cars.add(vehicule);
+                    NetworkManager.createCar(vehicule);
                     Intent returnMenuIntent = new Intent(addVehicule.this, listVehicules.class);
-                    //addNoteIntent.putExtra("title", "Titre de la note");
                     startActivity(returnMenuIntent);
                 }else{
                     Toast.makeText(addVehicule.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
