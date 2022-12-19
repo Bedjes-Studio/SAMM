@@ -226,7 +226,7 @@ public class NetworkManager {
             @Override
             public void onResponse(Call<DeleteSelector> call, Response<DeleteSelector> response) {
                 Log.d("API", token);
-                if (response.code() == 201) {
+                if (response.code() == 200) {
                     DeleteSelector data = response.body();
                     callback.onActionSuccess();
                 }

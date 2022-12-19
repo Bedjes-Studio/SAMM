@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -86,8 +87,28 @@ public class listVehicules extends AppCompatActivity {
                 adapter.setOnItemLongClickListener(new CarAdapter.OnItemLongClickListener() {
                     @Override
                     public void onItemLongClick(String id) {
-//                        Toast.makeText(listVehicules.this, "LongCLick", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(listVehicules.this, "Delete car", Toast.LENGTH_SHORT).show();
+                        Log.d("ALEXIA", "delete car");
+
                         NetworkCallback callback1 = new NetworkCallback() {
+                            @Override
+                            public void onActionSuccess() {
+                                Log.d("ALEXIA", "succes callback 1");
+                                NetworkCallback callback2 = new NetworkCallback() {
+                                    @Override
+                                    public void onActionSuccess(Car[] cars) {
+                                        Log.d("ALEXIA", "succes callback 2");
+                                        CarAdapter adapter = new CarAdapter(listVehicules.this, cars);
+
+
+                                        recyclerView.setAdapter(adapter);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(listVehicules.this));
+                                    }
+
+                                };
+
+                                NetworkManager.getAllCar(callback2);
+                            }
 
                         };
 
