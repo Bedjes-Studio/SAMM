@@ -17,6 +17,7 @@ import java.util.List;
 
 import UQAC.Mobile.SAMM.APIPojo.CarCreate;
 import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
+import UQAC.Mobile.SAMM.APIPojo.CostCreate;
 import UQAC.Mobile.SAMM.APIPojo.Login;
 import UQAC.Mobile.SAMM.APIPojo.RefuelCreate;
 import UQAC.Mobile.SAMM.APIPojo.RefuelGetAll;
@@ -204,6 +205,23 @@ public class NetworkManager {
 
             @Override
             public void onFailure(Call<List<RefuelGetAll.Response>> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+    public static void createCost(Cost cost, String carId) {
+        Log.d("API", "create cost");
+        Call<CostCreate> call = apiInterface.costCreate(token, new CostCreate.Request(cost, carId));
+        call.enqueue(new Callback<CostCreate>() {
+            @Override
+            public void onResponse(Call<CostCreate> call, Response<CostCreate> response) {
+                if (response.code() == 201) {
+                    CostCreate data = response.body();
+                }
+            }
+            @Override
+            public void onFailure(Call<CostCreate> call, Throwable t) {
                 call.cancel();
             }
         });

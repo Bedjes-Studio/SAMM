@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -94,7 +95,10 @@ public class EventActivity extends AppCompatActivity {
         // TODO : find clicked car and pass it to the networkmanager
 //        Car car = new Car("aaa");
         // appel networkmanager avec callback
-        NetworkManager.getAllRefuel(id, callback);
+//        Earning earning = new Earning("Covoiturage", 70, Calendar.getInstance().getTime(), 180000);
+//        Cost cost = new Cost(70, "Covoiturage", "CB", Calendar.getInstance().getTime(), 180000);
+//
+//        NetworkManager.createCost(cost, "aaa");
 
 //        //create and set the layout manager for the RecyclerView
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
