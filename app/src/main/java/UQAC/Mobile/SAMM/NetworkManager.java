@@ -129,7 +129,7 @@ public class NetworkManager {
 
     public static void createCar(Car car) {
         Log.d("API", "create car");
-        Call<CarCreate> call = apiInterface.carCreate(token, new CarCreate.Request(car.getMileage(), car.getYear()));
+        Call<CarCreate> call = apiInterface.carCreate(token, new CarCreate.Request(car));
         call.enqueue(new Callback<CarCreate>() {
             @Override
             public void onResponse(Call<CarCreate> call, Response<CarCreate> response) {

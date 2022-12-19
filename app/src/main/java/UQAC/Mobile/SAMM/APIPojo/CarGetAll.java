@@ -23,13 +23,25 @@ public class CarGetAll {
         @SerializedName("specsId")
         public String specsId;
 
+        @SerializedName("fuelType")
+        public String fuelType;
+
+        @SerializedName("fuelCapacity")
+        public Float fuelCapacity;
+
+        @SerializedName("type")
+        public String type;
+
+        @SerializedName("brand")
+        public String brand;
+
+        @SerializedName("model")
+        public String model;
+
+        @SerializedName("name")
+        public String name;
+
         @SerializedName("__v")
         public String version;
-
-
-        public Response(int mileage, int year) {
-            this.mileage = mileage;
-            this.year = year;
-        }
     }
 }

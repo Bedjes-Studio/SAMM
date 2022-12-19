@@ -10,20 +10,20 @@ public class Car {
     private List<User> owners;
     private int mileage;
     private int year;
-    private String typeCarbu;
-    private double capacityCarbu;
+    private String fuelType;
+    private float fuelCapacity;
     private String type;
     private String brand;
     private String model;
     private String name;
 
-    public Car(History history, List<User> owners, int mileage, int year, String typeCarbu, double capacityCarbu, String type, String brand, String model, String name) {
+    public Car(History history, List<User> owners, int mileage, int year, String fuelType, float fuelCapacity, String type, String brand, String model, String name) {
         this.history = history;
         this.owners = owners;
         this.mileage = mileage;
         this.year = year;
-        this.typeCarbu = typeCarbu;
-        this.capacityCarbu = capacityCarbu;
+        this.fuelType = fuelType;
+        this.fuelCapacity = fuelCapacity;
         this.type = type;
         this.brand = brand;
         this.model = model;
@@ -34,6 +34,12 @@ public class Car {
         this.id = response.id;
         this.mileage = response.mileage;
         this.year = response.year;
+        this.fuelType = response.fuelType;
+        this.fuelCapacity = response.fuelCapacity;
+        this.type = response.type;
+        this.brand = response.brand;
+        this.model = response.model;
+        this.name = response.name;
         // this.owner = get owners from id ?
         // this.guests = get guests from id ?
         // this.specs = not used anymore
@@ -67,12 +73,24 @@ public class Car {
         return type;
     }
 
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public float getFuelCapacity() {
+        return fuelCapacity;
+    }
+
     public String getBrand() {
         return brand;
     }
 
     public String getModel() {
         return model;
+    }
+
+    public String getName() {
+        return name;
     }
 
     //

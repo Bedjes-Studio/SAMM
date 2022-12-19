@@ -39,10 +39,21 @@ public class listVehicules extends AppCompatActivity{
             @Override
             public void onClick(View v){
                 Intent addVehiculeIntent = new Intent(listVehicules.this, addVehicule.class);
-                //addNoteIntent.putExtra("title", "Titre de la note");
                 startActivity(addVehiculeIntent);
+//                NetworkManager.getAllCar(new NetworkCallback());
+
 //                Refuel refuel = new Refuel("Essence", 1.6f, 86.64f, 54.15f, Calendar.getInstance().getTime(), 180000);
-//                NetworkManager.getAllRefuel(new NetworkCallback());
+//                Car car1 = new Car(null,
+//                        null,
+//                        180000,
+//                        2000,
+//                        "Essence",
+//                        23,
+//                        "voiture",
+//                        "Chrysler",
+//                        "300c",
+//                        "Mon char");
+//                NetworkManager.createCar(car1);
             }
         });
 
