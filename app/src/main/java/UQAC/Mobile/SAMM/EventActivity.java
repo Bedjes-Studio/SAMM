@@ -106,10 +106,10 @@ public class EventActivity extends AppCompatActivity {
         };
 //        Car car = new Car("aaa");
         // appel networkmanager avec callback
-//        Earning earning = new Earning("Covoiturage", 70, Calendar.getInstance().getTime(), 180000);
+        Earning earning = new Earning("Covoiturage", 70, Calendar.getInstance().getTime(), 180000);
 //        Cost cost = new Cost(70, "Covoiturage", "CB", Calendar.getInstance().getTime(), 180000);
 //
-//        NetworkManager.getAllCost("aaa", new NetworkCallback());
+//        NetworkManager.createEearning(earning, "aaa");
 
     }
 

@@ -19,6 +19,7 @@ import UQAC.Mobile.SAMM.APIPojo.CarCreate;
 import UQAC.Mobile.SAMM.APIPojo.CarGetAll;
 import UQAC.Mobile.SAMM.APIPojo.CostCreate;
 import UQAC.Mobile.SAMM.APIPojo.CostGetAll;
+import UQAC.Mobile.SAMM.APIPojo.EarningCreate;
 import UQAC.Mobile.SAMM.APIPojo.Login;
 import UQAC.Mobile.SAMM.APIPojo.RefuelCreate;
 import UQAC.Mobile.SAMM.APIPojo.RefuelGetAll;
@@ -247,6 +248,24 @@ public class NetworkManager {
 
             @Override
             public void onFailure(Call<List<CostGetAll.Response>> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+
+    public static void createEearning(Earning earning, String carId) {
+        Log.d("API", "create earning");
+        Call<EarningCreate> call = apiInterface.earningCreate(token, new EarningCreate.Request(earning, carId));
+        call.enqueue(new Callback<EarningCreate>() {
+            @Override
+            public void onResponse(Call<EarningCreate> call, Response<EarningCreate> response) {
+                if (response.code() == 201) {
+                    EarningCreate data = response.body();
+                }
+            }
+            @Override
+            public void onFailure(Call<EarningCreate> call, Throwable t) {
                 call.cancel();
             }
         });
