@@ -1,5 +1,6 @@
 package UQAC.Mobile.SAMM;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +49,8 @@ public class EventAdapterClass extends RecyclerView.Adapter {
             //case 0:
             case "Refuel":
                 return LayoutRefuel;
-//            case 1:
-//                return LayoutRepair;
+            case "Cost":
+                return LayoutRepair;
             case "Earning":
                 return LayoutEarning;
             default:
@@ -173,6 +174,8 @@ public class EventAdapterClass extends RecyclerView.Adapter {
                         .inflate(R.layout.earning_item, parent, false);
                 return new LayoutEarningViewHolder(layoutEarning);
             default:
+                Log.d("HUGO", "BUG HERE");
+
                 return null;
         }
     }

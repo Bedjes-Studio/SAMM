@@ -29,8 +29,6 @@ public class RepairActivity extends AppCompatActivity {
     final Calendar myCalendar = Calendar.getInstance();
     String myFuelType;
 
-    NetworkManager networkManager = new NetworkManager();
-
     FloatingActionButton back;
     Button save;
 
@@ -96,7 +94,7 @@ public class RepairActivity extends AppCompatActivity {
 
                     //Creer nouveau véhicule ici pour la bdd
                     //Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
-                    networkManager.createCost(cost, id);
+                    NetworkManager.createCost(cost, id);
                     Intent returnMenuIntent = new Intent(RepairActivity.this, EventActivity.class);
                     returnMenuIntent.putExtra("id", id);
                     startActivity(returnMenuIntent);

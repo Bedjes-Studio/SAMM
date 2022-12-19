@@ -52,16 +52,24 @@ public class EventActivity extends AppCompatActivity {
         NetworkCallback callback = new NetworkCallback() {
 
             @Override
-            public void onActionSuccess(Refuel[] refuels) {
+//                public void onActionSuccess(Cost[] costs) {
+                            public void onActionSuccess(Event[] events) {
+
+//                Log.d("HUGO", "size: " + events.length);
+
+
                 Toast.makeText(EventActivity.this, "Get refuel reussie", Toast.LENGTH_SHORT).show();
 
                 //create and set the layout manager for the RecyclerView
                 LinearLayoutManager layoutManager = new LinearLayoutManager(EventActivity.this);
                 recyclerView.setLayoutManager(layoutManager);
 
-//                EventAdapterClass eventAdapterClass = new EventAdapterClass(refuels);
-                EventAdapterClass eventAdapter = new EventAdapterClass(refuels);
+//                EventAdapterClass eventAdapter = new EventAdapterClass(refuels);
+                EventAdapterClass eventAdapter = new EventAdapterClass(events);
+//                EventAdapterClass eventAdapter = new EventAdapterClass(costs);
                 recyclerView.setAdapter(eventAdapter);
+                recyclerView.setAdapter(eventAdapter);
+
 
                 addEventButton = findViewById(R.id.button_add_event);
                 addRefuelButton = findViewById(R.id.button_add_refuel);
@@ -133,9 +141,7 @@ public class EventActivity extends AppCompatActivity {
                         startActivity(statsIntent);
                     }
                 });
-
             }
-
         };
 //        Car car = new Car("aaa");
         // appel networkmanager avec callback
@@ -152,7 +158,8 @@ public class EventActivity extends AppCompatActivity {
 //            };
 //        };
 
-        NetworkManager.getAllEvents( id, cb);
+        NetworkManager.getAllEvents( id, callback);
+//        NetworkManager.getAllCost( id, callback);
     }
 
     @Override

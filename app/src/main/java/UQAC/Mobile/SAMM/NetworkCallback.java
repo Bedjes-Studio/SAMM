@@ -9,6 +9,8 @@ public class NetworkCallback {
     public void onActionSuccess(Cost[] costs){};
     public void onActionSuccess(Earning[] earnings){};
     public void onActionSuccess(Event[] events){};
+    public void onActionSuccess(List<Event> events){};
+
 
     public void onActionFailure(){};
 }

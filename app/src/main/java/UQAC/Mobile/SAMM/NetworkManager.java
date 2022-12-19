@@ -1,8 +1,11 @@
 package UQAC.Mobile.SAMM;
 
+import static java.security.AccessController.getContext;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -110,16 +113,22 @@ public class NetworkManager {
         });
     }
 
-    public static void tokenCheck(NetworkCallback callback) {
+    public static void tokenCheck( SharedPreferences sharedPref, NetworkCallback callback) {
         Log.d("API", "tokenCheck");
+        String userToken =  sharedPref.getString("token", null);
+        Log.d("API", "token + " + userToken);
+        if (userToken != null) {
+            token = userToken;
+        }
 
-        Call<TokenCheck> call = apiInterface.tokenCheck();
+        Call<TokenCheck> call = apiInterface.tokenCheck(token);
 
         call.enqueue(new Callback<TokenCheck>() {
             @Override
             public void onResponse(Call<TokenCheck> call, Response<TokenCheck> response) {
                 if (response.code() == 200) {
                     callback.onActionSuccess();
+
                 } else {
                     callback.onActionFailure();
                 }
@@ -132,8 +141,9 @@ public class NetworkManager {
         });
     }
 
-    public static void login(String email, String password, NetworkCallback callback) {
+    public static void login(SharedPreferences sharedPref, String email, String password, NetworkCallback callback) {
         Log.d("API", "login");
+
         Call<Login.Response> call = apiInterface.login(new Login.Request(email, password));
 
         call.enqueue(new Callback<Login.Response>() {
@@ -142,6 +152,9 @@ public class NetworkManager {
                 if (response.code() == 200) {
                     Login.Response data = response.body();
                     token = "Bearer " + data.token;
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("token",token);
+                    editor.apply();
                     callback.onActionSuccess();
                 } else {
                     callback.onActionFailure();
@@ -223,8 +236,8 @@ public class NetworkManager {
 
         NetworkCallback callbackEarning = new NetworkCallback() {
             @Override
-            public void onActionSuccess(Cost[] costs){
-                Collections.addAll(events, costs);
+            public void onActionSuccess(Earning[] earnings){
+                Collections.addAll(events, earnings);
                 Event[] allevents = new Event[events.size()];
                 for (int i = 0; i < events.size(); ++i) {
                     allevents[i] = events.get(i);
@@ -237,7 +250,7 @@ public class NetworkManager {
             @Override
             public void onActionSuccess(Cost[] costs){
                 Collections.addAll(events, costs);
-                getAllCost(carId, callbackEarning);
+                getAllEarning(carId, callbackEarning);
             }
         };
 

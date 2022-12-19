@@ -2,6 +2,7 @@ package UQAC.Mobile.SAMM;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +36,22 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+
+        NetworkManager.tokenCheck(this.getSharedPreferences("Usertoken", Context.MODE_PRIVATE), new NetworkCallback() {
+            @Override
+            public void onActionSuccess() {
+                Toast.makeText(MainActivity.this, "Connection automatique reussie", Toast.LENGTH_SHORT).show();
+                networkManager.createContent();
+                Intent loginIntent = new Intent(MainActivity.this, listVehicules.class);
+                startActivity(loginIntent);
+            }
+
+            @Override
+            public void onActionFailure() {
+                Toast.makeText(MainActivity.this, "Connection automatique échouée", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 };
 
                 // appel networkmanager avec callback
-                NetworkManager.login(username.getText().toString(), password.getText().toString(), callback);
+                NetworkManager.login(MainActivity.this.getSharedPreferences("Usertoken", Context.MODE_PRIVATE), username.getText().toString(), password.getText().toString(), callback);
             }
         });
     }

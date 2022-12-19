@@ -34,7 +34,7 @@ interface APIInterface {
         Call<Login.Response> login(@Body Login.Request request);
 
         @GET("/api/user/token")
-        Call<TokenCheck> tokenCheck();
+        Call<TokenCheck> tokenCheck(@Header("Authorization") String token);
 
         @POST("/api/user/signup")
         Call<Signup.Response> signup(@Body Signup.Request request);
