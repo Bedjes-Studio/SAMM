@@ -136,9 +136,13 @@ public class EventActivity extends AppCompatActivity {
                 statButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent statsIntent = new Intent(EventActivity.this, Statistiques.class);
-                        statsIntent.putExtra("id", id);
-                        startActivity(statsIntent);
+                        if (NetworkManager.events.size() > 0) {
+                            Intent statsIntent = new Intent(EventActivity.this, Statistiques.class);
+                            statsIntent.putExtra("id", id);
+                            startActivity(statsIntent);
+                        } else {
+                            Toast.makeText(EventActivity.this, "Enregistrez un événement pour voir les statistiques.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }
