@@ -12,6 +12,7 @@ import java.sql.Ref;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import UQAC.Mobile.SAMM.APIPojo.RefuelCreate;
 import UQAC.Mobile.SAMM.APIPojo.RefuelGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Signup;
 import UQAC.Mobile.SAMM.APIPojo.Test;
+import UQAC.Mobile.SAMM.APIPojo.TokenCheck;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -39,7 +41,6 @@ public class NetworkManager {
 
     // TODO : remove faussaires
     static public List<Event> events = new ArrayList<Event>();
-    static public List<Car> cars = new ArrayList<Car>();
 
     private static Retrofit retrofit = null;
     static APIInterface apiInterface = getClient().create(APIInterface.class);
@@ -104,6 +105,28 @@ public class NetworkManager {
 
             @Override
             public void onFailure(Call<Signup.Response> call, Throwable t) {
+                call.cancel();
+            }
+        });
+    }
+
+    public static void tokenCheck(NetworkCallback callback) {
+        Log.d("API", "tokenCheck");
+
+        Call<TokenCheck> call = apiInterface.tokenCheck();
+
+        call.enqueue(new Callback<TokenCheck>() {
+            @Override
+            public void onResponse(Call<TokenCheck> call, Response<TokenCheck> response) {
+                if (response.code() == 200) {
+                    callback.onActionSuccess();
+                } else {
+                    callback.onActionFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TokenCheck> call, Throwable t) {
                 call.cancel();
             }
         });
@@ -192,6 +215,41 @@ public class NetworkManager {
                 call.cancel();
             }
         });
+    }
+
+    public static void getAllEvents(String carId, NetworkCallback callback) {
+        // fuel, cost earning
+        events.clear();
+
+        NetworkCallback callbackEarning = new NetworkCallback() {
+            @Override
+            public void onActionSuccess(Cost[] costs){
+                Collections.addAll(events, costs);
+                Event[] allevents = new Event[events.size()];
+                for (int i = 0; i < events.size(); ++i) {
+                    allevents[i] = events.get(i);
+                }
+                callback.onActionSuccess(allevents);
+            }
+        };
+
+        NetworkCallback callbackCost = new NetworkCallback() {
+            @Override
+            public void onActionSuccess(Cost[] costs){
+                Collections.addAll(events, costs);
+                getAllCost(carId, callbackEarning);
+            }
+        };
+
+        NetworkCallback callbackFuel = new NetworkCallback() {
+            @Override
+            public void onActionSuccess(Refuel[] refuels){
+                Collections.addAll(events, refuels);
+                getAllCost(carId, callbackCost);
+            }
+        };
+
+        getAllRefuel(carId, callbackFuel);
     }
 
     public static void createRefuel(Refuel refuel, String carId) {
@@ -379,55 +437,45 @@ public class NetworkManager {
 
     // TODO : remove faussaires
     public void createContent() {
-
-        // create events
-        Refuel refuel1 = new Refuel("Essence", 1.6f, 86.64f, 54.15f, Calendar.getInstance().getTime(), 180000);
-        Earning earning = new Earning("Covoiturage", 70, Calendar.getInstance().getTime(), 180000);
-        Refuel refuel2 = new Refuel("Essence", 1.5f, 75f, 50f, Calendar.getInstance().getTime(), 175000);
-
-        events.add(refuel1);
-        events.add(earning);
-        events.add(refuel2);
-
-        // create cars
-
-
-        History history = new History(events);
-        History history1 = new History();
-
-        Car car1 = new Car(history,
-                null,
-                180000,
-                2000,
-                "Essence",
-                23,
-                "voiture",
-                "Chrysler",
-                "300c",
-                "Mon char");
-
-        Car car2 = new Car(history1,
-                null,
-                150000,
-                2000,
-                "Essence",
-                23,
-                "voiture",
-                "Pontiac",
-                "G6",
-                "Auto de ma blonde");
-
-        cars.add(car1);
-        cars.add(car2);
-    }
-
-    // TODO : remove faussaires
-    static public List<Event> getEvents() {
-        return events;
-    }
-
-    static public List<Car> getCars() {
-
-        return cars;
+//
+//        // create events
+//        Refuel refuel1 = new Refuel("Essence", 1.6f, 86.64f, 54.15f, Calendar.getInstance().getTime(), 180000);
+//        Earning earning = new Earning("Covoiturage", 70, Calendar.getInstance().getTime(), 180000);
+//        Refuel refuel2 = new Refuel("Essence", 1.5f, 75f, 50f, Calendar.getInstance().getTime(), 175000);
+//
+//        events.add(refuel1);
+//        events.add(earning);
+//        events.add(refuel2);
+//
+//        // create cars
+//
+//
+//        History history = new History(events);
+//        History history1 = new History();
+//
+//        Car car1 = new Car(history,
+//                null,
+//                180000,
+//                2000,
+//                "Essence",
+//                23,
+//                "voiture",
+//                "Chrysler",
+//                "300c",
+//                "Mon char");
+//
+//        Car car2 = new Car(history1,
+//                null,
+//                150000,
+//                2000,
+//                "Essence",
+//                23,
+//                "voiture",
+//                "Pontiac",
+//                "G6",
+//                "Auto de ma blonde");
+//
+//        cars.add(car1);
+//        cars.add(car2);
     }
 }

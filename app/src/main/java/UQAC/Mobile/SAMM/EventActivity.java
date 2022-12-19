@@ -1,6 +1,5 @@
 package UQAC.Mobile.SAMM;
 
-import static UQAC.Mobile.SAMM.NetworkManager.getEvents;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -144,7 +143,16 @@ public class EventActivity extends AppCompatActivity {
 //        Cost cost = new Cost(70, "Covoiturage", "CB", Calendar.getInstance().getTime(), 180000);
 //
 //             NetworkManager.deleteCar( "639fd9508f3d7679bf4f9396", new NetworkCallback());
-        NetworkManager.getAllRefuel( id, callback);
+//        NetworkManager.getAllRefuel( id, callback);
+
+//        NetworkCallback cb = new NetworkCallback(){
+//            @Override
+//            public void onActionSuccess(Event[] events){
+//                Log.d("API", events.length + " - SIZE");
+//            };
+//        };
+
+        NetworkManager.getAllEvents( id, cb);
     }
 
     @Override

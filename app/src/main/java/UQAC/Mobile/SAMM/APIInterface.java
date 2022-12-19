@@ -1,5 +1,7 @@
 package UQAC.Mobile.SAMM;
 
+import android.media.session.MediaSession;
+
 import java.util.List;
 
 import UQAC.Mobile.SAMM.APIPojo.CarCreate;
@@ -14,6 +16,7 @@ import UQAC.Mobile.SAMM.APIPojo.RefuelCreate;
 import UQAC.Mobile.SAMM.APIPojo.RefuelGetAll;
 import UQAC.Mobile.SAMM.APIPojo.Signup;
 import UQAC.Mobile.SAMM.APIPojo.Test;
+import UQAC.Mobile.SAMM.APIPojo.TokenCheck;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -29,6 +32,9 @@ interface APIInterface {
 
         @POST("/api/user/login")
         Call<Login.Response> login(@Body Login.Request request);
+
+        @GET("/api/user/token")
+        Call<TokenCheck> tokenCheck();
 
         @POST("/api/user/signup")
         Call<Signup.Response> signup(@Body Signup.Request request);
