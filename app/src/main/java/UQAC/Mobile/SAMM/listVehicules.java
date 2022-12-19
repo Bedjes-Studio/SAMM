@@ -57,8 +57,9 @@ public class listVehicules extends AppCompatActivity {
 
                 adapter.setOnItemClickListener(new CarAdapter.OnItemClickListener() {
                     @Override
-                    public void onItemClick() {
+                    public void onItemClick(String id) {
                         Intent eventActivityIntent = new Intent(listVehicules.this, EventActivity.class);
+                        eventActivityIntent.putExtra("id", id);
                         startActivity(eventActivityIntent);
                     }
                 });

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,10 @@ public class EventActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+
+        Intent intent = getIntent();
+        String id = intent.getExtras().getString("id");
+        Log.d("ALEXIA", id);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_event);
 
@@ -85,9 +90,9 @@ public class EventActivity extends AppCompatActivity {
 
         };
         // TODO : find clicked car and pass it to the networkmanager
-        Car car = new Car("aaa");
+//        Car car = new Car("aaa");
         // appel networkmanager avec callback
-        NetworkManager.getAllRefuel(car, callback);
+        NetworkManager.getAllRefuel(id, callback);
 
 //        //create and set the layout manager for the RecyclerView
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
