@@ -30,7 +30,7 @@ public class EventActivity extends AppCompatActivity {
     FloatingActionButton addRefuelButton;
     FloatingActionButton addRepairButton;
     FloatingActionButton addEarningButton;
-    FloatingActionButton addCostButton;
+//    FloatingActionButton addCostButton;
     FloatingActionButton backButton;
 
     @Override
@@ -66,7 +66,7 @@ public class EventActivity extends AppCompatActivity {
                 addRefuelButton = findViewById(R.id.button_add_refuel);
                 addRepairButton = findViewById(R.id.button_add_repair);
                 addEarningButton = findViewById(R.id.button_add_earning);
-                addCostButton = findViewById(R.id.button_add_cost);
+//                addCostButton = findViewById(R.id.button_add_cost);
 
                 addEventButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -74,7 +74,7 @@ public class EventActivity extends AppCompatActivity {
                         addRefuelButton.setVisibility(View.VISIBLE);
                         addRepairButton.setVisibility(View.VISIBLE);
                         addEarningButton.setVisibility(View.VISIBLE);
-                        addCostButton.setVisibility(View.VISIBLE);
+//                        addCostButton.setVisibility(View.VISIBLE);
                     }
                 });
 
@@ -97,14 +97,14 @@ public class EventActivity extends AppCompatActivity {
                     }
                 });
 
-                addCostButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent eventActivityIntent = new Intent(EventActivity.this, CostActivity.class);
-                        eventActivityIntent.putExtra("id", id);
-                        startActivity(eventActivityIntent);
-                    }
-                });
+//                addCostButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent eventActivityIntent = new Intent(EventActivity.this, CostActivity.class);
+//                        eventActivityIntent.putExtra("id", id);
+//                        startActivity(eventActivityIntent);
+//                    }
+//                });
 
                 addRepairButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -132,7 +132,7 @@ public class EventActivity extends AppCompatActivity {
 //        Earning earning = new Earning("Covoiturage", 70, Calendar.getInstance().getTime(), 180000);
 //        Cost cost = new Cost(70, "Covoiturage", "CB", Calendar.getInstance().getTime(), 180000);
 //
-        //        NetworkManager.getAllEarning( "aaa", new NetworkCallback());
+       NetworkManager.getAllRefuel( id, callback);
     }
 
     @Override

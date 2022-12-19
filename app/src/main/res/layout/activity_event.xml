@@ -107,16 +107,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/button_add_earning" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_add_cost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="32dp"
-        android:backgroundTint="@color/purple"
-        android:visibility="gone"
-        android:src="@drawable/ic_cost"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_repair" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/button_add_cost"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_margin="32dp"-->
+<!--        android:backgroundTint="@color/purple"-->
+<!--        android:visibility="gone"-->
+<!--        android:src="@drawable/ic_cost"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/button_add_repair" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,9 +34,9 @@ public class RepairActivity extends AppCompatActivity {
     FloatingActionButton back;
     Button save;
 
-    EditText litterPrice;
-    EditText totalCost;
-    EditText litter;
+    EditText reason;
+    EditText cost;
+    EditText payementMethod;
     EditText mileage;
     EditText dateText;
 
@@ -45,39 +45,14 @@ public class RepairActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair);
 
-        litterPrice = findViewById(R.id.litterPriceText);
-        totalCost = findViewById(R.id.totalCostText);
-        litter = findViewById(R.id.litterText);
+        reason = findViewById(R.id.reasonText);
+        cost = findViewById(R.id.costText);
+        payementMethod = findViewById(R.id.payementMethodText);
         mileage = findViewById(R.id.mileageText);
 
         Intent intent = getIntent();
         String id = intent.getExtras().getString("id");
         Log.d("ALEXIA", id);
-
-        //https://andrologiciels.wordpress.com/astuces-android/divers-2/quitter-une-application/liste-deroulante-spinner/
-        //-- Drop Down Fuel Type
-        final Spinner spinnerFuelType = (Spinner) findViewById(R.id.spinnerFuelType);
-        String[] lFuelType = {"Gasoline","Diesel Fuel", "Bio-diesel", "Ethanol"};
-        ArrayAdapter<String> dataAdapterF = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lFuelType);
-        dataAdapterF.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerFuelType.setAdapter(dataAdapterF);
-
-        //-- Gestion du Click sur la liste Fuel type
-        spinnerFuelType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                myFuelType = String.valueOf(spinnerFuelType.getSelectedItem());
-//                Toast.makeText(RefuelActivity.this,
-//                        "OnClickListener : " +
-//                                "\nSpinner 1 : " + myFuelType,
-//                        Toast.LENGTH_SHORT).show();
-                       }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
-            }
-
-        });
 
         //-- Date Picker
         dateText = (EditText) findViewById(R.id.dateText);
@@ -111,17 +86,17 @@ public class RepairActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 //Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
-                if( !litterPrice.getText().toString().isEmpty() && !totalCost.getText().toString().isEmpty() && !litter.getText().toString().isEmpty() && !mileage.getText().toString().isEmpty()){
-                    Float litterPriceValue = Float.valueOf(litterPrice.getText().toString());
-                    Float totalCostValue = Float.valueOf(totalCost.getText().toString());
-                    Float litterValue = Float.valueOf(litter.getText().toString());
+                if( !reason.getText().toString().isEmpty() && !cost.getText().toString().isEmpty() && !payementMethod.getText().toString().isEmpty() && !mileage.getText().toString().isEmpty()){
+                    String reasonValue = reason.getText().toString();
+                    Float costValue = Float.valueOf(cost.getText().toString());
+                    String payementMethodValue = payementMethod.getText().toString();
                     Integer mileageValue = Integer.valueOf(mileage.getText().toString());
 
-                    Refuel refuel = new Refuel(myFuelType, litterPriceValue, totalCostValue, litterValue, myCalendar.getTime(),  mileageValue);
+                    Cost cost = new Cost(costValue, reasonValue, payementMethodValue, myCalendar.getTime(),  mileageValue);
 
                     //Creer nouveau véhicule ici pour la bdd
                     //Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
-                    networkManager.createRefuel(refuel, id);
+                    networkManager.createCost(cost, id);
                     Intent returnMenuIntent = new Intent(RepairActivity.this, EventActivity.class);
                     returnMenuIntent.putExtra("id", id);
                     startActivity(returnMenuIntent);
