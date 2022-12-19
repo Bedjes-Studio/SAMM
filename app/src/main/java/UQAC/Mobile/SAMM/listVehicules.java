@@ -8,8 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +33,7 @@ public class listVehicules extends AppCompatActivity {
 
         FloatingActionButton button_add_car = findViewById(R.id.button_add_car);
         FloatingActionButton logout = findViewById(R.id.logout);
+        FloatingActionButton info = findViewById(R.id.info);
         RecyclerView recyclerView = findViewById(R.id.recycler_view_car);
 
         // création de la callback
@@ -74,6 +80,36 @@ public class listVehicules extends AppCompatActivity {
                     }
                 });
 
+                info.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(listVehicules.this, "Info", Toast.LENGTH_SHORT).show();
+
+                        LayoutInflater inflater = (LayoutInflater)
+                                getSystemService(LAYOUT_INFLATER_SERVICE);
+                        View popupView = inflater.inflate(R.layout.info_vehicles, null);
+
+                        // create the popup window
+                        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                        boolean focusable = true; // lets taps outside the popup also dismiss it
+                        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+                        // show the popup window
+                        // which view you pass in doesn't matter, it is only used for the window tolken
+                        popupWindow.showAtLocation(recyclerView, Gravity.CENTER, 0, 0);
+
+//                        // dismiss the popup window when touched
+//                        popupView.setOnTouchListener(new View.OnTouchListener() {
+//                            @Override
+//                            public boolean onTouch(View v, MotionEvent event) {
+//                                popupWindow.dismiss();
+//                                return true;
+//                            }
+//                        });
+                    }
+                });
+
                 adapter.setOnItemClickListener(new CarAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(String id) {
@@ -88,31 +124,63 @@ public class listVehicules extends AppCompatActivity {
                     @Override
                     public void onItemLongClick(String id) {
                         Toast.makeText(listVehicules.this, "Delete car", Toast.LENGTH_SHORT).show();
-                        Log.d("ALEXIA", "delete car");
 
-                        NetworkCallback callback1 = new NetworkCallback() {
+                        LayoutInflater inflater = (LayoutInflater)
+                                getSystemService(LAYOUT_INFLATER_SERVICE);
+                        View popupView = inflater.inflate(R.layout.delete_vehicles, null);
+
+                        Button confirm = popupView.findViewById(R.id.button_delete);
+                        // create the popup window
+                        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                        boolean focusable = true; // lets taps outside the popup also dismiss it
+                        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+                        // show the popup window
+                        // which view you pass in doesn't matter, it is only used for the window tolken
+                        popupWindow.showAtLocation(recyclerView, Gravity.CENTER, 0, 0);
+
+                        // dismiss the popup window when touched
+                        popupView.setOnTouchListener(new View.OnTouchListener() {
                             @Override
-                            public void onActionSuccess() {
-                                Log.d("ALEXIA", "succes callback 1");
-                                NetworkCallback callback2 = new NetworkCallback() {
+                            public boolean onTouch(View v, MotionEvent event) {
+                                popupWindow.dismiss();
+                                return true;
+                            }
+                        });
+
+                        confirm.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.d("ALEXIA", "delete car");
+
+                                NetworkCallback callback1 = new NetworkCallback() {
                                     @Override
-                                    public void onActionSuccess(Car[] cars) {
-                                        Log.d("ALEXIA", "succes callback 2");
-                                        CarAdapter adapter = new CarAdapter(listVehicules.this, cars);
+                                    public void onActionSuccess() {
+                                        Log.d("ALEXIA", "succes callback 1");
+                                        NetworkCallback callback2 = new NetworkCallback() {
+                                            @Override
+                                            public void onActionSuccess(Car[] cars) {
+                                                Log.d("ALEXIA", "succes callback 2");
+                                                CarAdapter adapter = new CarAdapter(listVehicules.this, cars);
 
+                                                recyclerView.setAdapter(adapter);
+                                                recyclerView.setLayoutManager(new LinearLayoutManager(listVehicules.this));
+                                            }
 
-                                        recyclerView.setAdapter(adapter);
-                                        recyclerView.setLayoutManager(new LinearLayoutManager(listVehicules.this));
+                                        };
+
+                                        NetworkManager.getAllCar(callback2);
                                     }
 
                                 };
 
-                                NetworkManager.getAllCar(callback2);
+                                NetworkManager.deleteCar(id, callback1);
+                                popupWindow.dismiss();
                             }
 
-                        };
+                        });
 
-                        NetworkManager.deleteCar(id, callback1);
                     }
                 });
             }
@@ -125,6 +193,9 @@ public class listVehicules extends AppCompatActivity {
 
         // appel networkmanager avec callback
         NetworkManager.getAllCar(callback);
+
     }
+
+
 
 }
