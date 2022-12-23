@@ -17,7 +17,7 @@
         android:theme="@style/Theme.SAMM"
         tools:targetApi="31">
         <activity
-            android:name=".EarningActivity"
+            android:name=".activity.EarningActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
