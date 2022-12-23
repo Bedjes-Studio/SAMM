@@ -1,3 +1,3 @@
 # Simplest Auto Moto Manager
 
-SAMM is a really nice too to manage your car.
+SAMM is a really nice tool to manage your car.

@@ -1,0 +1,8 @@
+SAMM - Simplest Auto Moto Manager
+Copyright 2022 - Hugo LANGLAIS & Alexia LACOMBE
+
+This project is under Apache License version 2.0. A copy of the licence is available in the file
+LICENCE.txt at the root of the project.
+
+The Initial Developers were Hugo LANGLAIS, Alexia LACOMBE and Lilian MAGNE. Lilian MAGNE leaved the
+project before the code was under license.
