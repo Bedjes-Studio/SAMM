@@ -43,6 +43,8 @@ import UQAC.Mobile.SAMM.R;
 
 public class CostActivity extends AppCompatActivity {
 
+    private final static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
+
     private final Calendar myCalendar = Calendar.getInstance();
 
     private FloatingActionButton back;
@@ -55,6 +57,7 @@ public class CostActivity extends AppCompatActivity {
 
     private String intentId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +65,6 @@ public class CostActivity extends AppCompatActivity {
 
         readIntendExtras();
         findViewInLayout();
-
         setOnClickListeners();
     }
 
@@ -78,8 +80,7 @@ public class CostActivity extends AppCompatActivity {
         save = findViewById(R.id.button_save_event);
         back = findViewById(R.id.backButtonCreationV);
         dateText = (EditText) findViewById(R.id.dateText);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dateText.setText(dateFormat.format(new Date())); // it will show 16/07/2013
+        dateText.setText(dateFormat.format(new Date()));
     }
 
     private void setOnClickListeners() {
@@ -90,7 +91,7 @@ public class CostActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, month);
                 myCalendar.set(Calendar.DAY_OF_MONTH, day);
-                updateLabel();
+                dateText.setText(dateFormat.format(myCalendar.getTime()));
             }
         };
 
@@ -140,12 +141,6 @@ public class CostActivity extends AppCompatActivity {
                 startActivity(returnMenuIntent);
             }
         });
-    }
-
-    private void updateLabel() {
-        String myFormat = "MM/dd/yy";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
-        dateText.setText(dateFormat.format(myCalendar.getTime()));
     }
 
     @Override

@@ -32,6 +32,8 @@ import UQAC.Mobile.SAMM.R;
 
 public class EarningActivity extends AppCompatActivity {
 
+    private final static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
+
     final Calendar myCalendar = Calendar.getInstance();
 
     FloatingActionButton back;
@@ -42,72 +44,77 @@ public class EarningActivity extends AppCompatActivity {
     EditText mileage;
     EditText dateText;
 
+    private String intentId;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earning);
 
+        readIntendExtras();
+        findViewInLayout();
+        setOnClickListeners();
+    }
+
+    private void readIntendExtras() {
+        Intent intent = getIntent();
+        intentId = intent.getExtras().getString("id");
+    }
+
+    private void findViewInLayout() {
         value = findViewById(R.id.valueText);
         reason = findViewById(R.id.reasonText);
         mileage = findViewById(R.id.mileageText);
-
-        Intent intent = getIntent();
-        String id = intent.getExtras().getString("id");
-        Log.d("ALEXIA", id);
-
-        NetworkManager networkManager = new NetworkManager();
-
-
-        //-- Date Picker
+        save = findViewById(R.id.button_save_event);
+        back = findViewById(R.id.backButtonCreationV);
         dateText = (EditText) findViewById(R.id.dateText);
+        dateText.setText(dateFormat.format(new Date()));
+    }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dateText.setText(dateFormat.format(new Date())); // it will show 16/07/2013
+    private void setOnClickListeners() {
 
-        DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH,month);
-                myCalendar.set(Calendar.DAY_OF_MONTH,day);
-                updateLabel();
+                myCalendar.set(Calendar.MONTH, month);
+                myCalendar.set(Calendar.DAY_OF_MONTH, day);
+                dateText.setText(dateFormat.format(myCalendar.getTime()));
             }
         };
+
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(EarningActivity.this,date,
+                new DatePickerDialog(EarningActivity.this, date,
                         myCalendar.get(Calendar.YEAR),
                         myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
-        // --Save
-        save = findViewById(R.id.button_save_event);
-
-        back = findViewById(R.id.backButtonCreationV);
-
+        // TODO : clean this listener
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
-                if(!reason.getText().toString().isEmpty() && !value.getText().toString().isEmpty() && !mileage.getText().toString().isEmpty()){//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
+                if (!reason.getText().toString().isEmpty() && !value.getText().toString().isEmpty() && !mileage.getText().toString().isEmpty()) {//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
 
                     Float valueValue = Float.valueOf(value.getText().toString());
                     String reasonValue = reason.getText().toString();
                     Integer mileageValue = Integer.valueOf(mileage.getText().toString());
 
-                    Earning earning = new Earning( reasonValue, valueValue, myCalendar.getTime(),  mileageValue);
+                    Earning earning = new Earning(reasonValue, valueValue, myCalendar.getTime(), mileageValue);
 
                     earning.save(earning);
 
-                    networkManager.createEearning(earning, id);
+                    NetworkManager.createEearning(earning, intentId);
                     Intent returnMenuIntent = new Intent(EarningActivity.this, EventActivity.class);
-                    returnMenuIntent.putExtra("id", id);
+                    returnMenuIntent.putExtra("id", intentId);
                     startActivity(returnMenuIntent);
 
-                }else{
+                } else {
                     Toast.makeText(EarningActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
                 }
 
@@ -120,16 +127,10 @@ public class EarningActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent returnMenuIntent = new Intent(EarningActivity.this, EventActivity.class);
-                returnMenuIntent.putExtra("id", id);
+                returnMenuIntent.putExtra("id", intentId);
                 startActivity(returnMenuIntent);
             }
         });
-    }
-
-    private void updateLabel(){
-        String myFormat="MM/dd/yy";
-        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-        dateText.setText(dateFormat.format(myCalendar.getTime()));
     }
 
     @Override
