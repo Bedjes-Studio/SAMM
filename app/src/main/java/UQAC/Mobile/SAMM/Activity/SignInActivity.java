@@ -15,7 +15,7 @@ import UQAC.Mobile.SAMM.API.NetworkCallback;
 import UQAC.Mobile.SAMM.API.NetworkManager;
 import UQAC.Mobile.SAMM.R;
 
-public class SignIn extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +38,14 @@ public class SignIn extends AppCompatActivity {
                 NetworkCallback callback = new NetworkCallback() {
                     @Override
                     public void onActionSuccess() {
-                        Toast.makeText(SignIn.this, "Création de compte reussie", Toast.LENGTH_SHORT).show();
-                        Intent backIntent = new Intent(SignIn.this, MainActivity.class);
+                        Toast.makeText(SignInActivity.this, "Création de compte reussie", Toast.LENGTH_SHORT).show();
+                        Intent backIntent = new Intent(SignInActivity.this, LoginActivity.class);
                         startActivity(backIntent);
                     }
 
                     @Override
                     public void onActionFailure() {
-                        Toast.makeText(SignIn.this, "Création de compte échouée", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignInActivity.this, "Création de compte échouée", Toast.LENGTH_SHORT).show();
                     }
                 };
 
@@ -65,7 +65,7 @@ public class SignIn extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent backIntent = new Intent(SignIn.this, MainActivity.class);
+                Intent backIntent = new Intent(SignInActivity.this, LoginActivity.class);
                 //addNoteIntent.putExtra("title", "Titre de la note");
                 startActivity(backIntent);
             }

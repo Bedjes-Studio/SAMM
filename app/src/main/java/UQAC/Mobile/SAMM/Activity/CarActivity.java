@@ -47,11 +47,35 @@ import UQAC.Mobile.SAMM.R;
 
 public class CarActivity extends AppCompatActivity {
 
-    private FloatingActionButton button_add_car;
-    private FloatingActionButton logout;
-    private FloatingActionButton info;
+    private FloatingActionButton addCarButton;
+    private FloatingActionButton logoutButton;
+    private FloatingActionButton infoButton;
     private RecyclerView recyclerView;
     private CarAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_car);
+
+        findViewInLayout();
+        NetworkManager.getAllCar(callback);
+    }
+
+    private void findViewInLayout() {
+        addCarButton = findViewById(R.id.addCarButton);
+        logoutButton = findViewById(R.id.logoutButton);
+        infoButton = findViewById(R.id.infoButton);
+        recyclerView = findViewById(R.id.recycler_view_car);
+    }
+
+    private final NetworkCallback callback = new NetworkCallback() {
+        @Override
+        public void onActionSuccess(Car[] cars) {
+            updateRecyclerview(cars);
+            setOnClickListeners();
+        }
+    };
 
     private void updateRecyclerview(Car[] cars) {
         adapter = new CarAdapter(CarActivity.this, cars);
@@ -61,7 +85,7 @@ public class CarActivity extends AppCompatActivity {
 
     private void setOnClickListeners() {
 
-        button_add_car.setOnClickListener(new View.OnClickListener() {
+        addCarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addVehiculeIntent = new Intent(CarActivity.this, CarCreationActivity.class);
@@ -69,14 +93,14 @@ public class CarActivity extends AppCompatActivity {
             }
         });
 
-        logout.setOnClickListener(new View.OnClickListener() {
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(CarActivity.this, "Logout", Toast.LENGTH_SHORT).show();
                 NetworkManager.disconnect(CarActivity.this.getSharedPreferences("Usertoken", Context.MODE_PRIVATE), new NetworkCallback() {
                     @Override
                     public void onActionSuccess() {
-                        Intent mainActivityIntent = new Intent(CarActivity.this, MainActivity.class);
+                        Intent mainActivityIntent = new Intent(CarActivity.this, LoginActivity.class);
                         mainActivityIntent.putExtra("autologin", false);
                         startActivity(mainActivityIntent);
                     }
@@ -84,7 +108,7 @@ public class CarActivity extends AppCompatActivity {
             }
         });
 
-        info.setOnClickListener(new View.OnClickListener() {
+        infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(CarActivity.this, "Info", Toast.LENGTH_SHORT).show();
@@ -185,38 +209,7 @@ public class CarActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
-    // création de la callback
-    private final NetworkCallback callback = new NetworkCallback() {
 
-        @Override
-        public void onActionSuccess(Car[] cars) {
-            // Toast.makeText(CarActivity.this, "Get car reussie", Toast.LENGTH_SHORT).show();
-            updateRecyclerview(cars);
-            setOnClickListeners();
-        }
-
-        @Override
-        public void onActionFailure() {
-            // Toast.makeText(CarActivity.this, "Get car ratee", Toast.LENGTH_SHORT).show();
-        }
-    };
-
-    private void findViewInLayout() {
-        button_add_car = findViewById(R.id.button_add_car);
-        logout = findViewById(R.id.logout);
-        info = findViewById(R.id.info);
-        recyclerView = findViewById(R.id.recycler_view_car);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_car);
-
-        findViewInLayout();
-        NetworkManager.getAllCar(callback);
-    }
 }

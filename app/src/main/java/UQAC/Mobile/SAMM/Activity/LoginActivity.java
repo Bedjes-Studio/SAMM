@@ -14,7 +14,7 @@ import UQAC.Mobile.SAMM.API.NetworkCallback;
 import UQAC.Mobile.SAMM.API.NetworkManager;
 import UQAC.Mobile.SAMM.R;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     //TextView signIn = findViewById(R.id.signIn);
     NetworkManager networkManager = new NetworkManager();
 
@@ -48,15 +48,15 @@ public class MainActivity extends AppCompatActivity {
         NetworkManager.tokenCheck(this.getSharedPreferences("Usertoken", Context.MODE_PRIVATE), new NetworkCallback() {
             @Override
             public void onActionSuccess() {
-                Toast.makeText(MainActivity.this, "Connection automatique reussie", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Connection automatique reussie", Toast.LENGTH_SHORT).show();
                 networkManager.createContent();
-                Intent loginIntent = new Intent(MainActivity.this, CarActivity.class);
+                Intent loginIntent = new Intent(LoginActivity.this, CarActivity.class);
                 startActivity(loginIntent);
             }
 
             @Override
             public void onActionFailure() {
-                Toast.makeText(MainActivity.this, "Connection automatique échouée", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Connection automatique échouée", Toast.LENGTH_SHORT).show();
             }
         });}
 
@@ -68,26 +68,26 @@ public class MainActivity extends AppCompatActivity {
                 NetworkCallback callback = new NetworkCallback() {
                     @Override
                     public void onActionSuccess() {
-                        Toast.makeText(MainActivity.this, "Connection reussie", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Connection reussie", Toast.LENGTH_SHORT).show();
                         networkManager.createContent();
-                        Intent loginIntent = new Intent(MainActivity.this, CarActivity.class);
+                        Intent loginIntent = new Intent(LoginActivity.this, CarActivity.class);
                         startActivity(loginIntent);
                     }
 
                     @Override
                     public void onActionFailure() {
-                        Toast.makeText(MainActivity.this, "Connection ratee", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Connection ratee", Toast.LENGTH_SHORT).show();
                     }
                 };
 
                 // appel networkmanager avec callback
-                NetworkManager.login(MainActivity.this.getSharedPreferences("Usertoken", Context.MODE_PRIVATE), username.getText().toString(), password.getText().toString(), callback);
+                NetworkManager.login(LoginActivity.this.getSharedPreferences("Usertoken", Context.MODE_PRIVATE), username.getText().toString(), password.getText().toString(), callback);
             }
         });
     }
 
     public void setSignIn(View v) {
-        Intent signInIntent = new Intent(MainActivity.this, SignIn.class);
+        Intent signInIntent = new Intent(LoginActivity.this, SignInActivity.class);
         //addNoteIntent.putExtra("title", "Titre de la note");
         startActivity(signInIntent);
 
