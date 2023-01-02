@@ -19,7 +19,6 @@ package UQAC.Mobile.SAMM.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -85,61 +84,47 @@ public class CostActivity extends AppCompatActivity {
 
     private void setOnClickListeners() {
 
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, month);
-                myCalendar.set(Calendar.DAY_OF_MONTH, day);
-                dateText.setText(dateFormat.format(myCalendar.getTime()));
-            }
+        DatePickerDialog.OnDateSetListener date = (DatePicker view, int year, int month, int day) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, month);
+            myCalendar.set(Calendar.DAY_OF_MONTH, day);
+            dateText.setText(dateFormat.format(myCalendar.getTime()));
         };
 
-        dateText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(CostActivity.this, date,
-                        myCalendar.get(Calendar.YEAR),
-                        myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
+        dateText.setOnClickListener((View view) -> {
+            new DatePickerDialog(CostActivity.this, date,
+                    myCalendar.get(Calendar.YEAR),
+                    myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
         });
 
         // TODO : clean this listener
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Float valueValue = Float.valueOf(value.getText().toString());
-                String reasonValue = reason.getText().toString();
-                Integer mileageValue = Integer.valueOf(mileage.getText().toString());
+        save.setOnClickListener((View view) -> {
+            float valueValue = Float.parseFloat(value.getText().toString());
+            String reasonValue = reason.getText().toString();
+            int mileageValue = Integer.parseInt(mileage.getText().toString());
 
-                Earning earning = new Earning(reasonValue, valueValue, myCalendar.getTime(), mileageValue);
+            Earning earning = new Earning(reasonValue, valueValue, myCalendar.getTime(), mileageValue);
 
-                earning.save(earning);
+            earning.save(earning);
 
-//                Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
-                if (true) {//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
-                    //Creer nouveau véhicule ici pour la bdd
-                    //Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
-                    NetworkManager.events.add(earning);
-                    Intent returnMenuIntent = new Intent(CostActivity.this, EventActivity.class);
-                    startActivity(returnMenuIntent);
-                } else {
-                    Toast.makeText(CostActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
-                }
-
-//                Intent eventActivityIntent = new Intent(EarningActivity.this, EventActivity.class);
-//                startActivity(eventActivityIntent);
+            // TODO : if is always true
+            // Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
+            if (true) {//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
+                //Creer nouveau véhicule ici pour la bdd
+                //Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
+                NetworkManager.events.add(earning);
+                Intent returnMenuIntent = new Intent(CostActivity.this, EventActivity.class);
+                startActivity(returnMenuIntent);
+            } else {
+                Toast.makeText(CostActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent returnMenuIntent = new Intent(CostActivity.this, EventActivity.class);
-                returnMenuIntent.putExtra("id", intentId);
-                startActivity(returnMenuIntent);
-            }
+        back.setOnClickListener((View view) -> {
+            Intent returnMenuIntent = new Intent(CostActivity.this, EventActivity.class);
+            returnMenuIntent.putExtra("id", intentId);
+            startActivity(returnMenuIntent);
         });
     }
 

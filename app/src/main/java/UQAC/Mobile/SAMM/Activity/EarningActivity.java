@@ -117,9 +117,9 @@ public class EarningActivity extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
                 if (!reason.getText().toString().isEmpty() && !value.getText().toString().isEmpty() && !mileage.getText().toString().isEmpty()) {//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
 
-                    Float valueValue = Float.valueOf(value.getText().toString());
+                    float valueValue = Float.parseFloat(value.getText().toString());
                     String reasonValue = reason.getText().toString();
-                    Integer mileageValue = Integer.valueOf(mileage.getText().toString());
+                    int mileageValue = Integer.parseInt(mileage.getText().toString());
 
                     Earning earning = new Earning(reasonValue, valueValue, myCalendar.getTime(), mileageValue);
 
