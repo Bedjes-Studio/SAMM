@@ -138,7 +138,7 @@ public class EventActivity extends AppCompatActivity {
 
         statButton.setOnClickListener((View view) -> {
             if (NetworkManager.events.size() > 0) {
-                Intent statsIntent = new Intent(EventActivity.this, Statistiques.class);
+                Intent statsIntent = new Intent(EventActivity.this, StatsActivity.class);
                 statsIntent.putExtra("id", intentId);
                 startActivity(statsIntent);
             } else {

@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
     // TODO : onclick event is in layout, move it to java class file
     //  see : https://stackoverflow.com/questions/21319996/android-onclick-in-xml-vs-onclicklistener
     public void setSignIn(View v) {
-        Intent signInIntent = new Intent(LoginActivity.this, SignInActivity.class);
+        Intent signInIntent = new Intent(LoginActivity.this, SignUpActivity.class);
         //addNoteIntent.putExtra("title", "Titre de la note");
         startActivity(signInIntent);
 
