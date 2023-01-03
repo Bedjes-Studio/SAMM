@@ -40,6 +40,7 @@ public class SignInActivity extends AppCompatActivity {
                     public void onActionSuccess() {
                         Toast.makeText(SignInActivity.this, "Création de compte reussie", Toast.LENGTH_SHORT).show();
                         Intent backIntent = new Intent(SignInActivity.this, LoginActivity.class);
+                        backIntent.putExtra("autologin", false);
                         startActivity(backIntent);
                     }
 
