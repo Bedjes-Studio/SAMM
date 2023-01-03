@@ -126,7 +126,7 @@ public class RefuelActivity extends AppCompatActivity {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, month);
             myCalendar.set(Calendar.DAY_OF_MONTH, day);
-            updateLabel();
+            dateText.setText(dateFormat.format(myCalendar.getTime()));
         };
 
         dateText.setOnClickListener((View view) -> {
@@ -160,12 +160,6 @@ public class RefuelActivity extends AppCompatActivity {
             returnMenuIntent.putExtra("id", intentId);
             startActivity(returnMenuIntent);
         });
-    }
-
-    private void updateLabel() {
-        String myFormat = "MM/dd/yy";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
-        dateText.setText(dateFormat.format(myCalendar.getTime()));
     }
 
     @Override
