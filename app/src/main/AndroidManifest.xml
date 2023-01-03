@@ -17,68 +17,67 @@
         android:theme="@style/Theme.SAMM"
         tools:targetApi="31">
         <activity
-            android:name=".activity.EarningActivity"
+            android:name=".Activity.EarningActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".RefuelActivity"
+            android:name=".Activity.RefuelActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".EventActivity"
+            android:name=".Activity.EventActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".RepairActivity"
+            android:name=".Activity.RepairActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CostActivity"
+            android:name=".Activity.CostActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Statistiques"
+            android:name=".Activity.Statistiques"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignIn"
+            android:name=".Activity.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SIGNIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".listVehicules"
+            android:name=".Activity.CarActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".addVehicule"
+            android:name=".Activity.CarCreationActivity"
             android:exported="true"></activity>
     </application>
 
