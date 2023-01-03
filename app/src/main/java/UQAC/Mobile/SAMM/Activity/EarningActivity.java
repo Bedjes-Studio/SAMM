@@ -50,18 +50,17 @@ public class EarningActivity extends AppCompatActivity {
 
     private final static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
 
-    final Calendar myCalendar = Calendar.getInstance();
+    private final Calendar myCalendar = Calendar.getInstance();
 
-    FloatingActionButton back;
-    Button save;
+    private FloatingActionButton back;
+    private Button save;
 
-    EditText value;
-    EditText reason;
-    EditText mileage;
-    EditText dateText;
+    private EditText value;
+    private EditText reason;
+    private EditText mileage;
+    private EditText dateText;
 
     private String intentId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

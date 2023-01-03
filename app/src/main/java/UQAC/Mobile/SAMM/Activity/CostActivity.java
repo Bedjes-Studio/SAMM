@@ -128,6 +128,7 @@ public class CostActivity extends AppCompatActivity {
         });
     }
 
+    // TODO : is there other cases ?
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
