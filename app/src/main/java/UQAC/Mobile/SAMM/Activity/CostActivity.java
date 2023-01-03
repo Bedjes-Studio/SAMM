@@ -40,6 +40,10 @@ import UQAC.Mobile.SAMM.Base.Earning;
 import UQAC.Mobile.SAMM.API.NetworkManager;
 import UQAC.Mobile.SAMM.R;
 
+/**
+ * This activity shows the form to create cost
+ */
+
 public class CostActivity extends AppCompatActivity {
 
     private final static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
@@ -55,7 +59,6 @@ public class CostActivity extends AppCompatActivity {
     private EditText dateText;
 
     private String intentId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,13 +131,11 @@ public class CostActivity extends AppCompatActivity {
         });
     }
 
-    // TODO : is there other cases ?
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,48 +84,41 @@ public class CarActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(CarActivity.this));
     }
 
+    // TODO : clean that function
     private void setOnClickListeners() {
 
-        addCarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addVehiculeIntent = new Intent(CarActivity.this, CarCreationActivity.class);
-                startActivity(addVehiculeIntent);
-            }
+        addCarButton.setOnClickListener((View view) -> {
+            Intent addVehiculeIntent = new Intent(CarActivity.this, CarCreationActivity.class);
+            startActivity(addVehiculeIntent);
         });
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CarActivity.this, "Logout", Toast.LENGTH_SHORT).show();
-                NetworkManager.disconnect(CarActivity.this.getSharedPreferences("Usertoken", Context.MODE_PRIVATE), new NetworkCallback() {
-                    @Override
-                    public void onActionSuccess() {
-                        Intent mainActivityIntent = new Intent(CarActivity.this, LoginActivity.class);
-                        mainActivityIntent.putExtra("autologin", false);
-                        startActivity(mainActivityIntent);
-                    }
-                });
-            }
+        logoutButton.setOnClickListener((View view) -> {
+            Toast.makeText(CarActivity.this, "Logout", Toast.LENGTH_SHORT).show();
+            NetworkManager.disconnect(CarActivity.this.getSharedPreferences("Usertoken", Context.MODE_PRIVATE), new NetworkCallback() {
+                @Override
+                public void onActionSuccess() {
+                    Intent mainActivityIntent = new Intent(CarActivity.this, LoginActivity.class);
+                    mainActivityIntent.putExtra("autologin", false);
+                    startActivity(mainActivityIntent);
+                }
+            });
         });
 
-        infoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CarActivity.this, "Info", Toast.LENGTH_SHORT).show();
+        infoButton.setOnClickListener((View view) -> {
+            Toast.makeText(CarActivity.this, "Info", Toast.LENGTH_SHORT).show();
 
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.info_vehicles, null);
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            View popupView = inflater.inflate(R.layout.info_vehicles, null);
 
-                // create the popup window
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+            // create the popup window
+            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            boolean focusable = true; // lets taps outside the popup also dismiss it
+            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
-                // show the popup window
-                // which view you pass in doesn't matter, it is only used for the window tolken
-                popupWindow.showAtLocation(recyclerView, Gravity.CENTER, 0, 0);
+            // show the popup window
+            // which view you pass in doesn't matter, it is only used for the window tolken
+            popupWindow.showAtLocation(recyclerView, Gravity.CENTER, 0, 0);
 
 //                        // dismiss the popup window when touched
 //                        popupView.setOnTouchListener(new View.OnTouchListener() {
@@ -134,82 +128,63 @@ public class CarActivity extends AppCompatActivity {
 //                                return true;
 //                            }
 //                        });
-            }
         });
 
-        adapter.setOnItemClickListener(new CarAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(String id) {
-                Intent eventActivityIntent = new Intent(CarActivity.this, EventActivity.class);
-                eventActivityIntent.putExtra("id", id);
-                startActivity(eventActivityIntent);
-            }
-
+        adapter.setOnItemClickListener((String id) -> {
+            Intent eventActivityIntent = new Intent(CarActivity.this, EventActivity.class);
+            eventActivityIntent.putExtra("id", id);
+            startActivity(eventActivityIntent);
         });
 
-        adapter.setOnItemLongClickListener(new CarAdapter.OnItemLongClickListener() {
-            @Override
-            public void onItemLongClick(String id) {
-                Toast.makeText(CarActivity.this, "Delete car", Toast.LENGTH_SHORT).show();
+        adapter.setOnItemLongClickListener((String id) -> {
+            Toast.makeText(CarActivity.this, "Delete car", Toast.LENGTH_SHORT).show();
 
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.delete_vehicles, null);
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            View popupView = inflater.inflate(R.layout.delete_vehicles, null);
 
-                Button confirm = popupView.findViewById(R.id.button_delete);
-                // create the popup window
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+            Button confirm = popupView.findViewById(R.id.button_delete);
+            // create the popup window
+            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            boolean focusable = true; // lets taps outside the popup also dismiss it
+            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
-                // show the popup window
-                // which view you pass in doesn't matter, it is only used for the window tolken
-                popupWindow.showAtLocation(recyclerView, Gravity.CENTER, 0, 0);
+            // show the popup window
+            // which view you pass in doesn't matter, it is only used for the window tolken
+            popupWindow.showAtLocation(recyclerView, Gravity.CENTER, 0, 0);
 
-                // dismiss the popup window when touched
-                popupView.setOnTouchListener(new View.OnTouchListener() {
+            // dismiss the popup window when touched
+            popupView.setOnTouchListener((View view, MotionEvent event) -> {
+                popupWindow.dismiss();
+                view.performClick();
+                return true;
+            });
+
+            confirm.setOnClickListener((View view) -> {
+                Log.d("ALEXIA", "delete car");
+
+                NetworkCallback callback1 = new NetworkCallback() {
                     @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-
-                confirm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.d("ALEXIA", "delete car");
-
-                        NetworkCallback callback1 = new NetworkCallback() {
+                    public void onActionSuccess() {
+                        Log.d("ALEXIA", "succes callback 1");
+                        NetworkCallback callback2 = new NetworkCallback() {
                             @Override
-                            public void onActionSuccess() {
-                                Log.d("ALEXIA", "succes callback 1");
-                                NetworkCallback callback2 = new NetworkCallback() {
-                                    @Override
-                                    public void onActionSuccess(Car[] cars) {
-                                        Log.d("ALEXIA", "succes callback 2");
-                                        CarAdapter adapter = new CarAdapter(CarActivity.this, cars);
+                            public void onActionSuccess(Car[] cars) {
+                                Log.d("ALEXIA", "succes callback 2");
+                                CarAdapter adapter = new CarAdapter(CarActivity.this, cars);
 
-                                        recyclerView.setAdapter(adapter);
-                                        recyclerView.setLayoutManager(new LinearLayoutManager(CarActivity.this));
-                                    }
-
-                                };
-
-                                NetworkManager.getAllCar(callback2);
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(CarActivity.this));
                             }
 
                         };
 
-                        NetworkManager.deleteCar(id, callback1);
-                        popupWindow.dismiss();
+                        NetworkManager.getAllCar(callback2);
                     }
-
-                });
-
-            }
+                };
+                NetworkManager.deleteCar(id, callback1);
+                popupWindow.dismiss();
+            });
         });
     }
-
-
 }

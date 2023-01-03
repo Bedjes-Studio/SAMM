@@ -86,25 +86,19 @@ public class CarCreationActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void setOnClickListeners() {
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent returnMenuIntent = new Intent(CarCreationActivity.this, CarActivity.class);
-                startActivity(returnMenuIntent);
-            }
+        backButton.setOnClickListener((View view) -> {
+            Intent returnMenuIntent = new Intent(CarCreationActivity.this, CarActivity.class);
+            startActivity(returnMenuIntent);
         });
 
-        creation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()) {
-                    Car car = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), 2000, typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
-                    NetworkManager.createCar(car);
-                    Intent returnMenuIntent = new Intent(CarCreationActivity.this, CarActivity.class);
-                    startActivity(returnMenuIntent);
-                } else {
-                    Toast.makeText(CarCreationActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
-                }
+        creation.setOnClickListener((View view) -> {
+            if (!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()) {
+                Car car = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), 2000, typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
+                NetworkManager.createCar(car);
+                Intent returnMenuIntent = new Intent(CarCreationActivity.this, CarActivity.class);
+                startActivity(returnMenuIntent);
+            } else {
+                Toast.makeText(CarCreationActivity.this, "Champ manquant ou mal complété !", Toast.LENGTH_SHORT).show();
             }
         });
     }

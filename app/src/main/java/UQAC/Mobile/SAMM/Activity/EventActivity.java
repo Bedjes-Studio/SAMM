@@ -47,8 +47,6 @@ public class EventActivity extends AppCompatActivity {
     private FloatingActionButton statButton;
 
     private RecyclerView recyclerView;
-    private EventAdapterClass adapter;
-
 
     private String intentId;
 
@@ -88,39 +86,30 @@ public class EventActivity extends AppCompatActivity {
     };
 
     private void updateRecyclerview(Event[] events) {
-        adapter = new EventAdapterClass(events);
+        EventAdapterClass adapter = new EventAdapterClass(events);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(EventActivity.this));
     }
 
     private void setOnClickListeners() {
-        addEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addRefuelButton.setVisibility(View.VISIBLE);
-                addRepairButton.setVisibility(View.VISIBLE);
-                addEarningButton.setVisibility(View.VISIBLE);
+        addEventButton.setOnClickListener((View view) -> {
+            addRefuelButton.setVisibility(View.VISIBLE);
+            addRepairButton.setVisibility(View.VISIBLE);
+            addEarningButton.setVisibility(View.VISIBLE);
 //                        addCostButton.setVisibility(View.VISIBLE);
-            }
         });
 
-        addRefuelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("ALEXIA", "Want to add refuel");
-                Intent eventActivityIntent = new Intent(EventActivity.this, RefuelActivity.class);
-                eventActivityIntent.putExtra("id", intentId);
-                startActivity(eventActivityIntent);
-            }
+        addRefuelButton.setOnClickListener((View view) -> {
+            Log.d("ALEXIA", "Want to add refuel");
+            Intent eventActivityIntent = new Intent(EventActivity.this, RefuelActivity.class);
+            eventActivityIntent.putExtra("id", intentId);
+            startActivity(eventActivityIntent);
         });
 
-        addEarningButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent eventActivityIntent = new Intent(EventActivity.this, EarningActivity.class);
-                eventActivityIntent.putExtra("id", intentId);
-                startActivity(eventActivityIntent);
-            }
+        addEarningButton.setOnClickListener((View view) -> {
+            Intent eventActivityIntent = new Intent(EventActivity.this, EarningActivity.class);
+            eventActivityIntent.putExtra("id", intentId);
+            startActivity(eventActivityIntent);
         });
 
 //                addCostButton.setOnClickListener(new View.OnClickListener() {
@@ -132,34 +121,25 @@ public class EventActivity extends AppCompatActivity {
 //                    }
 //                });
 
-        addRepairButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent eventActivityIntent = new Intent(EventActivity.this, RepairActivity.class);
-                eventActivityIntent.putExtra("id", intentId);
-                startActivity(eventActivityIntent);
-            }
+        addRepairButton.setOnClickListener((View view) -> {
+            Intent eventActivityIntent = new Intent(EventActivity.this, RepairActivity.class);
+            eventActivityIntent.putExtra("id", intentId);
+            startActivity(eventActivityIntent);
         });
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent returnMenuIntent = new Intent(EventActivity.this, CarActivity.class);
-                returnMenuIntent.putExtra("id", intentId);
-                startActivity(returnMenuIntent);
-            }
+        backButton.setOnClickListener((View view) -> {
+            Intent returnMenuIntent = new Intent(EventActivity.this, CarActivity.class);
+            returnMenuIntent.putExtra("id", intentId);
+            startActivity(returnMenuIntent);
         });
 
-        statButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (NetworkManager.events.size() > 0) {
-                    Intent statsIntent = new Intent(EventActivity.this, Statistiques.class);
-                    statsIntent.putExtra("id", intentId);
-                    startActivity(statsIntent);
-                } else {
-                    Toast.makeText(EventActivity.this, "Enregistrez un événement pour voir les statistiques.", Toast.LENGTH_SHORT).show();
-                }
+        statButton.setOnClickListener((View view) -> {
+            if (NetworkManager.events.size() > 0) {
+                Intent statsIntent = new Intent(EventActivity.this, Statistiques.class);
+                statsIntent.putExtra("id", intentId);
+                startActivity(statsIntent);
+            } else {
+                Toast.makeText(EventActivity.this, "Enregistrez un événement pour voir les statistiques.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -167,10 +147,9 @@ public class EventActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
