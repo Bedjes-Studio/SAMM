@@ -36,6 +36,10 @@ import UQAC.Mobile.SAMM.API.NetworkCallback;
 import UQAC.Mobile.SAMM.API.NetworkManager;
 import UQAC.Mobile.SAMM.R;
 
+/**
+ * This activity shows the list of events for a car
+ */
+
 public class EventActivity extends AppCompatActivity {
 
     private FloatingActionButton addEventButton;
@@ -49,7 +53,6 @@ public class EventActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     private String intentId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +146,6 @@ public class EventActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

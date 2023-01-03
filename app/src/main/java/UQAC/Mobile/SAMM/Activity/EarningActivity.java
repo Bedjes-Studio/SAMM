@@ -40,6 +40,10 @@ import UQAC.Mobile.SAMM.API.NetworkManager;
 import UQAC.Mobile.SAMM.Base.Earning;
 import UQAC.Mobile.SAMM.R;
 
+/**
+ * This activity shows the form to create earning
+ */
+
 public class EarningActivity extends AppCompatActivity {
 
     private final static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
