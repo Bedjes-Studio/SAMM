@@ -11,12 +11,14 @@ import UQAC.Mobile.SAMM.API.APIPojo.RefuelGetAll;
 
 public class Refuel extends Event {
 
+    public static final String[] FUEL_TYPE = {"Gasoline", "Diesel Fuel", "Bio-diesel", "Ethanol"};
+
     private String fuelType;
     private float litterPrice;
     private float totalCost;
     private float litter;
 
-    public Refuel(String fuelType, float litterPrice, float totalCost, float litter, Date date, int mileage){
+    public Refuel(String fuelType, float litterPrice, float totalCost, float litter, Date date, int mileage) {
         this.fuelType = fuelType;
         this.litterPrice = litterPrice;
         this.totalCost = totalCost;
@@ -25,7 +27,7 @@ public class Refuel extends Event {
         this.mileage = mileage;
     }
 
-    public Refuel(RefuelGetAll.Response response){
+    public Refuel(RefuelGetAll.Response response) {
         this.id = response.id;
         this.fuelType = response.fuelType;
         this.litterPrice = response.litterPrice;
@@ -37,10 +39,11 @@ public class Refuel extends Event {
             System.out.println(date);
         } catch (ParseException e) {
             e.printStackTrace();
-        }        this.mileage = response.mileage;
+        }
+        this.mileage = response.mileage;
     }
 
-    public boolean save(Refuel refuel){
+    public boolean save(Refuel refuel) {
         return true;
     }
 
