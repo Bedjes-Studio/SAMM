@@ -52,7 +52,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activity.Statistiques"
+            android:name=".Activity.StatsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -67,7 +67,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.SignInActivity"
+            android:name=".Activity.SignUpActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SIGNIN" />

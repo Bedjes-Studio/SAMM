@@ -111,12 +111,19 @@ public class CostActivity extends AppCompatActivity {
 
             earning.save(earning);
 
+//            NetworkManager.createEearning(earning, intentId);
+//            Intent returnMenuIntent = new Intent(EarningActivity.this, EventActivity.class);
+//            returnMenuIntent.putExtra("id", intentId);
+//            startActivity(returnMenuIntent);
+//
+
+
             // TODO : if is always true
             // Toast.makeText(getApplicationContext(),"save", Toast.LENGTH_SHORT).show();
             if (true) {//!nom.getText().toString().isEmpty() && !marque.getText().toString().isEmpty() && !modele.getText().toString().isEmpty() && !numImmat.getText().toString().isEmpty() && !typeCarbu.getText().toString().isEmpty() && !capacite.getText().toString().isEmpty() && !kilometrage.getText().toString().isEmpty()){
                 //Creer nouveau véhicule ici pour la bdd
                 //Car vehicule = new Car(new History(), null /*pour le moment je met nul mais à changer*/, Integer.parseInt(kilometrage.getText().toString()), typeCarbu.getText().toString(), Integer.parseInt(capacite.getText().toString()), spinner.getAdapter().toString(), marque.getText().toString(), modele.getText().toString(), nom.getText().toString());
-                NetworkManager.events.add(earning);
+                NetworkManager.createEearning(earning, intentId);
                 Intent returnMenuIntent = new Intent(CostActivity.this, EventActivity.class);
                 startActivity(returnMenuIntent);
             } else {

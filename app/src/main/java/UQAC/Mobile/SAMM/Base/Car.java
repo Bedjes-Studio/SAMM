@@ -2,7 +2,7 @@ package UQAC.Mobile.SAMM.Base;
 
 import java.util.List;
 
-import UQAC.Mobile.SAMM.API.APIPojo.CarGetAll;
+import UQAC.Mobile.SAMM.API.APIPojo.getAllCars;
 
 public class Car {
     private String id;
@@ -34,7 +34,7 @@ public class Car {
         this.id = id;
     }
 
-    public Car(CarGetAll.Response response) {
+    public Car(getAllCars.Response response) {
         this.id = response.id;
         this.mileage = response.mileage;
         this.year = response.year;

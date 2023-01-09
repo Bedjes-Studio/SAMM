@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -60,7 +59,7 @@ public class CarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_car);
 
         findViewInLayout();
-        NetworkManager.getAllCar(callback);
+        NetworkManager.getAllCars(callback);
     }
 
     private void findViewInLayout() {
@@ -179,7 +178,7 @@ public class CarActivity extends AppCompatActivity {
 
                         };
 
-                        NetworkManager.getAllCar(callback2);
+                        NetworkManager.getAllCars(callback2);
                     }
                 };
                 NetworkManager.deleteCar(id, callback1);

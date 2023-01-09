@@ -35,6 +35,10 @@ import UQAC.Mobile.SAMM.Base.Earning;
 import UQAC.Mobile.SAMM.Base.Refuel;
 import UQAC.Mobile.SAMM.R;
 
+/**
+ * This activity shows the stats of the car (cost/fuel consumption...)
+ */
+
 public class StatsActivity extends AppCompatActivity {
 
     private List<Refuel> refuels = new ArrayList<Refuel>();

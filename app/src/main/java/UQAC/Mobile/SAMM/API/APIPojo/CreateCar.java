@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import UQAC.Mobile.SAMM.Base.Car;
 
-public class CarCreate {
+public class CreateCar {
 
     public static class Request {
 
@@ -46,6 +46,7 @@ public class CarCreate {
             this.name = car.getName();
         }
     }
+    // TODO : add response to get specs
 }
 
 

@@ -2,10 +2,9 @@ package UQAC.Mobile.SAMM.API.APIPojo;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Test {
+public class Online {
 
-    public class Test2 {
-
+    public static class Response {
         @SerializedName("message")
         public String message;
     }

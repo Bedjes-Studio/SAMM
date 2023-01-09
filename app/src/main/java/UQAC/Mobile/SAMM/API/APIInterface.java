@@ -2,8 +2,8 @@ package UQAC.Mobile.SAMM.API;
 
 import java.util.List;
 
-import UQAC.Mobile.SAMM.API.APIPojo.CarCreate;
-import UQAC.Mobile.SAMM.API.APIPojo.CarGetAll;
+import UQAC.Mobile.SAMM.API.APIPojo.CreateCar;
+import UQAC.Mobile.SAMM.API.APIPojo.getAllCars;
 import UQAC.Mobile.SAMM.API.APIPojo.CostCreate;
 import UQAC.Mobile.SAMM.API.APIPojo.CostGetAll;
 import UQAC.Mobile.SAMM.API.APIPojo.DeleteSelector;
@@ -14,7 +14,7 @@ import UQAC.Mobile.SAMM.API.APIPojo.RefuelCreate;
 import UQAC.Mobile.SAMM.API.APIPojo.RefuelGetAll;
 import UQAC.Mobile.SAMM.API.APIPojo.Signup;
 import UQAC.Mobile.SAMM.API.APIPojo.TokenCheck;
-import UQAC.Mobile.SAMM.API.APIPojo.Test;
+import UQAC.Mobile.SAMM.API.APIPojo.Online;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -24,7 +24,7 @@ import retrofit2.http.POST;
 interface APIInterface {
 
         @GET("/online")
-        Call<Test.Test2> isOnline();
+        Call<Online.Response> isOnline();
 
         @POST("/api/user/login")
         Call<Login.Response> login(@Body Login.Request request);
@@ -36,10 +36,10 @@ interface APIInterface {
         Call<Signup.Response> signup(@Body Signup.Request request);
 
         @POST("/api/car/create")
-        Call<CarCreate> carCreate(@Header("Authorization") String token, @Body CarCreate.Request request);
+        Call<CreateCar> carCreate(@Header("Authorization") String token, @Body CreateCar.Request request);
 
         @GET("/api/car/getAll")
-        Call<List<CarGetAll.Response>> carGetAll(@Header("Authorization") String token);
+        Call<List<getAllCars.Response>> carGetAll(@Header("Authorization") String token);
 
         @POST("/api/car/delete")
         Call<DeleteSelector> carDelete(@Header("Authorization") String token, @Body DeleteSelector.Request request);

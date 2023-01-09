@@ -1,3 +1,19 @@
+/*
+ * Copyright 2022 - Hugo LANGLAIS & Alexia LACOMBE
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package UQAC.Mobile.SAMM.API;
 
 import android.content.SharedPreferences;
@@ -7,8 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import UQAC.Mobile.SAMM.API.APIPojo.CarCreate;
-import UQAC.Mobile.SAMM.API.APIPojo.CarGetAll;
+import UQAC.Mobile.SAMM.API.APIPojo.CreateCar;
+import UQAC.Mobile.SAMM.API.APIPojo.getAllCars;
 import UQAC.Mobile.SAMM.API.APIPojo.CostCreate;
 import UQAC.Mobile.SAMM.API.APIPojo.CostGetAll;
 import UQAC.Mobile.SAMM.API.APIPojo.DeleteSelector;
@@ -19,7 +35,7 @@ import UQAC.Mobile.SAMM.API.APIPojo.RefuelCreate;
 import UQAC.Mobile.SAMM.API.APIPojo.RefuelGetAll;
 import UQAC.Mobile.SAMM.API.APIPojo.Signup;
 import UQAC.Mobile.SAMM.API.APIPojo.TokenCheck;
-import UQAC.Mobile.SAMM.API.APIPojo.Test;
+import UQAC.Mobile.SAMM.API.APIPojo.Online;
 import UQAC.Mobile.SAMM.Base.Car;
 import UQAC.Mobile.SAMM.Base.Cost;
 import UQAC.Mobile.SAMM.Base.Earning;
@@ -33,53 +49,67 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * This class is the public interface for API requests
+ */
 public class NetworkManager {
 
-    // TODO : remove faussaires
-    static public List<Event> events = new ArrayList<Event>();
+    private static final APIInterface API_INTERFACE = getClient().create(APIInterface.class);
 
-    private static Retrofit retrofit = null;
-    static APIInterface apiInterface = getClient().create(APIInterface.class);
+    private static final List<Event> events = new ArrayList<>();
 
     private static String token = null;
 
-    public NetworkManager() {
-
-    }
-
-    static Retrofit getClient() {
-
+    private static Retrofit getClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://34.236.157.55:6422")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
+        return new Retrofit.Builder().baseUrl("http://34.236.157.55:6422").addConverterFactory(GsonConverterFactory.create()).client(client).build();
+    }
 
-        return retrofit;
+
+    private static String readSavedToken(SharedPreferences sharedPref) {
+        String savedToken = sharedPref.getString("token", null);
+        Log.d("API", "token read : " + savedToken);
+        return savedToken;
+    }
+
+    private static void saveNewToken(SharedPreferences sharedPref, String newToken) {
+        token = "Bearer " + newToken;
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("token", token);
+        editor.apply();
+    }
+
+    private static void deleteToken(SharedPreferences sharedPref) {
+        token = null;
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("token");
+        editor.apply();
     }
 
 
     /**
      * GET online server status
      **/
-    public static void checkConnection() {
+    public static void checkConnection(NetworkCallback callback) {
         Log.d("API", "get Online status");
-        Call<Test.Test2> call = apiInterface.isOnline();
-        call.enqueue(new Callback<Test.Test2>() {
-            @Override
-            public void onResponse(Call<Test.Test2> call, Response<Test.Test2> response) {
+        Call<Online.Response> call = API_INTERFACE.isOnline();
 
-                Log.d("API", response.code() + "");
-                Test.Test2 resource = response.body();
-                String text = resource.message;
+        call.enqueue(new Callback<Online.Response>() {
+            @Override
+            public void onResponse(Call<Online.Response> call, Response<Online.Response> response) {
+
+                // TODO : remove message from server ?
+                if (response.code() == 200) {
+                    // Online.Response resource = response.body();
+                    // String text = resource.message;
+                    callback.onActionSuccess();
+                }
             }
-
             @Override
-            public void onFailure(Call<Test.Test2> call, Throwable t) {
+            public void onFailure(Call<Online.Response> call, Throwable t) {
                 call.cancel();
             }
         });
@@ -87,7 +117,7 @@ public class NetworkManager {
 
     public static void signup(String name, String email, String password, NetworkCallback callback) {
         Log.d("API", "signup");
-        Call<Signup.Response> call = apiInterface.signup(new Signup.Request(name, email, password));
+        Call<Signup.Response> call = API_INTERFACE.signup(new Signup.Request(name, email, password));
 
         call.enqueue(new Callback<Signup.Response>() {
             @Override
@@ -106,22 +136,16 @@ public class NetworkManager {
         });
     }
 
-    public static void tokenCheck( SharedPreferences sharedPref, NetworkCallback callback) {
+    public static void tokenCheck(SharedPreferences sharedPref, NetworkCallback callback) {
         Log.d("API", "tokenCheck");
-        String userToken =  sharedPref.getString("token", null);
-        Log.d("API", "token + " + userToken);
-        if (userToken != null) {
-            token = userToken;
-        }
-
-        Call<TokenCheck> call = apiInterface.tokenCheck(token);
+        token = readSavedToken(sharedPref);
+        Call<TokenCheck> call = API_INTERFACE.tokenCheck(token);
 
         call.enqueue(new Callback<TokenCheck>() {
             @Override
             public void onResponse(Call<TokenCheck> call, Response<TokenCheck> response) {
                 if (response.code() == 200) {
                     callback.onActionSuccess();
-
                 } else {
                     callback.onActionFailure();
                 }
@@ -136,18 +160,14 @@ public class NetworkManager {
 
     public static void login(SharedPreferences sharedPref, String email, String password, NetworkCallback callback) {
         Log.d("API", "login");
-
-        Call<Login.Response> call = apiInterface.login(new Login.Request(email, password));
+        Call<Login.Response> call = API_INTERFACE.login(new Login.Request(email, password));
 
         call.enqueue(new Callback<Login.Response>() {
             @Override
             public void onResponse(Call<Login.Response> call, Response<Login.Response> response) {
                 if (response.code() == 200) {
                     Login.Response data = response.body();
-                    token = "Bearer " + data.token;
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("token",token);
-                    editor.apply();
+                    saveNewToken(sharedPref, data.token);
                     callback.onActionSuccess();
                 } else {
                     callback.onActionFailure();
@@ -163,40 +183,41 @@ public class NetworkManager {
 
     public static void disconnect(SharedPreferences sharedPref, NetworkCallback callback) {
         Log.d("API", "disconnect");
-        token = null;
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.remove("token");
-        editor.apply();
+        deleteToken(sharedPref);
         callback.onActionSuccess();
     }
 
+    // TODO : update API to link with specs
+    // TODO : add callback to popup when car is created
     public static void createCar(Car car) {
         Log.d("API", "create car");
-        Call<CarCreate> call = apiInterface.carCreate(token, new CarCreate.Request(car));
-        call.enqueue(new Callback<CarCreate>() {
+        Call<CreateCar> call = API_INTERFACE.carCreate(token, new CreateCar.Request(car));
+
+        call.enqueue(new Callback<CreateCar>() {
             @Override
-            public void onResponse(Call<CarCreate> call, Response<CarCreate> response) {
-                Log.d("API", token);
+            public void onResponse(Call<CreateCar> call, Response<CreateCar> response) {
                 if (response.code() == 201) {
-                    CarCreate data = response.body();
+                    // TODO : get specs here
                 }
             }
 
             @Override
-            public void onFailure(Call<CarCreate> call, Throwable t) {
+            public void onFailure(Call<CreateCar> call, Throwable t) {
                 call.cancel();
             }
         });
     }
 
-    public static void getAllCar(NetworkCallback callback) {
+    public static void getAllCars(NetworkCallback callback) {
         Log.d("API", "get all cars");
-        Call<List<CarGetAll.Response>> call = apiInterface.carGetAll(token);
-        call.enqueue(new Callback<List<CarGetAll.Response>>() {
+        Call<List<getAllCars.Response>> call = API_INTERFACE.carGetAll(token);
+
+        call.enqueue(new Callback<List<getAllCars.Response>>() {
             @Override
-            public void onResponse(Call<List<CarGetAll.Response>> call, Response<List<CarGetAll.Response>> response) {
+            public void onResponse(Call<List<getAllCars.Response>> call, Response<List<getAllCars.Response>> response) {
                 if (response.code() == 200) {
-                    List<CarGetAll.Response> data = response.body();
+                    // TODO : create parser with generic type
+                    List<getAllCars.Response> data = response.body();
                     Car[] cars = new Car[data.size()];
                     for (int i = 0; i < data.size(); ++i) {
                         cars[i] = new Car(data.get(i));
@@ -206,7 +227,7 @@ public class NetworkManager {
             }
 
             @Override
-            public void onFailure(Call<List<CarGetAll.Response>> call, Throwable t) {
+            public void onFailure(Call<List<getAllCars.Response>> call, Throwable t) {
                 call.cancel();
             }
         });
@@ -214,13 +235,13 @@ public class NetworkManager {
 
     public static void deleteCar(String carId, NetworkCallback callback) {
         Log.d("API", "create car");
-        Call<DeleteSelector> call = apiInterface.carDelete(token, new DeleteSelector.Request(carId));
+        Call<DeleteSelector> call = API_INTERFACE.carDelete(token, new DeleteSelector.Request(carId));
+
         call.enqueue(new Callback<DeleteSelector>() {
             @Override
             public void onResponse(Call<DeleteSelector> call, Response<DeleteSelector> response) {
-                Log.d("API", token);
                 if (response.code() == 200) {
-                    DeleteSelector data = response.body();
+                    // TODO : parse response to check if delete success
                     callback.onActionSuccess();
                 }
             }
@@ -238,7 +259,7 @@ public class NetworkManager {
 
         NetworkCallback callbackEarning = new NetworkCallback() {
             @Override
-            public void onActionSuccess(Earning[] earnings){
+            public void onActionSuccess(Earning[] earnings) {
                 Collections.addAll(events, earnings);
                 Event[] allevents = new Event[events.size()];
                 for (int i = 0; i < events.size(); ++i) {
@@ -250,7 +271,7 @@ public class NetworkManager {
 
         NetworkCallback callbackCost = new NetworkCallback() {
             @Override
-            public void onActionSuccess(Cost[] costs){
+            public void onActionSuccess(Cost[] costs) {
                 Collections.addAll(events, costs);
                 getAllEarning(carId, callbackEarning);
             }
@@ -258,7 +279,7 @@ public class NetworkManager {
 
         NetworkCallback callbackFuel = new NetworkCallback() {
             @Override
-            public void onActionSuccess(Refuel[] refuels){
+            public void onActionSuccess(Refuel[] refuels) {
                 Collections.addAll(events, refuels);
                 getAllCost(carId, callbackCost);
             }
@@ -269,7 +290,7 @@ public class NetworkManager {
 
     public static void createRefuel(Refuel refuel, String carId) {
         Log.d("API", "create refuel");
-        Call<RefuelCreate> call = apiInterface.refuelCreate(token, new RefuelCreate.Request(refuel, carId));
+        Call<RefuelCreate> call = API_INTERFACE.refuelCreate(token, new RefuelCreate.Request(refuel, carId));
         call.enqueue(new Callback<RefuelCreate>() {
             @Override
             public void onResponse(Call<RefuelCreate> call, Response<RefuelCreate> response) {
@@ -277,6 +298,7 @@ public class NetworkManager {
                     RefuelCreate data = response.body();
                 }
             }
+
             @Override
             public void onFailure(Call<RefuelCreate> call, Throwable t) {
                 call.cancel();
@@ -286,14 +308,14 @@ public class NetworkManager {
 
     public static void getAllRefuel(String carId, NetworkCallback callback) {
         Log.d("API", "get all refuel");
-        Call<List<RefuelGetAll.Response>> call = apiInterface.refuelGetAll(token, new RefuelGetAll.Request(carId));
+        Call<List<RefuelGetAll.Response>> call = API_INTERFACE.refuelGetAll(token, new RefuelGetAll.Request(carId));
         call.enqueue(new Callback<List<RefuelGetAll.Response>>() {
             @Override
             public void onResponse(Call<List<RefuelGetAll.Response>> call, Response<List<RefuelGetAll.Response>> response) {
                 if (response.code() == 200) {
                     List<RefuelGetAll.Response> data = response.body();
                     Refuel[] refuels = new Refuel[data.size()];
-                    for (int i =0; i < data.size(); ++i) {
+                    for (int i = 0; i < data.size(); ++i) {
                         refuels[i] = new Refuel(data.get(i));
                     }
                     callback.onActionSuccess(refuels);
@@ -309,7 +331,7 @@ public class NetworkManager {
 
     public static void deleteFuel(String carId, NetworkCallback callback) {
         Log.d("API", "delete fuel");
-        Call<DeleteSelector> call = apiInterface.refuelDelete(token, new DeleteSelector.Request(carId));
+        Call<DeleteSelector> call = API_INTERFACE.refuelDelete(token, new DeleteSelector.Request(carId));
         call.enqueue(new Callback<DeleteSelector>() {
             @Override
             public void onResponse(Call<DeleteSelector> call, Response<DeleteSelector> response) {
@@ -329,7 +351,7 @@ public class NetworkManager {
 
     public static void createCost(Cost cost, String carId) {
         Log.d("API", "create cost");
-        Call<CostCreate> call = apiInterface.costCreate(token, new CostCreate.Request(cost, carId));
+        Call<CostCreate> call = API_INTERFACE.costCreate(token, new CostCreate.Request(cost, carId));
         call.enqueue(new Callback<CostCreate>() {
             @Override
             public void onResponse(Call<CostCreate> call, Response<CostCreate> response) {
@@ -337,6 +359,7 @@ public class NetworkManager {
                     CostCreate data = response.body();
                 }
             }
+
             @Override
             public void onFailure(Call<CostCreate> call, Throwable t) {
                 call.cancel();
@@ -347,14 +370,14 @@ public class NetworkManager {
 
     public static void getAllCost(String carId, NetworkCallback callback) {
         Log.d("API", "get all costs");
-        Call<List<CostGetAll.Response>> call = apiInterface.costGetAll(token, new CostGetAll.Request(carId));
+        Call<List<CostGetAll.Response>> call = API_INTERFACE.costGetAll(token, new CostGetAll.Request(carId));
         call.enqueue(new Callback<List<CostGetAll.Response>>() {
             @Override
             public void onResponse(Call<List<CostGetAll.Response>> call, Response<List<CostGetAll.Response>> response) {
                 if (response.code() == 200) {
                     List<CostGetAll.Response> data = response.body();
                     Cost[] costs = new Cost[data.size()];
-                    for (int i =0; i < data.size(); ++i) {
+                    for (int i = 0; i < data.size(); ++i) {
                         costs[i] = new Cost(data.get(i));
                     }
                     callback.onActionSuccess(costs);
@@ -370,7 +393,7 @@ public class NetworkManager {
 
     public static void deleteCost(String carId, NetworkCallback callback) {
         Log.d("API", "delete cost");
-        Call<DeleteSelector> call = apiInterface.costDelete(token, new DeleteSelector.Request(carId));
+        Call<DeleteSelector> call = API_INTERFACE.costDelete(token, new DeleteSelector.Request(carId));
         call.enqueue(new Callback<DeleteSelector>() {
             @Override
             public void onResponse(Call<DeleteSelector> call, Response<DeleteSelector> response) {
@@ -391,7 +414,7 @@ public class NetworkManager {
 
     public static void createEearning(Earning earning, String carId) {
         Log.d("API", "create earning");
-        Call<EarningCreate> call = apiInterface.earningCreate(token, new EarningCreate.Request(earning, carId));
+        Call<EarningCreate> call = API_INTERFACE.earningCreate(token, new EarningCreate.Request(earning, carId));
         call.enqueue(new Callback<EarningCreate>() {
             @Override
             public void onResponse(Call<EarningCreate> call, Response<EarningCreate> response) {
@@ -399,6 +422,7 @@ public class NetworkManager {
                     EarningCreate data = response.body();
                 }
             }
+
             @Override
             public void onFailure(Call<EarningCreate> call, Throwable t) {
                 call.cancel();
@@ -408,14 +432,14 @@ public class NetworkManager {
 
     public static void getAllEarning(String carId, NetworkCallback callback) {
         Log.d("API", "get all costs");
-        Call<List<EarningGetAll.Response>> call = apiInterface.earningGetAll(token, new EarningGetAll.Request(carId));
+        Call<List<EarningGetAll.Response>> call = API_INTERFACE.earningGetAll(token, new EarningGetAll.Request(carId));
         call.enqueue(new Callback<List<EarningGetAll.Response>>() {
             @Override
             public void onResponse(Call<List<EarningGetAll.Response>> call, Response<List<EarningGetAll.Response>> response) {
                 if (response.code() == 200) {
                     List<EarningGetAll.Response> data = response.body();
                     Earning[] earnings = new Earning[data.size()];
-                    for (int i =0; i < data.size(); ++i) {
+                    for (int i = 0; i < data.size(); ++i) {
                         earnings[i] = new Earning(data.get(i));
                     }
                     callback.onActionSuccess(earnings);
@@ -431,7 +455,7 @@ public class NetworkManager {
 
     public static void deleteEarning(String carId, NetworkCallback callback) {
         Log.d("API", "delete earning");
-        Call<DeleteSelector> call = apiInterface.earningDelete(token, new DeleteSelector.Request(carId));
+        Call<DeleteSelector> call = API_INTERFACE.earningDelete(token, new DeleteSelector.Request(carId));
         call.enqueue(new Callback<DeleteSelector>() {
             @Override
             public void onResponse(Call<DeleteSelector> call, Response<DeleteSelector> response) {
@@ -447,5 +471,9 @@ public class NetworkManager {
                 call.cancel();
             }
         });
+    }
+
+    public static int eventSize() {
+        return events.size();
     }
 }

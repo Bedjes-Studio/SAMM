@@ -3,6 +3,7 @@ package UQAC.Mobile.SAMM.API.APIPojo;
 import com.google.gson.annotations.SerializedName;
 
 public class Signup {
+
     public static class Request {
         @SerializedName("name")
         public String name;
