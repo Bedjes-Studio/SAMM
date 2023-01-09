@@ -100,7 +100,7 @@ public class StatsActivity extends AppCompatActivity {
                 totalFuelDayValue.setText(String.valueOf(totalKmRefuel(refuels, Float.parseFloat(totalFuelValue.getText().toString()))));
             }
         };
-        NetworkManager.getAllRefuel(intentId, callbackFuel);
+        NetworkManager.getAllRefuels(intentId, callbackFuel);
 
         // earnings
         NetworkCallback callbackEarnings = new NetworkCallback() {

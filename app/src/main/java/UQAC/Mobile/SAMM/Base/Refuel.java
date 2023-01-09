@@ -1,13 +1,10 @@
 package UQAC.Mobile.SAMM.Base;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import UQAC.Mobile.SAMM.API.APIPojo.RefuelGetAll;
+import UQAC.Mobile.SAMM.API.APIPojo.GetAllRefuels;
 
 public class Refuel extends Event {
 
@@ -27,7 +24,7 @@ public class Refuel extends Event {
         this.mileage = mileage;
     }
 
-    public Refuel(RefuelGetAll.Response response) {
+    public Refuel(GetAllRefuels.Response response) {
         this.id = response.id;
         this.fuelType = response.fuelType;
         this.litterPrice = response.litterPrice;

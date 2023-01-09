@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import UQAC.Mobile.SAMM.API.APIPojo.CostGetAll;
+import UQAC.Mobile.SAMM.API.APIPojo.GetAllCosts;
 
 public class Cost extends Event {
     private float value;
@@ -19,7 +19,7 @@ public class Cost extends Event {
         this.mileage = mileage;
     }
 
-    public Cost(CostGetAll.Response response) {
+    public Cost(GetAllCosts.Response response) {
         this.id = response.id;
         this.value = response.value;
         this.reason = response.reason;

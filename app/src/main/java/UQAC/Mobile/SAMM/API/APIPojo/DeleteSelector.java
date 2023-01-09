@@ -13,4 +13,6 @@ public class DeleteSelector {
             this.id = id;
         }
     }
+
+    // TODO : add response to read deletion results
 }

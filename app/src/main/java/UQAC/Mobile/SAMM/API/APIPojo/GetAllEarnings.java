@@ -2,7 +2,7 @@ package UQAC.Mobile.SAMM.API.APIPojo;
 
 import com.google.gson.annotations.SerializedName;
 
-public class RefuelGetAll {
+public class GetAllEarnings {
     public static class Response {
 
         @SerializedName("_id")
@@ -20,17 +20,11 @@ public class RefuelGetAll {
         @SerializedName("carId")
         public String carId;
 
-        @SerializedName("fuelType")
-        public String fuelType;
+        @SerializedName("value")
+        public float value;
 
-        @SerializedName("litterPrice")
-        public float litterPrice;
-
-        @SerializedName("totalCost")
-        public float totalCost;
-
-        @SerializedName("litter")
-        public float litter;
+        @SerializedName("reason")
+        public String reason;
 
         @SerializedName("__v")
         public String version;

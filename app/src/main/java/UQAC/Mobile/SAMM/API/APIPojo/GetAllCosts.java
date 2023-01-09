@@ -2,7 +2,7 @@ package UQAC.Mobile.SAMM.API.APIPojo;
 
 import com.google.gson.annotations.SerializedName;
 
-public class EarningGetAll {
+public class GetAllCosts {
     public static class Response {
 
         @SerializedName("_id")
@@ -25,6 +25,9 @@ public class EarningGetAll {
 
         @SerializedName("reason")
         public String reason;
+
+        @SerializedName("paymentMethod")
+        public String paymentMethod;
 
         @SerializedName("__v")
         public String version;

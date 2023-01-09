@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import UQAC.Mobile.SAMM.Base.Refuel;
 
-public class RefuelCreate {
+public class CreateRefuel {
     public static class Request {
         @SerializedName("mileage")
         public int mileage;
@@ -23,7 +23,6 @@ public class RefuelCreate {
 
         @SerializedName("litter")
         public Float litter;
-
 
         public Request(Refuel refuel, String carId) {
             this.mileage = refuel.getMileage();

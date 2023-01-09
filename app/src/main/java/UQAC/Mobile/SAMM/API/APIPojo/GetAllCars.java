@@ -2,7 +2,7 @@ package UQAC.Mobile.SAMM.API.APIPojo;
 
 import com.google.gson.annotations.SerializedName;
 
-public class getAllCars {
+public class GetAllCars {
     public static class Response {
 
         @SerializedName("_id")

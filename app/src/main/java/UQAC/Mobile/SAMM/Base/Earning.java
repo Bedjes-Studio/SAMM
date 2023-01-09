@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import UQAC.Mobile.SAMM.API.APIPojo.EarningGetAll;
+import UQAC.Mobile.SAMM.API.APIPojo.GetAllEarnings;
 
 public class Earning extends Event {
     private float value;
@@ -18,7 +18,7 @@ public class Earning extends Event {
         this.mileage = mileage;
     }
 
-    public Earning(EarningGetAll.Response response) {
+    public Earning(GetAllEarnings.Response response) {
         this.id = response.id;
         this.value = response.value;
         this.reason = response.reason;

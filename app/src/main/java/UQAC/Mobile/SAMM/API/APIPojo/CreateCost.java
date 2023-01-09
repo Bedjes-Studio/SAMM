@@ -2,9 +2,9 @@ package UQAC.Mobile.SAMM.API.APIPojo;
 
 import com.google.gson.annotations.SerializedName;
 
-import UQAC.Mobile.SAMM.Base.Earning;
+import UQAC.Mobile.SAMM.Base.Cost;
 
-public class EarningCreate {
+public class CreateCost {
     public static class Request {
 
         @SerializedName("mileage")
@@ -19,12 +19,15 @@ public class EarningCreate {
         @SerializedName("reason")
         public String reason;
 
+        @SerializedName("paymentMethod")
+        public String paymentMethod;
 
-        public Request(Earning earning, String carId) {
-            this.mileage = earning.getMileage();
+        public Request(Cost cost, String carId) {
+            this.mileage = cost.getMileage();
             this.carId = carId;
-            this.value = earning.getValue();
-            this.reason = earning.getReason();
+            this.value = cost.getValue();
+            this.reason = cost.getReason();
+            this.paymentMethod = cost.getPaymentMethod();
         }
     }
 }

@@ -114,7 +114,7 @@ public class EarningActivity extends AppCompatActivity {
 
                 earning.save(earning);
 
-                NetworkManager.createEearning(earning, intentId);
+                NetworkManager.createEarning(earning, intentId);
                 Intent returnMenuIntent = new Intent(EarningActivity.this, EventActivity.class);
                 returnMenuIntent.putExtra("id", intentId);
                 startActivity(returnMenuIntent);
