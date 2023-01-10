@@ -25,17 +25,30 @@ import UQAC.Mobile.SAMM.Base.Event;
 import UQAC.Mobile.SAMM.Base.Refuel;
 
 /**
- * NetworkCallbacks are calls after a request when
+ * NetworkCallbacks are calls after a request
  */
 public class NetworkCallback {
-    public void onActionSuccess(){};
-    public void onActionSuccess(Car[] cars){};
-    public void onActionSuccess(Refuel[] refuels){};
-    public void onActionSuccess(Cost[] costs){};
-    public void onActionSuccess(Earning[] earnings){};
-    public void onActionSuccess(Event[] events){};
-    public void onActionSuccess(List<Event> events){};
+    public void onActionSuccess() {
+    }
 
+    public void onActionSuccess(Car[] cars) {
+    }
 
-    public void onActionFailure(){};
+    public void onActionSuccess(Refuel[] refuels) {
+    }
+
+    public void onActionSuccess(Cost[] costs) {
+    }
+
+    public void onActionSuccess(Earning[] earnings) {
+    }
+
+    public void onActionSuccess(Event[] events) {
+    }
+
+    public void onActionSuccess(List<Event> events) {
+    }
+
+    public void onActionFailure() {
+    }
 }

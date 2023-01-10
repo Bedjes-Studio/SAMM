@@ -284,11 +284,11 @@ public class NetworkManager {
             @Override
             public void onActionSuccess(Earning[] earnings) {
                 Collections.addAll(events, earnings);
-                Event[] allevents = new Event[events.size()];
+                Event[] allEvents = new Event[events.size()];
                 for (int i = 0; i < events.size(); ++i) {
-                    allevents[i] = events.get(i);
+                    allEvents[i] = events.get(i);
                 }
-                callback.onActionSuccess(allevents);
+                callback.onActionSuccess(allEvents);
             }
         };
 

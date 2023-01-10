@@ -37,7 +37,7 @@ public class GetAllCars {
         public String ownerId;
 
         @SerializedName("guestsId")
-        public String guestsId[];
+        public String[] guestsId;
 
         @SerializedName("specsId")
         public String specsId;
