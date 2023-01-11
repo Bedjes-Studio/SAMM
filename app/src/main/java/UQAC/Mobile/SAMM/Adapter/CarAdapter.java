@@ -31,7 +31,7 @@ import UQAC.Mobile.SAMM.Base.Car;
 import UQAC.Mobile.SAMM.R;
 
 /**
- * This adapted is used to display all cars for the user
+ * This adapter is used to display all cars for the user
  */
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     private final Context context;
