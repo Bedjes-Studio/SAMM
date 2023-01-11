@@ -1,5 +1,20 @@
-package UQAC.Mobile.SAMM.Adapter;
+/*
+ * Copyright 2022 - Hugo LANGLAIS & Alexia LACOMBE
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+package UQAC.Mobile.SAMM.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,66 +30,48 @@ import androidx.recyclerview.widget.RecyclerView;
 import UQAC.Mobile.SAMM.Base.Car;
 import UQAC.Mobile.SAMM.R;
 
-public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
-    Context context;
-    Car[] carArrayList;
+/**
+ * This adapted is used to display all cars for the user
+ */
+public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
+    private final Context context;
+    private final Car[] carArrayList;
 
-    public static OnItemClickListener listener;
-    public static OnItemLongClickListener listenerLong;
+    private OnItemClickListener listener;
+    private OnItemLongClickListener listenerLong;
 
-    public CarAdapter(Context context, Car[] carArrayList){
+    public CarAdapter(Context context, Car[] carArrayList) {
         this.context = context;
         this.carArrayList = carArrayList;
     }
 
     @NonNull
     @Override
-    public CarAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.car_item,parent,false);
-        return new CarAdapter.MyViewHolder(view);
+        View view = inflater.inflate(R.layout.car_item, parent, false);
+        return new CarViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CarAdapter.MyViewHolder holder, int position) {
-        holder.brand.setText(carArrayList[position].getBrand());
-        holder.model.setText(carArrayList[position].getModel());
-        holder.mileage.setText(String.valueOf(carArrayList[position].getMileage()));
+    public void onBindViewHolder(@NonNull CarViewHolder holder, int position) {
+        holder.brand.setText(carArrayList[holder.getAdapterPosition()].getBrand());
+        holder.model.setText(carArrayList[holder.getAdapterPosition()].getModel());
+        holder.mileage.setText(String.valueOf(carArrayList[holder.getAdapterPosition()].getMileage()));
 
-        (holder).linearLayout.setOnClickListener(
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view)
-                            {
-//                                Toast.makeText(
-//                                                view.getContext(),
-//                                                carArrayList[position].getId(),
-//                                                Toast.LENGTH_SHORT)
-//                                        .show();
-                                //faudra voir pour passer en parametre la voiture sur laquelle on click pour avoir
-                                // son historique pour l'instant c'est du bullshit
-                                // j'ai fais des tests avec putExtra ce sera surement l'id de la voiture qu'on passera
-                                listener.onItemClick(carArrayList[position].getId());
-                            }
-                        });
+        holder.linearLayout.setOnClickListener((View view) -> {
+            listener.onItemClick(carArrayList[holder.getAdapterPosition()].getId());
+        });
 
-        (holder).linearLayout.setOnLongClickListener(
-                new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view)
-                    {
-                        Toast.makeText(
-                                        view.getContext(),
-                                        carArrayList[position].getId(),
-                                        Toast.LENGTH_SHORT)
-                                .show();
-                        //faudra voir pour passer en parametre la voiture sur laquelle on click pour avoir
-                        // son historique pour l'instant c'est du bullshit
-                        // j'ai fais des tests avec putExtra ce sera surement l'id de la voiture qu'on passera
-                        listenerLong.onItemLongClick(carArrayList[position].getId());
-                        return true;
-                    }
-                });
+        holder.linearLayout.setOnLongClickListener((View view) -> {
+            Toast.makeText(
+                            view.getContext(),
+                            carArrayList[holder.getAdapterPosition()].getId(),
+                            Toast.LENGTH_SHORT)
+                    .show();
+            listenerLong.onItemLongClick(carArrayList[holder.getAdapterPosition()].getId());
+            return true;
+        });
     }
 
     @Override
@@ -83,31 +80,32 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.listener = onItemClickListener;
+        listener = onItemClickListener;
     }
+
     public interface OnItemClickListener {
         void onItemClick(String id);
     }
 
-    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener){
-        this.listenerLong = onItemLongClickListener;
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        listenerLong = onItemLongClickListener;
     }
+
     public interface OnItemLongClickListener {
         void onItemLongClick(String id);
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder    {
+    public static class CarViewHolder extends RecyclerView.ViewHolder {
         TextView brand, model, mileage;
 
-        private LinearLayout linearLayout;
+        private final LinearLayout linearLayout;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public CarViewHolder(@NonNull View itemView) {
             super(itemView);
 
             brand = itemView.findViewById(R.id.text_view_brand);
             model = itemView.findViewById(R.id.text_view_model);
             mileage = itemView.findViewById(R.id.text_view_mileage);
-
             linearLayout = itemView.findViewById(R.id.linearLayout);
         }
     }
