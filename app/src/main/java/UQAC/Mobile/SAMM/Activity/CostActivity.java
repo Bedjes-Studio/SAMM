@@ -109,8 +109,6 @@ public class CostActivity extends AppCompatActivity {
 
             Earning earning = new Earning(reasonValue, valueValue, myCalendar.getTime(), mileageValue);
 
-            earning.save(earning);
-
 //            NetworkManager.createEearning(earning, intentId);
 //            Intent returnMenuIntent = new Intent(EarningActivity.this, EventActivity.class);
 //            returnMenuIntent.putExtra("id", intentId);

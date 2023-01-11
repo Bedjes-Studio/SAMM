@@ -55,6 +55,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     /**
      * return type of the item, there is no other solutions than using hard coded strings...
+     * maybe store each event type in class
      */
     @Override
     public int getItemViewType(int position) {
