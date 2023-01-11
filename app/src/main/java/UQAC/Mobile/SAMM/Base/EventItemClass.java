@@ -8,9 +8,9 @@ public class EventItemClass {
     // these are declared static so that they can
     // be accessed from the class name itself
     // And final so that they are not modified later
-    public static final int LayoutRefuel = 0;
-    public static final int LayoutRepair = 1;
-    public static final int LayoutEarning = 2;
+    public static final int LAYOUT_REFUEL = 0;
+    public static final int LAYOUT_REPAIR = 1;
+    public static final int LAYOUT_EARNING = 2;
 
     // This variable ViewType specifies
     // which out of the two layouts

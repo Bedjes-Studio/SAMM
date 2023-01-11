@@ -35,48 +35,48 @@ import UQAC.Mobile.SAMM.R;
  */
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     private final Context context;
-    private final Car[] carArrayList;
+    private final Car[] cars;
 
     private OnItemClickListener listener;
     private OnItemLongClickListener listenerLong;
 
-    public CarAdapter(Context context, Car[] carArrayList) {
+    public CarAdapter(Context context, Car[] cars) {
         this.context = context;
-        this.carArrayList = carArrayList;
+        this.cars = cars;
     }
 
     @NonNull
     @Override
     public CarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.car_item, parent, false);
+        View view = inflater.inflate(R.layout.item_car, parent, false);
         return new CarViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CarViewHolder holder, int position) {
-        holder.brand.setText(carArrayList[holder.getAdapterPosition()].getBrand());
-        holder.model.setText(carArrayList[holder.getAdapterPosition()].getModel());
-        holder.mileage.setText(String.valueOf(carArrayList[holder.getAdapterPosition()].getMileage()));
+        holder.brand.setText(cars[holder.getAdapterPosition()].getBrand());
+        holder.model.setText(cars[holder.getAdapterPosition()].getModel());
+        holder.mileage.setText(String.valueOf(cars[holder.getAdapterPosition()].getMileage()));
 
         holder.linearLayout.setOnClickListener((View view) -> {
-            listener.onItemClick(carArrayList[holder.getAdapterPosition()].getId());
+            listener.onItemClick(cars[holder.getAdapterPosition()].getId());
         });
 
         holder.linearLayout.setOnLongClickListener((View view) -> {
             Toast.makeText(
                             view.getContext(),
-                            carArrayList[holder.getAdapterPosition()].getId(),
+                            cars[holder.getAdapterPosition()].getId(),
                             Toast.LENGTH_SHORT)
                     .show();
-            listenerLong.onItemLongClick(carArrayList[holder.getAdapterPosition()].getId());
+            listenerLong.onItemLongClick(cars[holder.getAdapterPosition()].getId());
             return true;
         });
     }
 
     @Override
     public int getItemCount() {
-        return carArrayList.length;
+        return cars.length;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

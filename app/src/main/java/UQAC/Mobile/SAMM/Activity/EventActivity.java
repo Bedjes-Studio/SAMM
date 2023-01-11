@@ -31,7 +31,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import UQAC.Mobile.SAMM.Base.Event;
-import UQAC.Mobile.SAMM.Adapter.EventAdapterClass;
+import UQAC.Mobile.SAMM.Adapter.EventAdapter;
 import UQAC.Mobile.SAMM.API.NetworkCallback;
 import UQAC.Mobile.SAMM.API.NetworkManager;
 import UQAC.Mobile.SAMM.R;
@@ -89,7 +89,7 @@ public class EventActivity extends AppCompatActivity {
     };
 
     private void updateRecyclerview(Event[] events) {
-        EventAdapterClass adapter = new EventAdapterClass(events);
+        EventAdapter adapter = new EventAdapter(events);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(EventActivity.this));
     }

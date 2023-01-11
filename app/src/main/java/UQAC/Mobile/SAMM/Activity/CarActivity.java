@@ -107,7 +107,7 @@ public class CarActivity extends AppCompatActivity {
             Toast.makeText(CarActivity.this, "Info", Toast.LENGTH_SHORT).show();
 
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            View popupView = inflater.inflate(R.layout.info_vehicles, null);
+            View popupView = inflater.inflate(R.layout.help_vehicles, null);
 
             // create the popup window
             int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -139,7 +139,7 @@ public class CarActivity extends AppCompatActivity {
             Toast.makeText(CarActivity.this, "Delete car", Toast.LENGTH_SHORT).show();
 
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            View popupView = inflater.inflate(R.layout.delete_vehicles, null);
+            View popupView = inflater.inflate(R.layout.confirm_delete_vehicles, null);
 
             Button confirm = popupView.findViewById(R.id.button_delete);
             // create the popup window
