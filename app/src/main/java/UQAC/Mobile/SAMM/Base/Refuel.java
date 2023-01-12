@@ -1,14 +1,37 @@
+/*
+ * Copyright 2022 - Hugo LANGLAIS & Alexia LACOMBE
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package UQAC.Mobile.SAMM.Base;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import UQAC.Mobile.SAMM.API.APIPojo.GetAllRefuels;
 
+/**
+ * Base class for refuel events
+ */
 public class Refuel extends Event {
 
+    // TODO : exports strings
     public static final String[] FUEL_TYPE = {"Gasoline", "Diesel Fuel", "Bio-diesel", "Ethanol"};
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    public static final String EVENT_TYPE = "REFUEL";
 
     private String fuelType;
     private float litterPrice;
@@ -30,9 +53,8 @@ public class Refuel extends Event {
         this.litterPrice = response.litterPrice;
         this.totalCost = response.totalCost;
         this.litter = response.litter;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         try {
-            this.date = format.parse(response.date);
+            this.date = dateFormat.parse(response.date);
             System.out.println(date);
         } catch (ParseException e) {
             e.printStackTrace();
